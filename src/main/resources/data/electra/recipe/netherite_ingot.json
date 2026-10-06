@@ -1,0 +1,7 @@
+{
+  "type": "electra:alloying",
+  "input1": { "tag": "c:ingots/gold" },
+  "input2": { "item": "minecraft:netherite_scrap" },
+  "result": { "id": "minecraft:netherite_ingot", "count": 1 },
+  "energy_cost": 200
+}

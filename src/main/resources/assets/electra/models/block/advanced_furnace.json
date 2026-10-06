@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "electra:block/advanced_furnace_top",
+    "front": "electra:block/advanced_furnace_front",
+    "bottom": "electra:block/advanced_furnace_top",
+    "side": "electra:block/advanced_furnace_side"
+  }
+}

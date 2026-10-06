@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "electra:block/lightning_collector" }
+  }
+}

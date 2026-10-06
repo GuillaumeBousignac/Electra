@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": {
+      "tag": "c:ingots/copper"
+    },
+    "C": {
+      "tag": "c:storage_blocks/copper"
+    },
+    "R": {
+      "item": "minecraft:lightning_rod"
+    }
+  },
+  "pattern": [
+    "LRL",
+    "L L",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "electra:lightning_collector"
+  }
+}

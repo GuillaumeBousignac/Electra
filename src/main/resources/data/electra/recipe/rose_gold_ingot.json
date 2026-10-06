@@ -1,0 +1,7 @@
+{
+  "type": "electra:alloying",
+  "input1": { "tag": "c:ingots/copper" },
+  "input2": { "tag": "c:ingots/gold" },
+  "result": { "id": "electra:rose_gold_ingot", "count": 1 },
+  "energy_cost": 100
+}

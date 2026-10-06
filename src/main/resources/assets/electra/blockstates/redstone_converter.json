@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "electra:block/redstone_converter" }
+  }
+}

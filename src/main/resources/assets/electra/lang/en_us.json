@@ -1,0 +1,13 @@
+{
+  "block.electra.lightning_collector": "Lightning Collector",
+  "block.electra.bare_wire": "Bare Wire",
+  "block.electra.redstone_converter": "Redstone Converter",
+  "block.electra.rose_gold_block": "Rose Gold Block",
+  "block.electra.advanced_furnace": "Advanced Furnace",
+
+  "item.electra.energy_meter": "Energy Metter",
+  "item.electra.rose_gold_ingot": "Rose Gold Ingot",
+
+  "creativetab.electra.electra_blocks": "Electra Blocks",
+  "creativetab.electra.electra_items": "Electra Items"
+}
