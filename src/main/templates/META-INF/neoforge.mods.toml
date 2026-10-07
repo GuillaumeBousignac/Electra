@@ -6,6 +6,7 @@ license="${mod_license}"
 modId="${mod_id}"
 version="${mod_version}"
 displayName="${mod_name}"
+logoFile="electra_logo.png"
 authors="606Saucisse"
 description='''
 A vanilla+ tech mod focused on automation, allowing you to create machines, advanced energy systems, and powerful industrial tools to transform and optimize your Minecraft world.

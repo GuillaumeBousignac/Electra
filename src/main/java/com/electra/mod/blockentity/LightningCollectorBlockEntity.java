@@ -1,5 +1,6 @@
 package com.electra.mod.blockentity;
 
+import com.electra.mod.block.LightningCollectorBlock;
 import com.electra.mod.energy.ModEnergyStorage;
 import com.electra.mod.setup.ModBlockEntities;
 import com.mojang.logging.LogUtils;
@@ -55,6 +56,13 @@ public class LightningCollectorBlockEntity extends BlockEntity {
             LOGGER.debug("Éclair capté en {} : {} FE", worldPosition, energyStorage.getEnergyStored());
         }
         wasRodPowered = rodPowered;
+
+        // Passage chargé ↔ déchargé : change l'état du bloc (cœur visible + lumière)
+        boolean charged = energyStorage.getEnergyStored() > 0;
+        BlockState state = getBlockState();
+        if (state.getValue(LightningCollectorBlock.CHARGED) != charged) {
+            level.setBlock(worldPosition, state.setValue(LightningCollectorBlock.CHARGED, charged), Block.UPDATE_ALL);
+        }
 
         // Synchronisation client limitée à deux fois par seconde
         if (needsSync && level.getGameTime() % 10 == 0 && level instanceof ServerLevel serverLevel) {

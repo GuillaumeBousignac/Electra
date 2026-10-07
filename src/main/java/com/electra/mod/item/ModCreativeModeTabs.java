@@ -28,6 +28,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.BARE_WIRE.get());
                         ModBlocks.INSULATED_WIRES.values().forEach(wire -> output.accept(wire.get()));
                         output.accept(ModBlocks.ROSE_GOLD_BLOCK.get());
+                        output.accept(ModBlocks.RED_IRON_BLOCK.get());
                     }).build());
 
     public static final Supplier<CreativeModeTab> ELECTRA_ITEMS_TAB = CREATIVE_MODE_TAB.register("electra_items_tab",
@@ -36,6 +37,7 @@ public class ModCreativeModeTabs {
                     .title(Component.translatable("creativetab.electra.electra_items"))
                     .displayItems((parameters, output) -> {
                         output.accept(ModItems.ROSE_GOLD_INGOT.get());
+                        output.accept(ModItems.RED_IRON_INGOT.get());
                         output.accept(ModItems.ENERGY_METER.get());
                     }).build());
 

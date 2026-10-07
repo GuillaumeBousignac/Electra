@@ -1,5 +1,6 @@
 {
   "variants": {
-    "": { "model": "electra:block/lightning_collector" }
+    "charged=false": { "model": "electra:block/lightning_collector" },
+    "charged=true":  { "model": "electra:block/lightning_collector" }
   }
 }

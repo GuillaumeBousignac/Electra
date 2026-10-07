@@ -191,3 +191,7 @@ idea {
         downloadJavadoc = true
     }
 }
+
+tasks.named('jar') {
+    archiveFileName = "Electra_${mod_version}.jar"
+}

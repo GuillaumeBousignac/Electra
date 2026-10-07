@@ -32,6 +32,7 @@ public class ModBlocks {
                             .noOcclusion()
                             .isViewBlocking((state, level, pos) -> false)
                             .strength(3.0f, 6.0f)
+                            .lightLevel(state -> state.getValue(LightningCollectorBlock.CHARGED) ? 10 : 0)
                             .requiresCorrectToolForDrops());
     public static final DeferredItem<BlockItem> LIGHTNING_COLLECTOR_ITEM =
             ITEMS.registerSimpleBlockItem("lightning_collector", LIGHTNING_COLLECTOR);
@@ -75,6 +76,16 @@ public class ModBlocks {
                             .requiresCorrectToolForDrops());
     public static final DeferredItem<BlockItem> ROSE_GOLD_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("rose_gold_block", ROSE_GOLD_BLOCK);
+
+    public static final DeferredBlock<Block> RED_IRON_BLOCK =
+            BLOCKS.registerSimpleBlock("red_iron_block",
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_RED)
+                            .strength(5.0f, 6.0f)
+                            .sound(SoundType.METAL)
+                            .requiresCorrectToolForDrops());
+    public static final DeferredItem<BlockItem> RED_IRON_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem("red_iron_block", RED_IRON_BLOCK);
 
     public static final DeferredBlock<RedstoneConverterBlock> REDSTONE_CONVERTER =
             BLOCKS.registerBlock("redstone_converter", RedstoneConverterBlock::new,

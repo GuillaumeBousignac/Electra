@@ -1,0 +1,14 @@
+{
+  "type": "electra:alloying",
+  "input1": {
+    "tag": "c:ingots/iron"
+  },
+  "input2": {
+    "tag": "c:dusts/redstone"
+  },
+  "result": {
+    "id": "electra:red_iron_ingot",
+    "count": 1
+  },
+  "energy_cost": 150
+}

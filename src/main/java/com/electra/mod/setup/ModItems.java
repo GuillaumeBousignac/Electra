@@ -15,6 +15,11 @@ public class ModItems {
             ITEMS.register("rose_gold_ingot",
                     () -> new Item(new Item.Properties()));
 
+    /** Alliage fer + redstone : propriétés magnétiques, utilisé par la Redstone Dynamo. */
+    public static final DeferredItem<Item> RED_IRON_INGOT =
+            ITEMS.register("red_iron_ingot",
+                    () -> new Item(new Item.Properties()));
+
     public static final DeferredItem<EnergyMeterItem> ENERGY_METER =
             ITEMS.register("energy_meter",
                     () -> new EnergyMeterItem(new Item.Properties().stacksTo(1)));
