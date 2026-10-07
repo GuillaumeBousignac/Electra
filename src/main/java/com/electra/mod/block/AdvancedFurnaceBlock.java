@@ -6,6 +6,7 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -16,7 +17,6 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -28,14 +28,20 @@ import org.jetbrains.annotations.Nullable;
 
 public class AdvancedFurnaceBlock extends BaseEntityBlock {
 
+    public static final MapCodec<AdvancedFurnaceBlock> CODEC = simpleCodec(AdvancedFurnaceBlock::new);
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
-    public AdvancedFurnaceBlock(BlockBehaviour.Properties properties) {
+    public AdvancedFurnaceBlock(Properties properties) {
         super(properties);
-        registerDefaultState(defaultBlockState()
+        registerDefaultState(stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
                 .setValue(LIT, false));
+    }
+
+    @Override
+    protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Override
@@ -45,18 +51,11 @@ public class AdvancedFurnaceBlock extends BaseEntityBlock {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return defaultBlockState()
-                .setValue(FACING, ctx.getHorizontalDirection().getOpposite())
-                .setValue(LIT, false);
+        return defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
     }
 
     @Override
-    protected @Nullable MapCodec<? extends BaseEntityBlock> codec() {
-        return null;
-    }
-
-    @Override
-    public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
+    protected @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
         return RenderShape.MODEL;
     }
 
@@ -68,29 +67,41 @@ public class AdvancedFurnaceBlock extends BaseEntityBlock {
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
-            @NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state,
+                                                                  @NotNull BlockEntityType<T> type) {
         if (level.isClientSide()) return null;
         return createTickerHelper(type, ModBlockEntities.ADVANCED_FURNACE_BE.get(),
                 (lvl, pos, blockState, be) -> be.tick());
     }
 
     @Override
-    public @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level,
-                                                     @NotNull BlockPos pos, @NotNull Player player,
-                                                     @NotNull BlockHitResult hit) {
+    protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level,
+                                                        @NotNull BlockPos pos, @NotNull Player player,
+                                                        @NotNull BlockHitResult hit) {
         if (level.isClientSide()) return InteractionResult.SUCCESS;
-        BlockEntity be = level.getBlockEntity(pos);
-        if (be instanceof AdvancedFurnaceBlockEntity furnace && player instanceof ServerPlayer serverPlayer) {
+        if (level.getBlockEntity(pos) instanceof AdvancedFurnaceBlockEntity furnace
+                && player instanceof ServerPlayer serverPlayer) {
             serverPlayer.openMenu(furnace, pos);
         }
         return InteractionResult.CONSUME;
     }
 
-    // Méthode statique appelée depuis le BlockEntity pour changer l'état lit
+    /** Fait tomber le contenu du four quand il est cassé (sinon les objets disparaissent). */
+    @Override
+    protected void onRemove(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
+                            @NotNull BlockState newState, boolean movedByPiston) {
+        if (!state.is(newState.getBlock())) {
+            if (level.getBlockEntity(pos) instanceof AdvancedFurnaceBlockEntity furnace) {
+                Containers.dropContents(level, pos, furnace);
+                level.updateNeighbourForOutputSignal(pos, this);
+            }
+        }
+        super.onRemove(state, level, pos, newState, movedByPiston);
+    }
+
     public static void setLit(Level level, BlockPos pos, BlockState state, boolean lit) {
         if (state.hasProperty(LIT) && state.getValue(LIT) != lit) {
-            level.setBlock(pos, state.setValue(LIT, lit), 2); // 2 = notify clients uniquement, pas de setChanged
+            level.setBlock(pos, state.setValue(LIT, lit), Block.UPDATE_ALL);
         }
     }
 }

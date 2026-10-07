@@ -4,10 +4,28 @@
   "block.electra.redstone_converter": "Redstone Converter",
   "block.electra.rose_gold_block": "Rose Gold Block",
   "block.electra.advanced_furnace": "Advanced Furnace",
-
-  "item.electra.energy_meter": "Energy Metter",
+  "item.electra.energy_meter": "Energy Meter",
   "item.electra.rose_gold_ingot": "Rose Gold Ingot",
-
   "creativetab.electra.electra_blocks": "Electra Blocks",
-  "creativetab.electra.electra_items": "Electra Items"
+  "creativetab.electra.electra_items": "Electra Items",
+  "death.attack.electra.electrocution": "%1$s was electrocuted",
+  "death.attack.electra.electrocution.player": "%1$s was electrocuted while fighting %2$s",
+  "gui.electra.energy": "%s / %s FE",
+  "message.electra.energy_meter": "⚡ %s : %s / %s FE (%s%%)",
+  "block.electra.white_insulated_wire": "White Insulated Wire",
+  "block.electra.orange_insulated_wire": "Orange Insulated Wire",
+  "block.electra.magenta_insulated_wire": "Magenta Insulated Wire",
+  "block.electra.light_blue_insulated_wire": "Light Blue Insulated Wire",
+  "block.electra.yellow_insulated_wire": "Yellow Insulated Wire",
+  "block.electra.lime_insulated_wire": "Lime Insulated Wire",
+  "block.electra.pink_insulated_wire": "Pink Insulated Wire",
+  "block.electra.gray_insulated_wire": "Gray Insulated Wire",
+  "block.electra.light_gray_insulated_wire": "Light Gray Insulated Wire",
+  "block.electra.cyan_insulated_wire": "Cyan Insulated Wire",
+  "block.electra.purple_insulated_wire": "Purple Insulated Wire",
+  "block.electra.blue_insulated_wire": "Blue Insulated Wire",
+  "block.electra.brown_insulated_wire": "Brown Insulated Wire",
+  "block.electra.green_insulated_wire": "Green Insulated Wire",
+  "block.electra.red_insulated_wire": "Red Insulated Wire",
+  "block.electra.black_insulated_wire": "Black Insulated Wire"
 }

@@ -1,5 +1,6 @@
 {
   "variants": {
-    "": { "model": "electra:block/redstone_converter" }
+    "powered=false": { "model": "electra:block/redstone_converter" },
+    "powered=true":  { "model": "electra:block/redstone_converter_on" }
   }
 }

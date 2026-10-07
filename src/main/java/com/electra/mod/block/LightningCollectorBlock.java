@@ -10,37 +10,34 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MapColor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class LightningCollectorBlock extends BaseEntityBlock {
 
-    public LightningCollectorBlock() {
-        super(BlockBehaviour.Properties.of()
-                .mapColor(MapColor.METAL)
-                .noOcclusion()
-                .isViewBlocking((state, level, pos) -> false)
-                .strength(3.0f, 6.0f)
-                .requiresCorrectToolForDrops());
+    public static final MapCodec<LightningCollectorBlock> CODEC = simpleCodec(LightningCollectorBlock::new);
+
+    public LightningCollectorBlock(Properties properties) {
+        super(properties);
     }
 
     @Override
     protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
-        return null;
+        return CODEC;
     }
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state,
+                                                                  @NotNull BlockEntityType<T> type) {
+        if (level.isClientSide()) return null;
         return createTickerHelper(type, ModBlockEntities.LIGHTNING_COLLECTOR_BE.get(),
                 (lvl, pos, st, be) -> be.tick());
     }
 
     @Override
-    public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
+    protected @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
         return RenderShape.MODEL;
     }
 

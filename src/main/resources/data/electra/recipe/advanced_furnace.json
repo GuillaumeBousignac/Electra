@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "c:ingots/copper"
+    },
+    "F": {
+      "item": "minecraft:furnace"
+    },
+    "W": {
+      "item": "electra:bare_wire"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "CFC",
+    "CWC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "electra:advanced_furnace"
+  }
+}

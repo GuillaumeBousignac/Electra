@@ -1,161 +1,163 @@
 package com.electra.mod.network;
 
-import com.electra.mod.blockentity.BareWireBlockEntity;
+import com.electra.mod.block.WireBlock;
+import com.electra.mod.blockentity.WireBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class EnergyNetworkManager {
+/**
+ * Un gestionnaire par dimension. Ne lit jamais le monde pour trouver les câbles :
+ * il ne connaît que ceux qui se sont déclarés (onLoad), ce qui évite tout chargement
+ * de tronçon involontaire.
+ */
+public final class EnergyNetworkManager {
 
-    private static final EnergyNetworkManager INSTANCE = new EnergyNetworkManager();
-    public static EnergyNetworkManager get() { return INSTANCE; }
+    private static final Map<ResourceKey<Level>, EnergyNetworkManager> MANAGERS = new HashMap<>();
+    private static boolean active = true;
 
-    private final Map<BlockPos, EnergyNetwork> wireToNetwork = new HashMap<>();
-    private final Set<EnergyNetwork> networks = new HashSet<>();
+    private final Map<BlockPos, WireBlockEntity> wires = new HashMap<>();
+    private final Map<BlockPos, EnergyNetwork> byPos = new HashMap<>();
+    private final Set<EnergyNetwork> networks = new LinkedHashSet<>();
 
-    private boolean active = true;
+    private EnergyNetworkManager() {}
 
-    public void saveWireEnergy(BareWireBlockEntity wire) {
-        EnergyNetwork net = wireToNetwork.get(wire.getBlockPos());
-        if (net == null || net.getWires().isEmpty()) return;
-        int share = net.getEnergyStored() / net.getWires().size();
-        wire.setDisplayEnergy(share);
+    // ── Cycle de vie ───────────────────────────────────────────────────────
+
+    public static EnergyNetworkManager get(Level level) {
+        return MANAGERS.computeIfAbsent(level.dimension(), key -> new EnergyNetworkManager());
     }
 
-    public void onWirePlaced(BareWireBlockEntity wire, Level level) {
-        Set<EnergyNetwork> adjacentNetworks = new HashSet<>();
+    public static boolean isActive() { return active; }
 
-        for (Direction dir : Direction.values()) {
-            BlockEntity neighbor = level.getBlockEntity(wire.getBlockPos().relative(dir));
-            if (neighbor instanceof BareWireBlockEntity adjacentWire) {
-                EnergyNetwork net = wireToNetwork.get(adjacentWire.getBlockPos());
-                if (net != null) adjacentNetworks.add(net);
-            }
+    /** Au démarrage du serveur (y compris en réouvrant un monde solo). */
+    public static void start() {
+        MANAGERS.clear();
+        active = true;
+    }
+
+    /** À l'arrêt : recopie l'énergie dans les câbles AVANT la sauvegarde finale. */
+    public static void shutdown() {
+        for (EnergyNetworkManager manager : MANAGERS.values()) {
+            for (EnergyNetwork network : manager.networks) network.flushToWires();
+        }
+        MANAGERS.clear();
+        active = false;
+    }
+
+    public void tick(ServerLevel level) {
+        for (EnergyNetwork network : List.copyOf(networks)) network.tick(level);
+    }
+
+    @Nullable
+    public EnergyNetwork getNetwork(BlockPos pos) {
+        return byPos.get(pos);
+    }
+
+    // ── Ajout ──────────────────────────────────────────────────────────────
+
+    public void onWirePlaced(WireBlockEntity wire) {
+        BlockPos pos = wire.getBlockPos();
+        if (wires.containsKey(pos)) return;
+        wires.put(pos, wire);
+
+        Set<EnergyNetwork> adjacent = new LinkedHashSet<>();
+        for (WireBlockEntity neighbor : connectedNeighbors(wire)) {
+            EnergyNetwork net = byPos.get(neighbor.getBlockPos());
+            if (net != null) adjacent.add(net);
         }
 
-        if (adjacentNetworks.isEmpty()) {
-            EnergyNetwork newNet = new EnergyNetwork(List.of(wire));
-            newNet.addEnergy(wire.getPersistedEnergy());
-            networks.add(newNet);
-            wireToNetwork.put(wire.getBlockPos(), newNet);
-        } else if (adjacentNetworks.size() == 1) {
-            EnergyNetwork net = adjacentNetworks.iterator().next();
-            net.addEnergy(wire.getPersistedEnergy());
-            net.getWires().add(wire);
-            wireToNetwork.put(wire.getBlockPos(), net);
+        EnergyNetwork target;
+        int energyToAdd = wire.getEnergyShare();
+
+        if (adjacent.size() == 1) {
+            target = adjacent.iterator().next();
         } else {
-            mergeNetworks(adjacentNetworks, wire);
-        }
-    }
-
-    public void onWireRemoved(BlockPos pos, Level level) {
-        EnergyNetwork oldNet = wireToNetwork.remove(pos);
-        if (oldNet == null) return;
-
-        int totalEnergyBefore = oldNet.getEnergyStored();
-        int totalWiresBefore  = oldNet.getWires().size();
-
-        networks.remove(oldNet);
-        oldNet.getWires().removeIf(w -> w.getBlockPos().equals(pos));
-
-        Set<BareWireBlockEntity> remaining = new HashSet<>(oldNet.getWires());
-        Set<BareWireBlockEntity> visited   = new HashSet<>();
-        List<EnergyNetwork> newNetworks    = new ArrayList<>();
-
-        for (BareWireBlockEntity startWire : remaining) {
-            if (visited.contains(startWire)) continue;
-            List<BareWireBlockEntity> subNetwork = new ArrayList<>();
-            floodFill(startWire, level, subNetwork, visited);
-            if (!subNetwork.isEmpty()) {
-                EnergyNetwork newNet = new EnergyNetwork(subNetwork);
-                newNetworks.add(newNet);
-                networks.add(newNet);
-                for (BareWireBlockEntity w : subNetwork) {
-                    wireToNetwork.put(w.getBlockPos(), newNet);
+            target = new EnergyNetwork();
+            networks.add(target);
+            // Fusion de plusieurs réseaux
+            for (EnergyNetwork old : adjacent) {
+                energyToAdd += old.getEnergyStored();
+                networks.remove(old);
+                for (WireBlockEntity w : old.getWires()) {
+                    target.addWire(w);
+                    byPos.put(w.getBlockPos(), target);
                 }
             }
         }
 
-        if (totalWiresBefore > 0 && !newNetworks.isEmpty()) {
-            for (EnergyNetwork newNet : newNetworks) {
-                int proportion = (totalEnergyBefore * newNet.getWires().size()) / totalWiresBefore;
-                newNet.addEnergy(proportion);
+        target.addWire(wire);
+        byPos.put(pos, target);
+        target.addEnergy(energyToAdd);
+    }
+
+    // ── Retrait ────────────────────────────────────────────────────────────
+
+    public void onWireRemoved(WireBlockEntity wire) {
+        BlockPos pos = wire.getBlockPos();
+        if (wires.get(pos) != wire) return;
+        wires.remove(pos);
+
+        EnergyNetwork old = byPos.remove(pos);
+        if (old == null) return;
+
+        int oldSize = old.getWires().size();
+        int oldEnergy = old.getEnergyStored();
+        List<WireBlockEntity> neighbors = connectedNeighbors(wire).stream()
+                .filter(n -> byPos.get(n.getBlockPos()) == old)
+                .toList();
+        old.removeWire(wire);
+
+        if (old.getWires().isEmpty()) {
+            networks.remove(old);
+            return;
+        }
+
+        // Cas courant (bout de ligne, déchargement) : pas de découpe possible
+        if (neighbors.size() <= 1) {
+            old.setEnergy((int) ((long) oldEnergy * (oldSize - 1) / oldSize));
+            return;
+        }
+
+        // Découpe éventuelle en plusieurs réseaux, énergie répartie au prorata
+        networks.remove(old);
+        Set<WireBlockEntity> visited = new HashSet<>();
+        for (WireBlockEntity start : neighbors) {
+            if (!visited.add(start)) continue;
+            EnergyNetwork part = new EnergyNetwork();
+            Deque<WireBlockEntity> queue = new ArrayDeque<>();
+            queue.add(start);
+            while (!queue.isEmpty()) {
+                WireBlockEntity current = queue.poll();
+                part.addWire(current);
+                byPos.put(current.getBlockPos(), part);
+                for (WireBlockEntity next : connectedNeighbors(current)) {
+                    if (byPos.get(next.getBlockPos()) == old && visited.add(next)) queue.add(next);
+                }
             }
+            networks.add(part);
+            part.setEnergy((int) ((long) oldEnergy * part.getWires().size() / oldSize));
         }
     }
 
-    private void mergeNetworks(Set<EnergyNetwork> toMerge, BareWireBlockEntity newWire) {
-        List<BareWireBlockEntity> allWires = new ArrayList<>();
-        int totalEnergy = 0;
+    // ── Utilitaires ────────────────────────────────────────────────────────
 
-        for (EnergyNetwork net : toMerge) {
-            allWires.addAll(net.getWires());
-            totalEnergy += net.getEnergyStored();
-            networks.remove(net);
-            for (BareWireBlockEntity w : net.getWires()) {
-                wireToNetwork.remove(w.getBlockPos());
-            }
-        }
-        allWires.add(newWire);
-        totalEnergy += newWire.getPersistedEnergy();
-
-        EnergyNetwork merged = new EnergyNetwork(allWires);
-        merged.addEnergy(totalEnergy);
-        networks.add(merged);
-        for (BareWireBlockEntity w : allWires) {
-            wireToNetwork.put(w.getBlockPos(), merged);
-        }
-    }
-
-    private void floodFill(BareWireBlockEntity wire, Level level,
-                           List<BareWireBlockEntity> result, Set<BareWireBlockEntity> visited) {
-        if (visited.contains(wire)) return;
-        visited.add(wire);
-        result.add(wire);
-
+    /** Câbles voisins déjà déclarés et compatibles (règle des couleurs). */
+    private List<WireBlockEntity> connectedNeighbors(WireBlockEntity wire) {
+        List<WireBlockEntity> result = new ArrayList<>(6);
+        if (!(wire.getBlockState().getBlock() instanceof WireBlock self)) return result;
         for (Direction dir : Direction.values()) {
-            BlockEntity neighbor = level.getBlockEntity(wire.getBlockPos().relative(dir));
-            if (neighbor instanceof BareWireBlockEntity adj) {
-                floodFill(adj, level, result, visited);
+            WireBlockEntity other = wires.get(wire.getBlockPos().relative(dir));
+            if (other != null && other.getBlockState().getBlock() instanceof WireBlock otherBlock
+                    && self.connectsToWire(otherBlock)) {
+                result.add(other);
             }
         }
-    }
-
-    public EnergyNetwork getNetwork(BlockPos pos) { return wireToNetwork.get(pos); }
-    public Set<EnergyNetwork> getAllNetworks()     { return networks; }
-
-    public void clear() {
-        active = false;
-        wireToNetwork.clear();
-        networks.clear();
-    }
-
-    public void activate() {
-        active = true;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void tickAll(Level level) {
-        if (!active || networks.isEmpty()) return;
-
-        Set<EnergyNetwork> toRemove = new HashSet<>();
-        for (EnergyNetwork net : networks) {
-            net.getWires().removeIf(w -> w.isRemoved() || w.getLevel() == null);
-            if (net.getWires().isEmpty()) {
-                toRemove.add(net);
-            } else {
-                net.tick(level);
-            }
-        }
-        networks.removeAll(toRemove);
-        toRemove.forEach(net ->
-                wireToNetwork.entrySet().removeIf(e -> e.getValue() == net)
-        );
+        return result;
     }
 }

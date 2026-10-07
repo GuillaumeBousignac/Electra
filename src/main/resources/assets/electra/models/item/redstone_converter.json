@@ -1,3 +1,9 @@
 {
-  "parent": "electra:block/redstone_converter"
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "top": "electra:block/advanced_furnace_top",
+    "bottom": "electra:block/advanced_furnace_bottom",
+    "side": "electra:block/advanced_furnace_side",
+    "front": "electra:block/advanced_furnace_front"
+  }
 }

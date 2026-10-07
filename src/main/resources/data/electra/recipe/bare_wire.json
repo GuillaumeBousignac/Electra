@@ -1,13 +1,13 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "building",
+  "category": "redstone",
   "key": {
-    "L": {
-      "item": "c:copper_ingot"
+    "C": {
+      "tag": "c:ingots/copper"
     }
   },
   "pattern": [
-    "LLL"
+    "CCC"
   ],
   "result": {
     "count": 8,

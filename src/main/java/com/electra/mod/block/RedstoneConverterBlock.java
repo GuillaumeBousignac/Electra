@@ -4,35 +4,46 @@ import com.electra.mod.blockentity.RedstoneConverterBlockEntity;
 import com.electra.mod.setup.ModBlockEntities;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class RedstoneConverterBlock extends BaseEntityBlock {
 
-    public RedstoneConverterBlock() {
-        super(BlockBehaviour.Properties.of()
-                .mapColor(MapColor.STONE)
-                .strength(2.0f, 6.0f)
-                .requiresCorrectToolForDrops());
+    public static final MapCodec<RedstoneConverterBlock> CODEC = simpleCodec(RedstoneConverterBlock::new);
+
+    /** Allumé quand le réseau voisin contient de l'énergie : sert au signal ET à la texture. */
+    public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+
+    public RedstoneConverterBlock(Properties properties) {
+        super(properties);
+        registerDefaultState(stateDefinition.any().setValue(POWERED, false));
     }
 
     @Override
-    protected @Nullable MapCodec<? extends BaseEntityBlock> codec() {
-        return null;
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(POWERED);
     }
 
     @Override
-    public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
+    protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
+    @Override
+    protected @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
         return RenderShape.MODEL;
     }
 
@@ -44,30 +55,31 @@ public class RedstoneConverterBlock extends BaseEntityBlock {
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state,
+                                                                  @NotNull BlockEntityType<T> type) {
+        if (level.isClientSide()) return null;
         return createTickerHelper(type, ModBlockEntities.REDSTONE_CONVERTER_BE.get(),
                 (lvl, pos, st, be) -> be.tick());
     }
 
-    // Active la sortie redstone analogique
     @Override
-    public boolean isSignalSource(@NotNull BlockState state) {
+    protected boolean isSignalSource(@NotNull BlockState state) {
         return true;
     }
 
     @Override
-    public int getSignal(@NotNull BlockState state, BlockGetter level, @NotNull BlockPos pos, net.minecraft.core.@NotNull Direction direction) {
-        if (level.getBlockEntity(pos) instanceof RedstoneConverterBlockEntity be) {
-            return be.getRedstoneSignal();
-        }
-        return 0;
+    protected int getSignal(@NotNull BlockState state, @NotNull BlockGetter level,
+                            @NotNull BlockPos pos, @NotNull Direction direction) {
+        return state.getValue(POWERED) ? 15 : 0;
     }
 
     @Override
-    public int getAnalogOutputSignal(@NotNull BlockState state, Level level, @NotNull BlockPos pos) {
-        if (level.getBlockEntity(pos) instanceof RedstoneConverterBlockEntity be) {
-            return be.getRedstoneSignal();
-        }
-        return 0;
+    protected boolean hasAnalogOutputSignal(@NotNull BlockState state) {
+        return true;
+    }
+
+    @Override
+    protected int getAnalogOutputSignal(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos) {
+        return state.getValue(POWERED) ? 15 : 0;
     }
 }

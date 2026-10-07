@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "key": {
+    "G": {
+      "tag": "c:glass_panes"
+    },
+    "C": {
+      "tag": "c:ingots/copper"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    }
+  },
+  "pattern": [
+    " G ",
+    "CRC",
+    " C "
+  ],
+  "result": {
+    "count": 1,
+    "id": "electra:energy_meter"
+  }
+}

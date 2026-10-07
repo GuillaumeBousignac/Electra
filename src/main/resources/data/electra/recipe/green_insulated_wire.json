@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "W": {
+      "item": "electra:bare_wire"
+    },
+    "L": {
+      "item": "minecraft:green_wool"
+    }
+  },
+  "pattern": [
+    "WWW",
+    "WLW",
+    "WWW"
+  ],
+  "result": {
+    "count": 8,
+    "id": "electra:green_insulated_wire"
+  }
+}

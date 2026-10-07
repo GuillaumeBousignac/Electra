@@ -1,21 +1,19 @@
 package com.electra.mod.item;
 
-import com.electra.mod.blockentity.AdvancedFurnaceBlockEntity;
-import com.electra.mod.blockentity.BareWireBlockEntity;
-import com.electra.mod.blockentity.LightningCollectorBlockEntity;
-import com.electra.mod.blockentity.RedstoneConverterBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.neoforged.neoforge.energy.EnergyStorage;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.NotNull;
 
+/** Affiche l'énergie de tout bloc compatible FE visé, Electra ou autre mod. */
 public class EnergyMeterItem extends Item {
 
     public EnergyMeterItem(Properties properties) {
@@ -23,49 +21,25 @@ public class EnergyMeterItem extends Item {
     }
 
     @Override
-    public void inventoryTick(@NotNull ItemStack stack, @NotNull Level level,
-                              net.minecraft.world.entity.@NotNull Entity entity,
+    public void inventoryTick(@NotNull ItemStack stack, @NotNull Level level, @NotNull Entity entity,
                               int slot, boolean selected) {
-        if (!selected || !(entity instanceof Player player)) return;
-        if (!isInMainHand(player, stack)) return;
+        if (!level.isClientSide() || !(entity instanceof Player player)) return;
+        if (player.getMainHandItem() != stack) return;
 
-        // Lit côté CLIENT uniquement (les données sont synchro via getUpdatePacket)
-        if (level.isClientSide()) {
-            displayEnergyInfoClient(player, level);
-        }
-    }
+        HitResult hit = player.pick(20.0, 1.0f, false);
+        if (hit.getType() != HitResult.Type.BLOCK) return;
 
-    private void displayEnergyInfoClient(Player player, Level level) {
-        var hitResult = player.pick(20.0, 1.0f, false);
-        if (hitResult.getType() != HitResult.Type.BLOCK) return;
-
-        BlockPos pos = ((BlockHitResult) hitResult).getBlockPos();
-        BlockEntity be = level.getBlockEntity(pos);
-        if (be == null) return;
-
-        EnergyStorage storage = getEnergyStorage(be);
+        BlockHitResult blockHit = (BlockHitResult) hit;
+        BlockPos pos = blockHit.getBlockPos();
+        IEnergyStorage storage = level.getCapability(Capabilities.EnergyStorage.BLOCK, pos, blockHit.getDirection());
+        if (storage == null) storage = level.getCapability(Capabilities.EnergyStorage.BLOCK, pos, null);
         if (storage == null) return;
 
-        int stored   = storage.getEnergyStored();
+        int stored = storage.getEnergyStored();
         int capacity = storage.getMaxEnergyStored();
-        int percent  = capacity > 0 ? (stored * 100 / capacity) : 0;
+        int percent = capacity > 0 ? (int) ((long) stored * 100 / capacity) : 0;
 
-        player.displayClientMessage(
-                Component.literal("§e⚡ " + be.getBlockState().getBlock().getName().getString()
-                        + " §7: §a" + stored + " §7/ §a" + capacity + " FE §7(" + percent + "%)"),
-                true
-        );
-    }
-
-    private EnergyStorage getEnergyStorage(BlockEntity be) {
-        if (be instanceof LightningCollectorBlockEntity e) return e.getEnergyStorage();
-        if (be instanceof BareWireBlockEntity e)          return e.getEnergyStorage();
-        if (be instanceof AdvancedFurnaceBlockEntity e)   return e.getEnergyStorage();
-        if (be instanceof RedstoneConverterBlockEntity e) return e.getEnergyStorage();
-        return null;
-    }
-
-    private boolean isInMainHand(Player player, ItemStack stack) {
-        return player.getMainHandItem() == stack;
+        player.displayClientMessage(Component.translatable("message.electra.energy_meter",
+                level.getBlockState(pos).getBlock().getName(), stored, capacity, percent), true);
     }
 }
