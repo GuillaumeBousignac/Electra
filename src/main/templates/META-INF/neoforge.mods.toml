@@ -25,3 +25,10 @@ type="required"
 versionRange="${minecraft_version_range}"
 ordering="NONE"
 side="BOTH"
+# JEI : facultatif, côté client uniquement
+[[dependencies.${mod_id}]]
+modId="jei"
+type="optional"
+versionRange="[19,)"
+ordering="NONE"
+side="CLIENT"

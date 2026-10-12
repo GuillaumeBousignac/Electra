@@ -1,6 +1,0 @@
-{
-  "parent": "electra:block/insulated_wire_side",
-  "textures": {
-    "wire": "electra:block/black_insulated_wire"
-  }
-}

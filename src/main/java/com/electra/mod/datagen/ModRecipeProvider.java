@@ -1,0 +1,140 @@
+package com.electra.mod.datagen;
+
+import com.electra.mod.Electra;
+import com.electra.mod.recipe.AlloyingRecipe;
+import com.electra.mod.setup.ModBlocks;
+import com.electra.mod.setup.ModItems;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
+import net.neoforged.neoforge.common.Tags;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.concurrent.CompletableFuture;
+
+public class ModRecipeProvider extends RecipeProvider {
+
+    public ModRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookup) {
+        super(output, lookup);
+    }
+
+    @Override
+    protected void buildRecipes(@NotNull RecipeOutput output) {
+        Item bareWire = ModBlocks.BARE_WIRE_ITEM.get();
+
+        // ── Câbles ─────────────────────────────────────────────────────────
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, bareWire, 8)
+                .pattern("CCC")
+                .define('C', Tags.Items.INGOTS_COPPER)
+                .unlockedBy("has_copper_ingot", has(Tags.Items.INGOTS_COPPER))
+                .save(output);
+
+        for (DyeColor color : DyeColor.values()) {
+            Item wool = BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(color.getName() + "_wool"));
+            ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModBlocks.INSULATED_WIRE_ITEMS.get(color).get(), 8)
+                    .pattern("WWW")
+                    .pattern("WLW")
+                    .pattern("WWW")
+                    .define('W', bareWire)
+                    .define('L', wool)
+                    .unlockedBy(getHasName(bareWire), has(bareWire))
+                    .save(output);
+        }
+
+        // ── Machines ───────────────────────────────────────────────────────
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.LIGHTNING_COLLECTOR_ITEM.get())
+                .pattern("LRL")
+                .pattern("L L")
+                .pattern("CCC")
+                .define('L', Tags.Items.INGOTS_COPPER)
+                .define('C', Tags.Items.STORAGE_BLOCKS_COPPER)
+                .define('R', Items.LIGHTNING_ROD)
+                .unlockedBy(getHasName(Items.LIGHTNING_ROD), has(Items.LIGHTNING_ROD))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.ADVANCED_FURNACE_ITEM.get())
+                .pattern("CCC")
+                .pattern("CFC")
+                .pattern("CWC")
+                .define('C', Tags.Items.INGOTS_COPPER)
+                .define('F', Items.FURNACE)
+                .define('W', bareWire)
+                .unlockedBy(getHasName(bareWire), has(bareWire))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModBlocks.REDSTONE_CONVERTER_ITEM.get())
+                .pattern("CRC")
+                .pattern("RWR")
+                .pattern("CRC")
+                .define('C', Tags.Items.INGOTS_COPPER)
+                .define('R', Tags.Items.DUSTS_REDSTONE)
+                .define('W', bareWire)
+                .unlockedBy(getHasName(bareWire), has(bareWire))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.ENERGY_METER.get())
+                .pattern(" G ")
+                .pattern("CRC")
+                .pattern(" C ")
+                .define('G', Tags.Items.GLASS_PANES)
+                .define('C', Tags.Items.INGOTS_COPPER)
+                .define('R', Tags.Items.DUSTS_REDSTONE)
+                .unlockedBy("has_copper_ingot", has(Tags.Items.INGOTS_COPPER))
+                .save(output);
+
+        // ── Blocs de stockage (9 lingots ⇄ 1 bloc) ─────────────────────────
+        storageBlock(output, ModItems.ROSE_GOLD_INGOT.get(), ModTags.Items.INGOTS_ROSE_GOLD,
+                ModBlocks.ROSE_GOLD_BLOCK_ITEM.get(), "rose_gold_ingot_from_block");
+        storageBlock(output, ModItems.RED_IRON_INGOT.get(), ModTags.Items.INGOTS_RED_IRON,
+                ModBlocks.RED_IRON_BLOCK_ITEM.get(), "red_iron_ingot_from_block");
+
+        // ── Alliages (four avancé) ─────────────────────────────────────────
+        alloying(output, "rose_gold_ingot",
+                Ingredient.of(Tags.Items.INGOTS_COPPER), Ingredient.of(Tags.Items.INGOTS_GOLD),
+                ModItems.ROSE_GOLD_INGOT.get(), 100);
+        alloying(output, "red_iron_ingot",
+                Ingredient.of(Tags.Items.INGOTS_IRON), Ingredient.of(Tags.Items.DUSTS_REDSTONE),
+                ModItems.RED_IRON_INGOT.get(), 150);
+        alloying(output, "netherite_ingot",
+                Ingredient.of(Tags.Items.INGOTS_GOLD), Ingredient.of(Items.NETHERITE_SCRAP),
+                Items.NETHERITE_INGOT, 200);
+    }
+
+    /** Le bloc accepte les lingots de l'étiquette commune (lingots équivalents d'autres mods compris). */
+    private static void storageBlock(RecipeOutput output, Item ingot, TagKey<Item> ingotTag, Item block,
+                                     String unpackId) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, block)
+                .pattern("###")
+                .pattern("###")
+                .pattern("###")
+                .define('#', ingotTag)
+                .unlockedBy(getHasName(ingot), has(ingot))
+                .save(output);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ingot, 9)
+                .requires(block)
+                .unlockedBy(getHasName(block), has(block))
+                .save(output, ResourceLocation.fromNamespaceAndPath(Electra.MODID, unpackId));
+    }
+
+    /** Recette d'alliage : deux entrées (ordre indifférent) → une sortie, coût en FE. */
+    private static void alloying(RecipeOutput output, String id, Ingredient input1, Ingredient input2,
+                                 ItemLike result, int energyCost) {
+        output.accept(ResourceLocation.fromNamespaceAndPath(Electra.MODID, id),
+                new AlloyingRecipe(input1, input2, new ItemStack(result), energyCost),
+                null);
+    }
+}

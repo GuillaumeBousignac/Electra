@@ -1,0 +1,6 @@
+{
+  "parent": "electra:block/insulated_wire_side",
+  "textures": {
+    "wire": "electra:block/orange_insulated_wire"
+  }
+}

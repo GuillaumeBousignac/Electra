@@ -1,5 +1,0 @@
-{
-  "variants": {
-    "": { "model": "electra:block/rose_gold_block" }
-  }
-}

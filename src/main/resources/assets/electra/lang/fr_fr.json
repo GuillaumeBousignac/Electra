@@ -29,5 +29,7 @@
   "block.electra.brown_insulated_wire": "Câble isolé marron",
   "block.electra.green_insulated_wire": "Câble isolé vert",
   "block.electra.red_insulated_wire": "Câble isolé rouge",
-  "block.electra.black_insulated_wire": "Câble isolé noir"
+  "block.electra.black_insulated_wire": "Câble isolé noir",
+  "jei.electra.alloying": "Alliage",
+  "jei.electra.energy": "%s FE"
 }

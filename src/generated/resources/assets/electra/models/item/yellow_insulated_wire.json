@@ -1,0 +1,6 @@
+{
+  "parent": "electra:item/insulated_wire_inventory",
+  "textures": {
+    "wire": "electra:block/yellow_insulated_wire"
+  }
+}
