@@ -60,10 +60,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 modLoc("block/advanced_furnace_front"),
                 modLoc("block/advanced_furnace_bottom"),
                 modLoc("block/advanced_furnace_top"));
-        // Identique à l'ancien fichier : allumé, la face du dessous reprend la texture du dessus
-        ModelFile furnaceOn = models().orientable("advanced_furnace_on",
+        ModelFile furnaceOn = models().orientableWithBottom("advanced_furnace_on",
                 modLoc("block/advanced_furnace_side"),
                 modLoc("block/advanced_furnace_front_on"),
+                modLoc("block/advanced_furnace_bottom"),
                 modLoc("block/advanced_furnace_top"));
         getVariantBuilder(ModBlocks.ADVANCED_FURNACE.get()).forAllStates(state -> {
             Direction facing = state.getValue(AdvancedFurnaceBlock.FACING);
