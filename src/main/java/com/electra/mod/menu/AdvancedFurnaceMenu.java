@@ -1,6 +1,7 @@
 package com.electra.mod.menu;
 
 import com.electra.mod.blockentity.AdvancedFurnaceBlockEntity;
+import com.electra.mod.config.ElectraConfig;
 import com.electra.mod.setup.ModMenuTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
@@ -60,7 +61,7 @@ public class AdvancedFurnaceMenu extends AbstractContainerMenu {
     public int getCookTime()      { return data.get(0); }
     public int getCookTimeTotal() { return data.get(1); }
     public int getEnergy()        { return (data.get(2) & 0xFFFF) | ((data.get(3) & 0xFFFF) << 16); }
-    public int getCapacity()      { return AdvancedFurnaceBlockEntity.CAPACITY; }
+    public int getCapacity()      { return ElectraConfig.FURNACE_CAPACITY.get(); }
 
     @Override
     public boolean stillValid(@NotNull Player player) {

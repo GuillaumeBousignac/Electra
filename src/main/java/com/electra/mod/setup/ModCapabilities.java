@@ -23,6 +23,9 @@ public final class ModCapabilities {
         event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK,
                 ModBlockEntities.ADVANCED_FURNACE_BE.get(), (be, side) -> be.getEnergyStorage());
 
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK,
+                ModBlockEntities.REDSTONE_DYNAMO_BE.get(), (be, side) -> be.getEnergyStorage());
+
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,
                 ModBlockEntities.ADVANCED_FURNACE_BE.get(),
                 (be, side) -> side == null ? new InvWrapper(be) : new SidedInvWrapper(be, side));

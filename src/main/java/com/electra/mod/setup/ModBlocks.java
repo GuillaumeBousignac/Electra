@@ -6,6 +6,7 @@ import com.electra.mod.block.BareWireBlock;
 import com.electra.mod.block.InsulatedWireBlock;
 import com.electra.mod.block.LightningCollectorBlock;
 import com.electra.mod.block.RedstoneConverterBlock;
+import com.electra.mod.block.RedstoneDynamoBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
@@ -108,4 +109,16 @@ public class ModBlocks {
                             .requiresCorrectToolForDrops());
     public static final DeferredItem<BlockItem> ADVANCED_FURNACE_ITEM =
             ITEMS.registerSimpleBlockItem("advanced_furnace", ADVANCED_FURNACE);
+
+    // Redstone Dynamo : cœur du multibloc
+    public static final DeferredBlock<RedstoneDynamoBlock> REDSTONE_DYNAMO =
+            BLOCKS.registerBlock("redstone_dynamo", RedstoneDynamoBlock::new,
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_ORANGE)
+                            .strength(3.5f, 6.0f)
+                            .sound(SoundType.COPPER)
+                            .noOcclusion()   // modèle ajouré : socle, bobine, chapeau
+                            .requiresCorrectToolForDrops());
+    public static final DeferredItem<BlockItem> REDSTONE_DYNAMO_ITEM =
+            ITEMS.registerSimpleBlockItem("redstone_dynamo", REDSTONE_DYNAMO);
 }

@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "axis=x,formed=false": {
+      "model": "electra:block/redstone_dynamo",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,formed=true": {
+      "model": "electra:block/redstone_dynamo",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y,formed=false": {
+      "model": "electra:block/redstone_dynamo"
+    },
+    "axis=y,formed=true": {
+      "model": "electra:block/redstone_dynamo"
+    },
+    "axis=z,formed=false": {
+      "model": "electra:block/redstone_dynamo",
+      "x": 90
+    },
+    "axis=z,formed=true": {
+      "model": "electra:block/redstone_dynamo",
+      "x": 90
+    }
+  }
+}

@@ -1,6 +1,7 @@
 package com.electra.mod.blockentity;
 
 import com.electra.mod.block.LightningCollectorBlock;
+import com.electra.mod.config.ElectraConfig;
 import com.electra.mod.energy.ModEnergyStorage;
 import com.electra.mod.setup.ModBlockEntities;
 import com.mojang.logging.LogUtils;
@@ -23,14 +24,11 @@ public class LightningCollectorBlockEntity extends BlockEntity {
 
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public static final int MAX_ENERGY        = 1_000_000;
-    public static final int MAX_EXTRACT       = 1_000;
-    public static final int ENERGY_PER_STRIKE = 5_000;
     private static final int ROD_SEARCH_HEIGHT = 5;
 
-    /** Source pure : n'accepte pas d'énergie de l'extérieur, en fournit jusqu'à 1 000 FE/tick. */
-    private final ModEnergyStorage energyStorage =
-            new ModEnergyStorage(MAX_ENERGY, 0, MAX_EXTRACT, this::onEnergyChanged);
+    /** Source pure : n'accepte pas d'énergie de l'extérieur. Valeurs lues dans electra-server.toml. */
+    private final ModEnergyStorage energyStorage = new ModEnergyStorage(
+            ElectraConfig.COLLECTOR_CAPACITY.get(), 0, ElectraConfig.COLLECTOR_MAX_EXTRACT.get(), this::onEnergyChanged);
 
     private boolean wasRodPowered = false;
     private boolean needsSync = false;
@@ -52,7 +50,7 @@ public class LightningCollectorBlockEntity extends BlockEntity {
         // Front montant de l'état POWERED du paratonnerre = un éclair vient de frapper
         boolean rodPowered = isRodPowered();
         if (rodPowered && !wasRodPowered) {
-            energyStorage.insertInternal(ENERGY_PER_STRIKE);
+            energyStorage.insertInternal(ElectraConfig.COLLECTOR_ENERGY_PER_STRIKE.get());
             LOGGER.debug("Éclair capté en {} : {} FE", worldPosition, energyStorage.getEnergyStored());
         }
         wasRodPowered = rodPowered;

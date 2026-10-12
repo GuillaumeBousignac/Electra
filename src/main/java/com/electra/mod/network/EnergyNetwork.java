@@ -46,7 +46,7 @@ public class EnergyNetwork {
 
     // ── Énergie ────────────────────────────────────────────────────────────
 
-    public int getCapacity()     { return wires.size() * WireBlockEntity.CAPACITY; }
+    public int getCapacity()     { return wires.size() * WireBlockEntity.capacity(); }
     public int getEnergyStored() { return energy; }
     public int getShare()        { return wires.isEmpty() ? 0 : energy / wires.size(); }
 

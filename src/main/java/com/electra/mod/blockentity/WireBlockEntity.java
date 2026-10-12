@@ -1,5 +1,6 @@
 package com.electra.mod.blockentity;
 
+import com.electra.mod.config.ElectraConfig;
 import com.electra.mod.network.EnergyNetwork;
 import com.electra.mod.network.EnergyNetworkManager;
 import com.electra.mod.setup.ModBlockEntities;
@@ -23,7 +24,8 @@ import org.jetbrains.annotations.Nullable;
  */
 public class WireBlockEntity extends BlockEntity {
 
-    public static final int CAPACITY = 10_000;
+    /** Capacité d'un câble, lue dans electra-server.toml. */
+    public static int capacity() { return ElectraConfig.WIRE_CAPACITY.get(); }
 
     private int energyShare = 0;
     private boolean unloading = false;
@@ -44,7 +46,7 @@ public class WireBlockEntity extends BlockEntity {
             return net == null ? energyShare : net.getShare();
         }
 
-        @Override public int getMaxEnergyStored() { return CAPACITY; }
+        @Override public int getMaxEnergyStored() { return capacity(); }
         @Override public boolean canExtract()     { return false; }
         @Override public boolean canReceive()     { return true; }
     };

@@ -27,7 +27,8 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 ModBlocks.ADVANCED_FURNACE.get(),
                 ModBlocks.REDSTONE_CONVERTER.get(),
                 ModBlocks.ROSE_GOLD_BLOCK.get(),
-                ModBlocks.RED_IRON_BLOCK.get());
+                ModBlocks.RED_IRON_BLOCK.get(),
+                ModBlocks.REDSTONE_DYNAMO.get());
 
         tag(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.RED_IRON_BLOCK.get());
 

@@ -1,6 +1,7 @@
 package com.electra.mod.compat.jei;
 
 import com.electra.mod.Electra;
+import com.electra.mod.config.ElectraConfig;
 import com.electra.mod.recipe.AlloyingRecipe;
 import com.electra.mod.setup.ModBlocks;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -37,8 +38,9 @@ public class AlloyingRecipeCategory implements IRecipeCategory<AlloyingRecipe> {
     public AlloyingRecipeCategory(IGuiHelper guiHelper) {
         this.icon  = guiHelper.createDrawableItemStack(new ItemStack(ModBlocks.ADVANCED_FURNACE_ITEM.get()));
         this.slot  = guiHelper.getSlotDrawable();
-        // Même durée que la cuisson réelle (AdvancedFurnaceBlockEntity.COOK_TIME_TOTAL = 25 ticks)
-        this.arrow = guiHelper.createAnimatedRecipeArrow(25);
+        // Même durée que la cuisson réelle ; 25 ticks (valeur par défaut) si la configuration n'est pas encore chargée
+        int cookTime = ElectraConfig.SPEC.isLoaded() ? ElectraConfig.FURNACE_COOK_TIME.get() : 25;
+        this.arrow = guiHelper.createAnimatedRecipeArrow(cookTime);
     }
 
     @Override public @NotNull RecipeType<AlloyingRecipe> getRecipeType() { return TYPE; }

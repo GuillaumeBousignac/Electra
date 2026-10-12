@@ -1,0 +1,202 @@
+{
+  "parent": "minecraft:block/block",
+  "credit": "Electra",
+  "ambientocclusion": false,
+  "textures": {
+    "plate": "electra:block/redstone_dynamo_plate",
+    "top": "electra:block/redstone_dynamo_top",
+    "bottom": "electra:block/redstone_dynamo_bottom",
+    "coil": "electra:block/redstone_dynamo_coil",
+    "particle": "electra:block/redstone_dynamo_plate"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        4,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            12,
+            16,
+            16
+          ],
+          "texture": "#plate"
+        },
+        "south": {
+          "uv": [
+            0,
+            12,
+            16,
+            16
+          ],
+          "texture": "#plate"
+        },
+        "east": {
+          "uv": [
+            0,
+            12,
+            16,
+            16
+          ],
+          "texture": "#plate"
+        },
+        "west": {
+          "uv": [
+            0,
+            12,
+            16,
+            16
+          ],
+          "texture": "#plate"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#plate"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#bottom",
+          "cullface": "down"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        12,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            4
+          ],
+          "texture": "#plate"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            4
+          ],
+          "texture": "#plate"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            4
+          ],
+          "texture": "#plate"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            4
+          ],
+          "texture": "#plate"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#top",
+          "cullface": "up"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#plate"
+        }
+      }
+    },
+    {
+      "from": [
+        5,
+        4,
+        5
+      ],
+      "to": [
+        11,
+        12,
+        11
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            5,
+            4,
+            11,
+            12
+          ],
+          "texture": "#coil"
+        },
+        "south": {
+          "uv": [
+            5,
+            4,
+            11,
+            12
+          ],
+          "texture": "#coil"
+        },
+        "east": {
+          "uv": [
+            5,
+            4,
+            11,
+            12
+          ],
+          "texture": "#coil"
+        },
+        "west": {
+          "uv": [
+            5,
+            4,
+            11,
+            12
+          ],
+          "texture": "#coil"
+        }
+      }
+    }
+  ]
+}

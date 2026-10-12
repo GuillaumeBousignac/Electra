@@ -75,6 +75,16 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(bareWire), has(bareWire))
                 .save(output);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.REDSTONE_DYNAMO_ITEM.get())
+                .pattern("CCC")
+                .pattern("RWR")
+                .pattern("CCC")
+                .define('C', Tags.Items.INGOTS_COPPER)
+                .define('R', ModTags.Items.INGOTS_RED_IRON)
+                .define('W', bareWire)
+                .unlockedBy("has_red_iron_ingot", has(ModTags.Items.INGOTS_RED_IRON))
+                .save(output);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModBlocks.REDSTONE_CONVERTER_ITEM.get())
                 .pattern("CRC")
                 .pattern("RWR")

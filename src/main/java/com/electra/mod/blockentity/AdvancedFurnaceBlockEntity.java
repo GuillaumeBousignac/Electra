@@ -1,6 +1,7 @@
 package com.electra.mod.blockentity;
 
 import com.electra.mod.block.AdvancedFurnaceBlock;
+import com.electra.mod.config.ElectraConfig;
 import com.electra.mod.energy.ModEnergyStorage;
 import com.electra.mod.menu.AdvancedFurnaceMenu;
 import com.electra.mod.recipe.AlloyingRecipeInput;
@@ -38,11 +39,6 @@ import java.util.Optional;
 
 public class AdvancedFurnaceBlockEntity extends BlockEntity implements WorldlyContainer, MenuProvider {
 
-    public static final int CAPACITY        = 50_000;
-    public static final int MAX_RECEIVE     = 1_000;
-    public static final int ENERGY_PER_ITEM = 100;
-    public static final int COOK_TIME_TOTAL = 25;
-
     public static final int SLOT_INPUT1 = 0;
     public static final int SLOT_INPUT2 = 1;
     public static final int SLOT_OUTPUT = 2;
@@ -52,9 +48,9 @@ public class AdvancedFurnaceBlockEntity extends BlockEntity implements WorldlyCo
 
     private final NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
 
-    /** Consommateur pur : reçoit 1 000 FE/tick, ne se laisse pas vider par les câbles. */
-    private final ModEnergyStorage energyStorage =
-            new ModEnergyStorage(CAPACITY, MAX_RECEIVE, 0, this::onEnergyChanged);
+    /** Consommateur pur : ne se laisse pas vider par les câbles. Valeurs lues dans electra-server.toml. */
+    private final ModEnergyStorage energyStorage = new ModEnergyStorage(
+            ElectraConfig.FURNACE_CAPACITY.get(), ElectraConfig.FURNACE_MAX_RECEIVE.get(), 0, this::onEnergyChanged);
 
     private int cookTime = 0;
     private boolean needsSync = false;
@@ -69,7 +65,7 @@ public class AdvancedFurnaceBlockEntity extends BlockEntity implements WorldlyCo
             int energy = energyStorage.getEnergyStored();
             return switch (index) {
                 case 0 -> cookTime;
-                case 1 -> COOK_TIME_TOTAL;
+                case 1 -> ElectraConfig.FURNACE_COOK_TIME.get();
                 case 2 -> energy & 0xFFFF;
                 case 3 -> (energy >>> 16) & 0xFFFF;
                 default -> 0;
@@ -109,7 +105,7 @@ public class AdvancedFurnaceBlockEntity extends BlockEntity implements WorldlyCo
             AdvancedFurnaceBlock.setLit(level, worldPosition, getBlockState(), false);
         } else {
             AdvancedFurnaceBlock.setLit(level, worldPosition, getBlockState(), true);
-            if (++cookTime >= COOK_TIME_TOTAL) {
+            if (++cookTime >= ElectraConfig.FURNACE_COOK_TIME.get()) {
                 cookTime = 0;
                 craft(match);
             }
@@ -161,7 +157,7 @@ public class AdvancedFurnaceBlockEntity extends BlockEntity implements WorldlyCo
         return cook(RecipeType.SMELTING, input)
                 .or(() -> cook(RecipeType.BLASTING, input))
                 .or(() -> cook(RecipeType.SMOKING, input))
-                .map(result -> new Match(result, ENERGY_PER_ITEM, false))
+                .map(result -> new Match(result, ElectraConfig.FURNACE_ENERGY_PER_SMELT.get(), false))
                 .orElse(null);
     }
 

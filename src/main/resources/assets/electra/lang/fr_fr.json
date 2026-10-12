@@ -31,5 +31,6 @@
   "block.electra.red_insulated_wire": "Câble isolé rouge",
   "block.electra.black_insulated_wire": "Câble isolé noir",
   "jei.electra.alloying": "Alliage",
-  "jei.electra.energy": "%s FE"
+  "jei.electra.energy": "%s FE",
+  "block.electra.redstone_dynamo": "Dynamo de redstone"
 }

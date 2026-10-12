@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "c:ingots/copper"
+    },
+    "R": {
+      "tag": "c:ingots/red_iron"
+    },
+    "W": {
+      "item": "electra:bare_wire"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "RWR",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "electra:redstone_dynamo"
+  }
+}

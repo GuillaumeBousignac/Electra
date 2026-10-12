@@ -20,6 +20,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     protected void generate() {
         // Tout bloc enregistré se lâche lui-même. Si un futur bloc doit lâcher autre chose,
         // le traiter ici avant cette boucle et l'exclure de celle-ci.
+        // (Le fer rouge accroché à la Dynamo est rendu par RedstoneDynamoBlock#onRemove.)
         for (Block block : getKnownBlocks()) {
             dropSelf(block);
         }

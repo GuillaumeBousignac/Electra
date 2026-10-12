@@ -23,6 +23,7 @@ public class ModCreativeModeTabs {
                     .title(Component.translatable("creativetab.electra.electra_blocks"))
                     .displayItems((parameters, output) -> {
                         output.accept(ModBlocks.LIGHTNING_COLLECTOR.get());
+                        output.accept(ModBlocks.REDSTONE_DYNAMO.get());
                         output.accept(ModBlocks.ADVANCED_FURNACE.get());
                         output.accept(ModBlocks.REDSTONE_CONVERTER.get());
                         output.accept(ModBlocks.BARE_WIRE.get());

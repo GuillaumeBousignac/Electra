@@ -4,6 +4,7 @@ import com.electra.mod.Electra;
 import com.electra.mod.blockentity.AdvancedFurnaceBlockEntity;
 import com.electra.mod.blockentity.LightningCollectorBlockEntity;
 import com.electra.mod.blockentity.RedstoneConverterBlockEntity;
+import com.electra.mod.blockentity.RedstoneDynamoBlockEntity;
 import com.electra.mod.blockentity.WireBlockEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
@@ -42,5 +43,10 @@ public class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<AdvancedFurnaceBlockEntity>> ADVANCED_FURNACE_BE =
             BLOCK_ENTITIES.register("advanced_furnace_be", () -> BlockEntityType.Builder
                     .of(AdvancedFurnaceBlockEntity::new, ModBlocks.ADVANCED_FURNACE.get())
+                    .build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RedstoneDynamoBlockEntity>> REDSTONE_DYNAMO_BE =
+            BLOCK_ENTITIES.register("redstone_dynamo_be", () -> BlockEntityType.Builder
+                    .of(RedstoneDynamoBlockEntity::new, ModBlocks.REDSTONE_DYNAMO.get())
                     .build(null));
 }

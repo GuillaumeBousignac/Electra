@@ -26,6 +26,7 @@ public class ModLanguageProvider extends LanguageProvider {
         add(ModBlocks.ROSE_GOLD_BLOCK.get(), "Rose Gold Block");
         add(ModBlocks.RED_IRON_BLOCK.get(), "Red Iron Block");
         add(ModBlocks.ADVANCED_FURNACE.get(), "Advanced Furnace");
+        add(ModBlocks.REDSTONE_DYNAMO.get(), "Redstone Dynamo");
 
         for (DyeColor color : DyeColor.values()) {
             add(ModBlocks.INSULATED_WIRES.get(color).get(), toTitle(color.getName()) + " Insulated Wire");

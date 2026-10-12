@@ -3,6 +3,7 @@ package com.electra.mod.datagen;
 import com.electra.mod.Electra;
 import com.electra.mod.block.AdvancedFurnaceBlock;
 import com.electra.mod.block.RedstoneConverterBlock;
+import com.electra.mod.block.RedstoneDynamoBlock;
 import com.electra.mod.block.WireBlock;
 import com.electra.mod.setup.ModBlocks;
 import net.minecraft.core.Direction;
@@ -74,6 +75,20 @@ public class ModBlockStateProvider extends BlockStateProvider {
                     .build();
         });
         simpleBlockItem(ModBlocks.ADVANCED_FURNACE.get(), furnaceOff);
+
+        // ── Redstone Dynamo ────────────────────────────────────────────────
+        // Modèle écrit à la main (socle, bobine, chapeau) ; le bras est dessiné par RedstoneDynamoRenderer.
+        // Orientation selon l'axe, comme une bûche.
+        ModelFile dynamo = models().getExistingFile(modLoc("block/redstone_dynamo"));
+        getVariantBuilder(ModBlocks.REDSTONE_DYNAMO.get()).forAllStates(state -> {
+            Direction.Axis axis = state.getValue(RedstoneDynamoBlock.AXIS);
+            return ConfiguredModel.builder()
+                    .modelFile(dynamo)
+                    .rotationX(axis == Direction.Axis.Y ? 0 : 90)
+                    .rotationY(axis == Direction.Axis.X ? 90 : 0)
+                    .build();
+        });
+        simpleBlockItem(ModBlocks.REDSTONE_DYNAMO.get(), dynamo);
 
         // ── Câbles ─────────────────────────────────────────────────────────
         wire(ModBlocks.BARE_WIRE.get(),

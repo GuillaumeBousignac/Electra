@@ -4,6 +4,7 @@
     "electra:advanced_furnace",
     "electra:redstone_converter",
     "electra:rose_gold_block",
-    "electra:red_iron_block"
+    "electra:red_iron_block",
+    "electra:redstone_dynamo"
   ]
 }

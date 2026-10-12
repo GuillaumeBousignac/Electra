@@ -1,6 +1,7 @@
 package com.electra.mod.block;
 
 import com.electra.mod.blockentity.WireBlockEntity;
+import com.electra.mod.config.ElectraConfig;
 import com.electra.mod.setup.ModDamageTypes;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -17,7 +18,6 @@ import org.jetbrains.annotations.Nullable;
 public class BareWireBlock extends WireBlock {
 
     public static final MapCodec<BareWireBlock> CODEC = simpleCodec(BareWireBlock::new);
-    public static final float SHOCK_DAMAGE = 4.0f;
 
     public BareWireBlock(Properties properties) {
         super(properties, 4);
@@ -38,8 +38,9 @@ public class BareWireBlock extends WireBlock {
                                 @NotNull BlockPos pos, @NotNull Entity entity) {
         if (level.isClientSide() || !(entity instanceof LivingEntity living)) return;
         // Dégâts uniquement si le réseau contient de l'énergie
-        if (level.getBlockEntity(pos) instanceof WireBlockEntity wire && wire.getNetworkEnergy() > 0) {
-            living.hurt(ModDamageTypes.electrocution(level), SHOCK_DAMAGE);
+        float damage = ElectraConfig.BARE_WIRE_SHOCK_DAMAGE.get().floatValue();
+        if (damage > 0 && level.getBlockEntity(pos) instanceof WireBlockEntity wire && wire.getNetworkEnergy() > 0) {
+            living.hurt(ModDamageTypes.electrocution(level), damage);
         }
     }
 }
