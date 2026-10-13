@@ -2,6 +2,8 @@ package com.electra.mod.network;
 
 import com.electra.mod.block.WireBlock;
 import com.electra.mod.blockentity.WireBlockEntity;
+import com.electra.mod.config.ElectraConfig;
+import com.electra.mod.energy.OnDemandEnergyStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -29,6 +31,14 @@ public class EnergyNetwork {
     private int syncTimer = 0;
     private int roundRobin = 0;
 
+    /**
+     * Le réseau est « alimenté » quand une source lui fournit du courant pendant le tick.
+     * Un réseau qui n'est plus alimenté se décharge en quelques ticks (voir dischargeTicks) :
+     * les portes et lampes, qui réagissent à la présence d'énergie, s'éteignent ainsi rapidement.
+     */
+    private boolean fedThisTick = false;
+    private boolean fed = false;
+
     // ── Composition ────────────────────────────────────────────────────────
 
     void addWire(WireBlockEntity wire) {
@@ -50,6 +60,9 @@ public class EnergyNetwork {
     public int getEnergyStored() { return energy; }
     public int getShare()        { return wires.isEmpty() ? 0 : energy / wires.size(); }
 
+    /** Vrai si une source a alimenté le réseau pendant le dernier tick terminé. */
+    public boolean isFed()       { return fed; }
+
     void setEnergy(int value) {
         energy = Math.max(0, Math.min(getCapacity(), value));
     }
@@ -60,6 +73,7 @@ public class EnergyNetwork {
 
     /** Injection depuis l'extérieur (autres mods qui poussent dans un câble). */
     public int receive(int maxReceive, boolean simulate) {
+        if (!simulate && maxReceive > 0) fedThisTick = true;
         int accepted = Math.min(maxReceive, getCapacity() - energy);
         if (accepted <= 0) return 0;
         if (!simulate) energy += accepted;
@@ -81,6 +95,7 @@ public class EnergyNetwork {
         int capacity = getCapacity();
         Set<IEnergyStorage> seen = Collections.newSetFromMap(new IdentityHashMap<>());
         List<IEnergyStorage> receivers = new ArrayList<>();
+        List<IEnergyStorage> onDemandSources = new ArrayList<>();
 
         for (BlockCapabilityCache<IEnergyStorage, Direction> cache : endpoints) {
             BlockPos pos = cache.pos();
@@ -92,9 +107,27 @@ public class EnergyNetwork {
 
             if (storage.canReceive()) {
                 receivers.add(storage);
-            } else if (storage.canExtract() && energy < capacity) {
-                // Source pure (générateur) : on aspire
-                energy += storage.extractEnergy(Math.min(TRANSFER_RATE, capacity - energy), false);
+            } else if (storage.canExtract()) {
+                // Source pure (générateur) : elle alimente le réseau même quand il est plein
+                if (storage.extractEnergy(1, true) > 0) fedThisTick = true;
+                if (storage instanceof OnDemandEnergyStorage) {
+                    onDemandSources.add(storage);   // prélevée plus bas, selon la demande
+                } else if (energy < capacity) {
+                    energy += storage.extractEnergy(Math.min(TRANSFER_RATE, capacity - energy), false);
+                }
+            }
+        }
+
+        // Sources à la demande (Lightning Collector) : on ne prend que ce que les machines vont consommer
+        if (!onDemandSources.isEmpty() && !receivers.isEmpty()) {
+            long demand = 0;
+            for (IEnergyStorage receiver : receivers) demand += receiver.receiveEnergy(TRANSFER_RATE, true);
+            int needed = (int) Math.min(Math.max(0, demand - energy), capacity - energy);
+            for (IEnergyStorage source : onDemandSources) {
+                if (needed <= 0) break;
+                int pulled = source.extractEnergy(Math.min(TRANSFER_RATE, needed), false);
+                energy += pulled;
+                needed -= pulled;
             }
         }
 
@@ -106,6 +139,15 @@ public class EnergyNetwork {
                 energy -= receivers.get((start + i) % n).receiveEnergy(Math.min(TRANSFER_RATE, energy), false);
             }
         }
+
+        // Décharge : sans source, le réseau se vide en dischargeTicks au plus
+        int dischargeTicks = ElectraConfig.WIRE_DISCHARGE_TICKS.get();
+        if (!fedThisTick && energy > 0 && dischargeTicks > 0) {
+            energy = Math.max(0, energy - Math.max(1, capacity / dischargeTicks));
+        }
+
+        fed = fedThisTick;
+        fedThisTick = false;
 
         if (++syncTimer >= SYNC_INTERVAL) {
             syncTimer = 0;

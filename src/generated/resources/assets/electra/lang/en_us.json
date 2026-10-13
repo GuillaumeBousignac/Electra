@@ -1,10 +1,13 @@
 {
   "block.electra.advanced_furnace": "Advanced Furnace",
+  "block.electra.and_gate": "AND Gate",
   "block.electra.bare_wire": "Bare Wire",
   "block.electra.black_insulated_wire": "Black Insulated Wire",
   "block.electra.blue_insulated_wire": "Blue Insulated Wire",
   "block.electra.brown_insulated_wire": "Brown Insulated Wire",
   "block.electra.cyan_insulated_wire": "Cyan Insulated Wire",
+  "block.electra.electric_lamp": "Electric Lamp",
+  "block.electra.energy_switch": "Energy Switch",
   "block.electra.gray_insulated_wire": "Gray Insulated Wire",
   "block.electra.green_insulated_wire": "Green Insulated Wire",
   "block.electra.light_blue_insulated_wire": "Light Blue Insulated Wire",
@@ -12,6 +15,8 @@
   "block.electra.lightning_collector": "Lightning Collector",
   "block.electra.lime_insulated_wire": "Lime Insulated Wire",
   "block.electra.magenta_insulated_wire": "Magenta Insulated Wire",
+  "block.electra.not_gate": "NOT Gate",
+  "block.electra.or_gate": "OR Gate",
   "block.electra.orange_insulated_wire": "Orange Insulated Wire",
   "block.electra.pink_insulated_wire": "Pink Insulated Wire",
   "block.electra.purple_insulated_wire": "Purple Insulated Wire",
@@ -32,5 +37,12 @@
   "item.electra.rose_gold_ingot": "Rose Gold Ingot",
   "jei.electra.alloying": "Alloying",
   "jei.electra.energy": "%s FE",
-  "message.electra.energy_meter": "⚡ %s : %s / %s FE (%s%%)"
+  "message.electra.energy_meter": "⚡ %s : %s / %s FE (%s%%)",
+  "message.electra.gate_mode_or": "Mode: OR",
+  "message.electra.gate_mode_xor": "Mode: XOR (exclusive OR)",
+  "tooltip.electra.and_gate": "Output powered when both side inputs are powered",
+  "tooltip.electra.electric_lamp": "Lights up while powered. Right-click with a dye to change its color",
+  "tooltip.electra.energy_switch": "Right-click to let power flow from the back to the front",
+  "tooltip.electra.not_gate": "Output powered from the back while no side input is powered",
+  "tooltip.electra.or_gate": "Output powered when at least one side input is powered. Sneak + right-click: switch to XOR (exactly one input)"
 }

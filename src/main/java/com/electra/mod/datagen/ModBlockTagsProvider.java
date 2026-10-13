@@ -28,7 +28,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 ModBlocks.REDSTONE_CONVERTER.get(),
                 ModBlocks.ROSE_GOLD_BLOCK.get(),
                 ModBlocks.RED_IRON_BLOCK.get(),
-                ModBlocks.REDSTONE_DYNAMO.get());
+                ModBlocks.REDSTONE_DYNAMO.get(),
+                ModBlocks.ELECTRIC_LAMP.get());
+        ModBlocks.LOGIC_GATES.values().forEach(gate -> tag(BlockTags.MINEABLE_WITH_PICKAXE).add(gate.get()));
 
         tag(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.RED_IRON_BLOCK.get());
 

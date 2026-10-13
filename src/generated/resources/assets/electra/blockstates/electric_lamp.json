@@ -1,0 +1,100 @@
+{
+  "variants": {
+    "color=black,lit=false": {
+      "model": "electra:block/electric_lamp"
+    },
+    "color=black,lit=true": {
+      "model": "electra:block/electric_lamp_on"
+    },
+    "color=blue,lit=false": {
+      "model": "electra:block/electric_lamp"
+    },
+    "color=blue,lit=true": {
+      "model": "electra:block/electric_lamp_on"
+    },
+    "color=brown,lit=false": {
+      "model": "electra:block/electric_lamp"
+    },
+    "color=brown,lit=true": {
+      "model": "electra:block/electric_lamp_on"
+    },
+    "color=cyan,lit=false": {
+      "model": "electra:block/electric_lamp"
+    },
+    "color=cyan,lit=true": {
+      "model": "electra:block/electric_lamp_on"
+    },
+    "color=gray,lit=false": {
+      "model": "electra:block/electric_lamp"
+    },
+    "color=gray,lit=true": {
+      "model": "electra:block/electric_lamp_on"
+    },
+    "color=green,lit=false": {
+      "model": "electra:block/electric_lamp"
+    },
+    "color=green,lit=true": {
+      "model": "electra:block/electric_lamp_on"
+    },
+    "color=light_blue,lit=false": {
+      "model": "electra:block/electric_lamp"
+    },
+    "color=light_blue,lit=true": {
+      "model": "electra:block/electric_lamp_on"
+    },
+    "color=light_gray,lit=false": {
+      "model": "electra:block/electric_lamp"
+    },
+    "color=light_gray,lit=true": {
+      "model": "electra:block/electric_lamp_on"
+    },
+    "color=lime,lit=false": {
+      "model": "electra:block/electric_lamp"
+    },
+    "color=lime,lit=true": {
+      "model": "electra:block/electric_lamp_on"
+    },
+    "color=magenta,lit=false": {
+      "model": "electra:block/electric_lamp"
+    },
+    "color=magenta,lit=true": {
+      "model": "electra:block/electric_lamp_on"
+    },
+    "color=orange,lit=false": {
+      "model": "electra:block/electric_lamp"
+    },
+    "color=orange,lit=true": {
+      "model": "electra:block/electric_lamp_on"
+    },
+    "color=pink,lit=false": {
+      "model": "electra:block/electric_lamp"
+    },
+    "color=pink,lit=true": {
+      "model": "electra:block/electric_lamp_on"
+    },
+    "color=purple,lit=false": {
+      "model": "electra:block/electric_lamp"
+    },
+    "color=purple,lit=true": {
+      "model": "electra:block/electric_lamp_on"
+    },
+    "color=red,lit=false": {
+      "model": "electra:block/electric_lamp"
+    },
+    "color=red,lit=true": {
+      "model": "electra:block/electric_lamp_on"
+    },
+    "color=white,lit=false": {
+      "model": "electra:block/electric_lamp"
+    },
+    "color=white,lit=true": {
+      "model": "electra:block/electric_lamp_on"
+    },
+    "color=yellow,lit=false": {
+      "model": "electra:block/electric_lamp"
+    },
+    "color=yellow,lit=true": {
+      "model": "electra:block/electric_lamp_on"
+    }
+  }
+}

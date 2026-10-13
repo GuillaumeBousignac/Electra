@@ -2,6 +2,9 @@ package com.electra.mod.datagen;
 
 import com.electra.mod.Electra;
 import com.electra.mod.block.AdvancedFurnaceBlock;
+import com.electra.mod.block.ElectricLampBlock;
+import com.electra.mod.block.GateType;
+import com.electra.mod.block.LogicGateBlock;
 import com.electra.mod.block.RedstoneConverterBlock;
 import com.electra.mod.block.RedstoneDynamoBlock;
 import com.electra.mod.block.WireBlock;
@@ -89,6 +92,56 @@ public class ModBlockStateProvider extends BlockStateProvider {
                     .build();
         });
         simpleBlockItem(ModBlocks.REDSTONE_DYNAMO.get(), dynamo);
+
+        // ── Portes logiques et interrupteur ─────────────────────────────────
+        // Modèles écrits à la main (boîtier, embouts, voyants, manette). Multipart : le boîtier selon
+        // l'orientation, plus chaque voyant allumé et la manette selon l'état.
+        ModelFile ledOutput = models().getExistingFile(modLoc("block/logic_gate_led_output"));
+        ModelFile ledA = models().getExistingFile(modLoc("block/logic_gate_led_a"));
+        ModelFile ledB = models().getExistingFile(modLoc("block/logic_gate_led_b"));
+        ModelFile leverOn = models().getExistingFile(modLoc("block/energy_switch_lever_on"));
+        ModelFile leverOff = models().getExistingFile(modLoc("block/energy_switch_lever_off"));
+        for (GateType type : GateType.values()) {
+            LogicGateBlock gate = ModBlocks.LOGIC_GATES.get(type).get();
+            ModelFile gateModel = models().getExistingFile(modLoc("block/" + type.id()));
+            ModelFile xorModel = models().getExistingFile(modLoc("block/xor_gate"));
+            var builder = getMultipartBuilder(gate);
+            for (Direction facing : Direction.Plane.HORIZONTAL) {
+                int rotation = ((int) facing.toYRot() + 180) % 360;
+                if (type == GateType.OR) {
+                    // Même boîtier ; seul le symbole du dessus change en mode XOR
+                    builder.part().modelFile(gateModel).rotationY(rotation).addModel()
+                            .condition(LogicGateBlock.FACING, facing).condition(LogicGateBlock.EXCLUSIVE, false).end();
+                    builder.part().modelFile(xorModel).rotationY(rotation).addModel()
+                            .condition(LogicGateBlock.FACING, facing).condition(LogicGateBlock.EXCLUSIVE, true).end();
+                } else {
+                    builder.part().modelFile(gateModel).rotationY(rotation).addModel()
+                            .condition(LogicGateBlock.FACING, facing).end();
+                }
+                builder.part().modelFile(ledOutput).rotationY(rotation).addModel()
+                        .condition(LogicGateBlock.FACING, facing).condition(LogicGateBlock.OUTPUT, true).end();
+                if (type.hasInputs()) {
+                    builder.part().modelFile(ledA).rotationY(rotation).addModel()
+                            .condition(LogicGateBlock.FACING, facing).condition(LogicGateBlock.INPUT_A, true).end();
+                    builder.part().modelFile(ledB).rotationY(rotation).addModel()
+                            .condition(LogicGateBlock.FACING, facing).condition(LogicGateBlock.INPUT_B, true).end();
+                }
+                if (type == GateType.SWITCH) {
+                    builder.part().modelFile(leverOn).rotationY(rotation).addModel()
+                            .condition(LogicGateBlock.FACING, facing).condition(LogicGateBlock.ON, true).end();
+                    builder.part().modelFile(leverOff).rotationY(rotation).addModel()
+                            .condition(LogicGateBlock.FACING, facing).condition(LogicGateBlock.ON, false).end();
+                }
+            }
+            simpleBlockItem(gate, gateModel);
+        }
+
+        // ── Lampe électrique : allumée / éteinte ; la couleur est appliquée par teinte (ElectraClient)
+        ModelFile lampOff = models().getExistingFile(modLoc("block/electric_lamp"));
+        ModelFile lampOn = models().getExistingFile(modLoc("block/electric_lamp_on"));
+        getVariantBuilder(ModBlocks.ELECTRIC_LAMP.get()).forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(state.getValue(ElectricLampBlock.LIT) ? lampOn : lampOff).build());
+        simpleBlockItem(ModBlocks.ELECTRIC_LAMP.get(), lampOff);
 
         // ── Câbles ─────────────────────────────────────────────────────────
         wire(ModBlocks.BARE_WIRE.get(),

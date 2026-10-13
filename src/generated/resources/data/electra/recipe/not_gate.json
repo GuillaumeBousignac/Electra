@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "G": {
+      "tag": "c:ingots/rose_gold"
+    },
+    "T": {
+      "item": "minecraft:redstone_torch"
+    },
+    "W": {
+      "item": "electra:bare_wire"
+    }
+  },
+  "pattern": [
+    " T ",
+    "WGW"
+  ],
+  "result": {
+    "count": 2,
+    "id": "electra:not_gate"
+  }
+}

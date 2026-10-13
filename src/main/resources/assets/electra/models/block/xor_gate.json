@@ -1,0 +1,263 @@
+{
+  "parent": "minecraft:block/block",
+  "ambientocclusion": false,
+  "textures": {
+    "body": "electra:block/logic_gate_body",
+    "top": "electra:block/xor_gate_top",
+    "port": "electra:block/logic_gate_port",
+    "particle": "electra:block/logic_gate_body"
+  },
+  "elements": [
+    {
+      "name": "bo\u00eetier",
+      "from": [
+        3,
+        4,
+        3
+      ],
+      "to": [
+        13,
+        12,
+        13
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            3,
+            4,
+            13,
+            12
+          ],
+          "texture": "#body"
+        },
+        "south": {
+          "uv": [
+            3,
+            4,
+            13,
+            12
+          ],
+          "texture": "#body"
+        },
+        "east": {
+          "uv": [
+            3,
+            4,
+            13,
+            12
+          ],
+          "texture": "#body"
+        },
+        "west": {
+          "uv": [
+            3,
+            4,
+            13,
+            12
+          ],
+          "texture": "#body"
+        },
+        "up": {
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ],
+          "texture": "#top"
+        },
+        "down": {
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ],
+          "texture": "#body"
+        }
+      }
+    },
+    {
+      "name": "embout output",
+      "from": [
+        5,
+        5,
+        0
+      ],
+      "to": [
+        11,
+        11,
+        3
+      ],
+      "faces": {
+        "east": {
+          "uv": [
+            4,
+            0,
+            7,
+            6
+          ],
+          "texture": "#port"
+        },
+        "west": {
+          "uv": [
+            4,
+            0,
+            7,
+            6
+          ],
+          "texture": "#port"
+        },
+        "up": {
+          "uv": [
+            4,
+            0,
+            7,
+            6
+          ],
+          "texture": "#port",
+          "rotation": 90
+        },
+        "down": {
+          "uv": [
+            4,
+            0,
+            7,
+            6
+          ],
+          "texture": "#port",
+          "rotation": 90
+        },
+        "north": {
+          "uv": [
+            0,
+            8,
+            6,
+            14
+          ],
+          "texture": "#port"
+        }
+      }
+    },
+    {
+      "name": "embout input",
+      "from": [
+        0,
+        5,
+        5
+      ],
+      "to": [
+        3,
+        11,
+        11
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            3,
+            6
+          ],
+          "texture": "#port"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            3,
+            6
+          ],
+          "texture": "#port"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            3,
+            6
+          ],
+          "texture": "#port"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            3,
+            6
+          ],
+          "texture": "#port"
+        },
+        "west": {
+          "uv": [
+            0,
+            8,
+            6,
+            14
+          ],
+          "texture": "#port"
+        }
+      }
+    },
+    {
+      "name": "embout input",
+      "from": [
+        13,
+        5,
+        5
+      ],
+      "to": [
+        16,
+        11,
+        11
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            3,
+            6
+          ],
+          "texture": "#port"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            3,
+            6
+          ],
+          "texture": "#port"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            3,
+            6
+          ],
+          "texture": "#port"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            3,
+            6
+          ],
+          "texture": "#port"
+        },
+        "east": {
+          "uv": [
+            0,
+            8,
+            6,
+            14
+          ],
+          "texture": "#port"
+        }
+      }
+    }
+  ]
+}

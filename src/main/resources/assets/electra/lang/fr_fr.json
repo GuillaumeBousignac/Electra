@@ -32,5 +32,17 @@
   "block.electra.black_insulated_wire": "Câble isolé noir",
   "jei.electra.alloying": "Alliage",
   "jei.electra.energy": "%s FE",
-  "block.electra.redstone_dynamo": "Dynamo de redstone"
+  "block.electra.redstone_dynamo": "Dynamo de redstone",
+  "block.electra.and_gate": "Porte ET",
+  "block.electra.or_gate": "Porte OU",
+  "block.electra.not_gate": "Porte NON",
+  "block.electra.energy_switch": "Interrupteur électrique",
+  "block.electra.electric_lamp": "Lampe électrique",
+  "tooltip.electra.and_gate": "Sortie alimentée quand les deux entrées latérales le sont",
+  "tooltip.electra.or_gate": "Sortie alimentée quand au moins une entrée latérale l'est. Accroupi + clic droit : passe en OU exclusif (une seule entrée)",
+  "tooltip.electra.not_gate": "Sortie alimentée par l'arrière tant qu'aucune entrée latérale ne l'est",
+  "tooltip.electra.energy_switch": "Clic droit : laisse passer le courant de l'arrière vers l'avant",
+  "tooltip.electra.electric_lamp": "S'allume quand elle est alimentée. Clic droit avec une teinture pour changer sa couleur",
+  "message.electra.gate_mode_or": "Mode : OU",
+  "message.electra.gate_mode_xor": "Mode : OU exclusif (XOR)"
 }

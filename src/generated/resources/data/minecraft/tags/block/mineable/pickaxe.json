@@ -5,6 +5,11 @@
     "electra:redstone_converter",
     "electra:rose_gold_block",
     "electra:red_iron_block",
-    "electra:redstone_dynamo"
+    "electra:redstone_dynamo",
+    "electra:electric_lamp",
+    "electra:and_gate",
+    "electra:or_gate",
+    "electra:not_gate",
+    "electra:energy_switch"
   ]
 }

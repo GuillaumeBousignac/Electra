@@ -1,6 +1,7 @@
 package com.electra.mod.datagen;
 
 import com.electra.mod.Electra;
+import com.electra.mod.block.GateType;
 import com.electra.mod.recipe.AlloyingRecipe;
 import com.electra.mod.setup.ModBlocks;
 import com.electra.mod.setup.ModItems;
@@ -85,6 +86,31 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_red_iron_ingot", has(ModTags.Items.INGOTS_RED_IRON))
                 .save(output);
 
+        // ── Logique ────────────────────────────────────────────────────────
+        // T = torche de redstone, G = lingot d'or rose (bon conducteur), W = câble nu
+        gate(output, GateType.NOT, new String[]{" T ", "WGW"});
+        gate(output, GateType.AND, new String[]{"T T", "WGW"});
+        gate(output, GateType.OR, new String[]{" T ", "WGW", " T "});
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModBlocks.LOGIC_GATE_ITEMS.get(GateType.SWITCH).get(), 2)
+                .pattern(" L ")
+                .pattern("WGW")
+                .define('L', Items.LEVER)
+                .define('G', ModTags.Items.INGOTS_ROSE_GOLD)
+                .define('W', bareWire)
+                .unlockedBy("has_rose_gold_ingot", has(ModTags.Items.INGOTS_ROSE_GOLD))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModBlocks.ELECTRIC_LAMP_ITEM.get(), 4)
+                .pattern("GGG")
+                .pattern("GDG")
+                .pattern("CWC")
+                .define('G', Tags.Items.GLASS_BLOCKS_COLORLESS)
+                .define('D', Tags.Items.DUSTS_GLOWSTONE)
+                .define('C', Tags.Items.INGOTS_COPPER)
+                .define('W', bareWire)
+                .unlockedBy(getHasName(bareWire), has(bareWire))
+                .save(output);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModBlocks.REDSTONE_CONVERTER_ITEM.get())
                 .pattern("CRC")
                 .pattern("RWR")
@@ -124,6 +150,17 @@ public class ModRecipeProvider extends RecipeProvider {
     }
 
     /** Le bloc accepte les lingots de l'étiquette commune (lingots équivalents d'autres mods compris). */
+    private static void gate(RecipeOutput output, GateType type, String[] pattern) {
+        ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE,
+                ModBlocks.LOGIC_GATE_ITEMS.get(type).get(), 2);
+        for (String row : pattern) builder.pattern(row);
+        builder.define('T', Items.REDSTONE_TORCH)
+                .define('G', ModTags.Items.INGOTS_ROSE_GOLD)
+                .define('W', ModBlocks.BARE_WIRE_ITEM.get())
+                .unlockedBy("has_rose_gold_ingot", has(ModTags.Items.INGOTS_ROSE_GOLD))
+                .save(output);
+    }
+
     private static void storageBlock(RecipeOutput output, Item ingot, TagKey<Item> ingotTag, Item block,
                                      String unpackId) {
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, block)

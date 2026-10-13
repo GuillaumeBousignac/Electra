@@ -1,6 +1,7 @@
 package com.electra.mod.blockentity;
 
 import com.electra.mod.block.RedstoneConverterBlock;
+import com.electra.mod.energy.EnergySignals;
 import com.electra.mod.setup.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -9,7 +10,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * Met le bloc à l'état POWERED tant qu'un câble adjacent appartient à un réseau non vide.
+ * Met le bloc à l'état POWERED tant qu'un câble adjacent appartient à un réseau alimenté.
  * L'état du bloc porte l'information : signal redstone, texture allumée et lumière.
  */
 public class RedstoneConverterBlockEntity extends BlockEntity {
@@ -21,11 +22,12 @@ public class RedstoneConverterBlockEntity extends BlockEntity {
     public void tick() {
         if (level == null || level.isClientSide()) return;
 
+        // Allumé tant qu'un câble voisin reçoit du courant d'une source (et non plus tant qu'il en stocke) :
+        // le signal redstone suit ainsi les portes logiques sans attendre que les câbles se vident.
         boolean hasEnergy = false;
         for (Direction dir : Direction.values()) {
-            BlockPos neighborPos = worldPosition.relative(dir);
-            if (!level.isLoaded(neighborPos)) continue;
-            if (level.getBlockEntity(neighborPos) instanceof WireBlockEntity wire && wire.getNetworkEnergy() > 0) {
+            if (level.getBlockEntity(worldPosition.relative(dir)) instanceof WireBlockEntity
+                    && EnergySignals.isPowered(level, worldPosition, dir)) {
                 hasEnergy = true;
                 break;
             }

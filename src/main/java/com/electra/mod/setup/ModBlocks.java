@@ -3,8 +3,11 @@ package com.electra.mod.setup;
 import com.electra.mod.Electra;
 import com.electra.mod.block.AdvancedFurnaceBlock;
 import com.electra.mod.block.BareWireBlock;
+import com.electra.mod.block.ElectricLampBlock;
+import com.electra.mod.block.GateType;
 import com.electra.mod.block.InsulatedWireBlock;
 import com.electra.mod.block.LightningCollectorBlock;
+import com.electra.mod.block.LogicGateBlock;
 import com.electra.mod.block.RedstoneConverterBlock;
 import com.electra.mod.block.RedstoneDynamoBlock;
 import net.minecraft.world.item.BlockItem;
@@ -121,4 +124,34 @@ public class ModBlocks {
                             .requiresCorrectToolForDrops());
     public static final DeferredItem<BlockItem> REDSTONE_DYNAMO_ITEM =
             ITEMS.registerSimpleBlockItem("redstone_dynamo", REDSTONE_DYNAMO);
+
+    // Portes logiques au FE et interrupteur : un bloc par type
+    public static final Map<GateType, DeferredBlock<LogicGateBlock>> LOGIC_GATES = new EnumMap<>(GateType.class);
+    public static final Map<GateType, DeferredItem<BlockItem>> LOGIC_GATE_ITEMS = new EnumMap<>(GateType.class);
+
+    static {
+        for (GateType type : GateType.values()) {
+            DeferredBlock<LogicGateBlock> block = BLOCKS.registerBlock(type.id(),
+                    properties -> new LogicGateBlock(type, properties),
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_ORANGE)
+                            .strength(1.5f, 3.0f)
+                            .sound(SoundType.COPPER)
+                            .noOcclusion());
+            LOGIC_GATES.put(type, block);
+            LOGIC_GATE_ITEMS.put(type, ITEMS.registerSimpleBlockItem(type.id(), block));
+        }
+    }
+
+    // Lampe électrique : couleur au choix (teinture)
+    public static final DeferredBlock<ElectricLampBlock> ELECTRIC_LAMP =
+            BLOCKS.registerBlock("electric_lamp", ElectricLampBlock::new,
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_ORANGE)
+                            .strength(1.5f, 3.0f)
+                            .sound(SoundType.COPPER)
+                            .noOcclusion()
+                            .lightLevel(state -> state.getValue(ElectricLampBlock.LIT) ? 15 : 0));
+    public static final DeferredItem<BlockItem> ELECTRIC_LAMP_ITEM =
+            ITEMS.registerSimpleBlockItem("electric_lamp", ELECTRIC_LAMP);
 }

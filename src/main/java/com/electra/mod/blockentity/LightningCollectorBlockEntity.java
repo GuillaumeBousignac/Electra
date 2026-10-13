@@ -3,6 +3,7 @@ package com.electra.mod.blockentity;
 import com.electra.mod.block.LightningCollectorBlock;
 import com.electra.mod.config.ElectraConfig;
 import com.electra.mod.energy.ModEnergyStorage;
+import com.electra.mod.energy.OnDemandEnergyStorage;
 import com.electra.mod.setup.ModBlockEntities;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
@@ -27,7 +28,7 @@ public class LightningCollectorBlockEntity extends BlockEntity {
     private static final int ROD_SEARCH_HEIGHT = 5;
 
     /** Source pure : n'accepte pas d'énergie de l'extérieur. Valeurs lues dans electra-server.toml. */
-    private final ModEnergyStorage energyStorage = new ModEnergyStorage(
+    private final ModEnergyStorage energyStorage = new OnDemandEnergyStorage(
             ElectraConfig.COLLECTOR_CAPACITY.get(), 0, ElectraConfig.COLLECTOR_MAX_EXTRACT.get(), this::onEnergyChanged);
 
     private boolean wasRodPowered = false;

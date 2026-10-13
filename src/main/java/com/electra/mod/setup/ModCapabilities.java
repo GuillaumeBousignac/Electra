@@ -26,6 +26,13 @@ public final class ModCapabilities {
         event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK,
                 ModBlockEntities.REDSTONE_DYNAMO_BE.get(), (be, side) -> be.getEnergyStorage());
 
+        // Portes : capacité différente selon la face (entrée, sortie, alimentation, ou rien)
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK,
+                ModBlockEntities.LOGIC_GATE_BE.get(), (be, side) -> be.getEnergyStorage(side));
+
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK,
+                ModBlockEntities.ELECTRIC_LAMP_BE.get(), (be, side) -> be.getEnergyStorage());
+
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,
                 ModBlockEntities.ADVANCED_FURNACE_BE.get(),
                 (be, side) -> side == null ? new InvWrapper(be) : new SidedInvWrapper(be, side));

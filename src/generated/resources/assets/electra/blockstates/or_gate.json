@@ -1,0 +1,199 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "electra:block/or_gate"
+      },
+      "when": {
+        "exclusive": "false",
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/xor_gate"
+      },
+      "when": {
+        "exclusive": "true",
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/logic_gate_led_output"
+      },
+      "when": {
+        "facing": "north",
+        "output": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/logic_gate_led_a"
+      },
+      "when": {
+        "facing": "north",
+        "input_a": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/logic_gate_led_b"
+      },
+      "when": {
+        "facing": "north",
+        "input_b": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/or_gate",
+        "y": 90
+      },
+      "when": {
+        "exclusive": "false",
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/xor_gate",
+        "y": 90
+      },
+      "when": {
+        "exclusive": "true",
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/logic_gate_led_output",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "output": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/logic_gate_led_a",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "input_a": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/logic_gate_led_b",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "input_b": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/or_gate",
+        "y": 180
+      },
+      "when": {
+        "exclusive": "false",
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/xor_gate",
+        "y": 180
+      },
+      "when": {
+        "exclusive": "true",
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/logic_gate_led_output",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "output": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/logic_gate_led_a",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "input_a": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/logic_gate_led_b",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "input_b": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/or_gate",
+        "y": 270
+      },
+      "when": {
+        "exclusive": "false",
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/xor_gate",
+        "y": 270
+      },
+      "when": {
+        "exclusive": "true",
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/logic_gate_led_output",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "output": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/logic_gate_led_a",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "input_a": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/logic_gate_led_b",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "input_b": "true"
+      }
+    }
+  ]
+}

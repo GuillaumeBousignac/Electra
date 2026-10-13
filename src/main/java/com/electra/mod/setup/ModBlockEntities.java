@@ -2,7 +2,9 @@ package com.electra.mod.setup;
 
 import com.electra.mod.Electra;
 import com.electra.mod.blockentity.AdvancedFurnaceBlockEntity;
+import com.electra.mod.blockentity.ElectricLampBlockEntity;
 import com.electra.mod.blockentity.LightningCollectorBlockEntity;
+import com.electra.mod.blockentity.LogicGateBlockEntity;
 import com.electra.mod.blockentity.RedstoneConverterBlockEntity;
 import com.electra.mod.blockentity.RedstoneDynamoBlockEntity;
 import com.electra.mod.blockentity.WireBlockEntity;
@@ -48,5 +50,17 @@ public class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RedstoneDynamoBlockEntity>> REDSTONE_DYNAMO_BE =
             BLOCK_ENTITIES.register("redstone_dynamo_be", () -> BlockEntityType.Builder
                     .of(RedstoneDynamoBlockEntity::new, ModBlocks.REDSTONE_DYNAMO.get())
+                    .build(null));
+
+    // Un seul type pour les 4 composants logiques (AND, OR, NOT, interrupteur)
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LogicGateBlockEntity>> LOGIC_GATE_BE =
+            BLOCK_ENTITIES.register("logic_gate_be", () -> BlockEntityType.Builder
+                    .of(LogicGateBlockEntity::new, ModBlocks.LOGIC_GATES.values().stream()
+                            .map(holder -> (Block) holder.get()).toArray(Block[]::new))
+                    .build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ElectricLampBlockEntity>> ELECTRIC_LAMP_BE =
+            BLOCK_ENTITIES.register("electric_lamp_be", () -> BlockEntityType.Builder
+                    .of(ElectricLampBlockEntity::new, ModBlocks.ELECTRIC_LAMP.get())
                     .build(null));
 }

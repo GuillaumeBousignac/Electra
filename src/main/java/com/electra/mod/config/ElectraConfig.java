@@ -34,8 +34,14 @@ public final class ElectraConfig {
     public static final ModConfigSpec.IntValue DYNAMO_SPIN_UP_TICKS;
     public static final ModConfigSpec.IntValue DYNAMO_SPIN_DOWN_TICKS;
 
+    // ── Logic gates and lamps ─────────────────────────────────────────────
+    public static final ModConfigSpec.IntValue GATE_TRANSFER_RATE;
+    public static final ModConfigSpec.IntValue GATE_BUFFER;
+    public static final ModConfigSpec.IntValue LAMP_CONSUMPTION;
+
     // ── Wires ──────────────────────────────────────────────────────────────
     public static final ModConfigSpec.IntValue WIRE_CAPACITY;
+    public static final ModConfigSpec.IntValue WIRE_DISCHARGE_TICKS;
     public static final ModConfigSpec.DoubleValue BARE_WIRE_SHOCK_DAMAGE;
 
     static {
@@ -71,8 +77,9 @@ public final class ElectraConfig {
                 .defineInRange("cookTime", 25, 1, 1_200);
         builder.pop();
 
-        builder.comment("Redstone Dynamo: multiblock generator. A Red Iron block spins above the Dynamo,",
-                        "inside a 3x3 ring of redstone blocks, while the Red Iron block receives a redstone signal.")
+        builder.comment("Redstone Dynamo: multiblock generator. A Red Iron block held by the Dynamo's arm orbits",
+                        "around it, inside a 5x5 ring of redstone blocks (corners optional), while the Dynamo receives",
+                        "a redstone signal.")
                 .push("redstoneDynamo");
         DYNAMO_GENERATION = builder
                 .comment("Energy produced at full speed (FE/tick).")
@@ -91,10 +98,29 @@ public final class ElectraConfig {
                 .defineInRange("spinDownTicks", 100, 1, 12_000);
         builder.pop();
 
+        builder.comment("Logic gates (AND, OR, NOT), Energy Switch and Electric Lamp.",
+                        "An input counts as active while its cable holds energy or is being fed;",
+                        "cables no longer fed by any source discharge quickly (see wires.dischargeTicks).")
+                .push("logic");
+        GATE_TRANSFER_RATE = builder
+                .comment("Maximum energy a gate or switch can pass through, per face (FE/tick).")
+                .defineInRange("gateTransferRate", 200, 1, 100_000);
+        GATE_BUFFER = builder
+                .comment("Internal buffer of a gate or switch (FE).")
+                .defineInRange("gateBuffer", 1_000, 10, 1_000_000);
+        LAMP_CONSUMPTION = builder
+                .comment("Energy used by a lit Electric Lamp (FE/tick). 0 = free.")
+                .defineInRange("lampConsumption", 1, 0, 20);
+        builder.pop();
+
         builder.comment("Wires: energy is shared across each connected network.").push("wires");
         WIRE_CAPACITY = builder
                 .comment("Energy stored per wire block; a network holds this value times its number of wires (FE).")
-                .defineInRange("capacityPerWire", 10_000, 100, 1_000_000);
+                .defineInRange("capacityPerWire", 1_000, 100, 1_000_000);
+        WIRE_DISCHARGE_TICKS = builder
+                .comment("Time for a network that no source feeds anymore to fully discharge (ticks, 20 = 1 second).",
+                         "Keeps logic gates and lamps responsive. 0 = cables never discharge.")
+                .defineInRange("dischargeTicks", 20, 0, 72_000);
         BARE_WIRE_SHOCK_DAMAGE = builder
                 .comment("Damage dealt by a powered bare wire to living entities inside it (2 = one heart). 0 disables it.")
                 .defineInRange("bareWireShockDamage", 4.0, 0.0, 100.0);
