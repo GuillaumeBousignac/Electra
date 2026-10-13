@@ -1,16 +1,17 @@
 {
   "parent": "minecraft:block/block",
-  "credit": "Electra",
   "ambientocclusion": false,
   "textures": {
-    "plate": "electra:block/redstone_dynamo_plate",
+    "casing": "electra:block/redstone_dynamo_casing",
     "top": "electra:block/redstone_dynamo_top",
     "bottom": "electra:block/redstone_dynamo_bottom",
+    "plate": "electra:block/redstone_dynamo_plate",
     "coil": "electra:block/redstone_dynamo_coil",
-    "particle": "electra:block/redstone_dynamo_plate"
+    "particle": "electra:block/redstone_dynamo_casing"
   },
   "elements": [
     {
+      "name": "socle",
       "from": [
         0,
         0,
@@ -18,45 +19,45 @@
       ],
       "to": [
         16,
-        4,
+        2,
         16
       ],
       "faces": {
         "north": {
           "uv": [
             0,
-            12,
+            14,
             16,
             16
           ],
-          "texture": "#plate"
+          "texture": "#casing"
         },
         "south": {
           "uv": [
             0,
-            12,
+            14,
             16,
             16
           ],
-          "texture": "#plate"
+          "texture": "#casing"
         },
         "east": {
           "uv": [
             0,
-            12,
+            14,
             16,
             16
           ],
-          "texture": "#plate"
+          "texture": "#casing"
         },
         "west": {
           "uv": [
             0,
-            12,
+            14,
             16,
             16
           ],
-          "texture": "#plate"
+          "texture": "#casing"
         },
         "up": {
           "uv": [
@@ -80,9 +81,541 @@
       }
     },
     {
+      "name": "gradin du socle",
+      "from": [
+        1,
+        2,
+        1
+      ],
+      "to": [
+        15,
+        3.5,
+        15
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1,
+            12,
+            15,
+            13.5
+          ],
+          "texture": "#casing"
+        },
+        "south": {
+          "uv": [
+            1,
+            12,
+            15,
+            13.5
+          ],
+          "texture": "#casing"
+        },
+        "east": {
+          "uv": [
+            1,
+            12,
+            15,
+            13.5
+          ],
+          "texture": "#casing"
+        },
+        "west": {
+          "uv": [
+            1,
+            12,
+            15,
+            13.5
+          ],
+          "texture": "#casing"
+        },
+        "up": {
+          "uv": [
+            1,
+            1,
+            15,
+            15
+          ],
+          "texture": "#plate"
+        }
+      }
+    },
+    {
+      "name": "boulon",
+      "from": [
+        2,
+        3.5,
+        2
+      ],
+      "to": [
+        3.5,
+        4,
+        3.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            14,
+            1.5,
+            14.5
+          ],
+          "texture": "#coil"
+        },
+        "south": {
+          "uv": [
+            0,
+            14,
+            1.5,
+            14.5
+          ],
+          "texture": "#coil"
+        },
+        "east": {
+          "uv": [
+            0,
+            14,
+            1.5,
+            14.5
+          ],
+          "texture": "#coil"
+        },
+        "west": {
+          "uv": [
+            0,
+            14,
+            1.5,
+            14.5
+          ],
+          "texture": "#coil"
+        },
+        "up": {
+          "uv": [
+            0,
+            12,
+            1.5,
+            13.5
+          ],
+          "texture": "#coil"
+        }
+      }
+    },
+    {
+      "name": "boulon",
+      "from": [
+        12.5,
+        3.5,
+        2
+      ],
+      "to": [
+        14.0,
+        4,
+        3.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            14,
+            1.5,
+            14.5
+          ],
+          "texture": "#coil"
+        },
+        "south": {
+          "uv": [
+            0,
+            14,
+            1.5,
+            14.5
+          ],
+          "texture": "#coil"
+        },
+        "east": {
+          "uv": [
+            0,
+            14,
+            1.5,
+            14.5
+          ],
+          "texture": "#coil"
+        },
+        "west": {
+          "uv": [
+            0,
+            14,
+            1.5,
+            14.5
+          ],
+          "texture": "#coil"
+        },
+        "up": {
+          "uv": [
+            0,
+            12,
+            1.5,
+            13.5
+          ],
+          "texture": "#coil"
+        }
+      }
+    },
+    {
+      "name": "boulon",
+      "from": [
+        2,
+        3.5,
+        12.5
+      ],
+      "to": [
+        3.5,
+        4,
+        14.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            14,
+            1.5,
+            14.5
+          ],
+          "texture": "#coil"
+        },
+        "south": {
+          "uv": [
+            0,
+            14,
+            1.5,
+            14.5
+          ],
+          "texture": "#coil"
+        },
+        "east": {
+          "uv": [
+            0,
+            14,
+            1.5,
+            14.5
+          ],
+          "texture": "#coil"
+        },
+        "west": {
+          "uv": [
+            0,
+            14,
+            1.5,
+            14.5
+          ],
+          "texture": "#coil"
+        },
+        "up": {
+          "uv": [
+            0,
+            12,
+            1.5,
+            13.5
+          ],
+          "texture": "#coil"
+        }
+      }
+    },
+    {
+      "name": "boulon",
+      "from": [
+        12.5,
+        3.5,
+        12.5
+      ],
+      "to": [
+        14.0,
+        4,
+        14.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            14,
+            1.5,
+            14.5
+          ],
+          "texture": "#coil"
+        },
+        "south": {
+          "uv": [
+            0,
+            14,
+            1.5,
+            14.5
+          ],
+          "texture": "#coil"
+        },
+        "east": {
+          "uv": [
+            0,
+            14,
+            1.5,
+            14.5
+          ],
+          "texture": "#coil"
+        },
+        "west": {
+          "uv": [
+            0,
+            14,
+            1.5,
+            14.5
+          ],
+          "texture": "#coil"
+        },
+        "up": {
+          "uv": [
+            0,
+            12,
+            1.5,
+            13.5
+          ],
+          "texture": "#coil"
+        }
+      }
+    },
+    {
+      "name": "flasque basse",
+      "from": [
+        4,
+        3.5,
+        4
+      ],
+      "to": [
+        12,
+        4.5,
+        12
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            4,
+            0,
+            12,
+            1
+          ],
+          "texture": "#coil"
+        },
+        "south": {
+          "uv": [
+            4,
+            0,
+            12,
+            1
+          ],
+          "texture": "#coil"
+        },
+        "east": {
+          "uv": [
+            4,
+            0,
+            12,
+            1
+          ],
+          "texture": "#coil"
+        },
+        "west": {
+          "uv": [
+            4,
+            0,
+            12,
+            1
+          ],
+          "texture": "#coil"
+        },
+        "up": {
+          "uv": [
+            4,
+            4,
+            12,
+            12
+          ],
+          "texture": "#plate"
+        }
+      }
+    },
+    {
+      "name": "flasque haute",
+      "from": [
+        4,
+        11.5,
+        4
+      ],
+      "to": [
+        12,
+        12.5,
+        12
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            4,
+            0,
+            12,
+            1
+          ],
+          "texture": "#coil"
+        },
+        "south": {
+          "uv": [
+            4,
+            0,
+            12,
+            1
+          ],
+          "texture": "#coil"
+        },
+        "east": {
+          "uv": [
+            4,
+            0,
+            12,
+            1
+          ],
+          "texture": "#coil"
+        },
+        "west": {
+          "uv": [
+            4,
+            0,
+            12,
+            1
+          ],
+          "texture": "#coil"
+        },
+        "down": {
+          "uv": [
+            4,
+            4,
+            12,
+            12
+          ],
+          "texture": "#plate"
+        }
+      }
+    },
+    {
+      "name": "bobine",
+      "from": [
+        5,
+        4.5,
+        5
+      ],
+      "to": [
+        11,
+        11.5,
+        11
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            5,
+            4.5,
+            11,
+            11.5
+          ],
+          "texture": "#coil"
+        },
+        "south": {
+          "uv": [
+            5,
+            4.5,
+            11,
+            11.5
+          ],
+          "texture": "#coil"
+        },
+        "east": {
+          "uv": [
+            5,
+            4.5,
+            11,
+            11.5
+          ],
+          "texture": "#coil"
+        },
+        "west": {
+          "uv": [
+            5,
+            4.5,
+            11,
+            11.5
+          ],
+          "texture": "#coil"
+        }
+      }
+    },
+    {
+      "name": "gradin du chapeau",
+      "from": [
+        1,
+        12.5,
+        1
+      ],
+      "to": [
+        15,
+        14,
+        15
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1,
+            2,
+            15,
+            3.5
+          ],
+          "texture": "#casing"
+        },
+        "south": {
+          "uv": [
+            1,
+            2,
+            15,
+            3.5
+          ],
+          "texture": "#casing"
+        },
+        "east": {
+          "uv": [
+            1,
+            2,
+            15,
+            3.5
+          ],
+          "texture": "#casing"
+        },
+        "west": {
+          "uv": [
+            1,
+            2,
+            15,
+            3.5
+          ],
+          "texture": "#casing"
+        },
+        "down": {
+          "uv": [
+            1,
+            1,
+            15,
+            15
+          ],
+          "texture": "#plate"
+        }
+      }
+    },
+    {
+      "name": "chapeau",
       "from": [
         0,
-        12,
+        14,
         0
       ],
       "to": [
@@ -96,36 +629,36 @@
             0,
             0,
             16,
-            4
+            2
           ],
-          "texture": "#plate"
+          "texture": "#casing"
         },
         "south": {
           "uv": [
             0,
             0,
             16,
-            4
+            2
           ],
-          "texture": "#plate"
+          "texture": "#casing"
         },
         "east": {
           "uv": [
             0,
             0,
             16,
-            4
+            2
           ],
-          "texture": "#plate"
+          "texture": "#casing"
         },
         "west": {
           "uv": [
             0,
             0,
             16,
-            4
+            2
           ],
-          "texture": "#plate"
+          "texture": "#casing"
         },
         "up": {
           "uv": [
@@ -145,56 +678,6 @@
             16
           ],
           "texture": "#plate"
-        }
-      }
-    },
-    {
-      "from": [
-        5,
-        4,
-        5
-      ],
-      "to": [
-        11,
-        12,
-        11
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            5,
-            4,
-            11,
-            12
-          ],
-          "texture": "#coil"
-        },
-        "south": {
-          "uv": [
-            5,
-            4,
-            11,
-            12
-          ],
-          "texture": "#coil"
-        },
-        "east": {
-          "uv": [
-            5,
-            4,
-            11,
-            12
-          ],
-          "texture": "#coil"
-        },
-        "west": {
-          "uv": [
-            5,
-            4,
-            11,
-            12
-          ],
-          "texture": "#coil"
         }
       }
     }
