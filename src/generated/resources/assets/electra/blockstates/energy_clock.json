@@ -1,0 +1,234 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "electra:block/energy_clock"
+      },
+      "when": {
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/logic_gate_led_output"
+      },
+      "when": {
+        "facing": "north",
+        "output": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/energy_clock_marker_1"
+      },
+      "when": {
+        "delay": "1",
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/energy_clock_marker_2"
+      },
+      "when": {
+        "delay": "2",
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/energy_clock_marker_3"
+      },
+      "when": {
+        "delay": "3",
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/energy_clock_marker_4"
+      },
+      "when": {
+        "delay": "4",
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/energy_clock",
+        "y": 90
+      },
+      "when": {
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/logic_gate_led_output",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "output": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/energy_clock_marker_1",
+        "y": 90
+      },
+      "when": {
+        "delay": "1",
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/energy_clock_marker_2",
+        "y": 90
+      },
+      "when": {
+        "delay": "2",
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/energy_clock_marker_3",
+        "y": 90
+      },
+      "when": {
+        "delay": "3",
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/energy_clock_marker_4",
+        "y": 90
+      },
+      "when": {
+        "delay": "4",
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/energy_clock",
+        "y": 180
+      },
+      "when": {
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/logic_gate_led_output",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "output": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/energy_clock_marker_1",
+        "y": 180
+      },
+      "when": {
+        "delay": "1",
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/energy_clock_marker_2",
+        "y": 180
+      },
+      "when": {
+        "delay": "2",
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/energy_clock_marker_3",
+        "y": 180
+      },
+      "when": {
+        "delay": "3",
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/energy_clock_marker_4",
+        "y": 180
+      },
+      "when": {
+        "delay": "4",
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/energy_clock",
+        "y": 270
+      },
+      "when": {
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/logic_gate_led_output",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "output": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/energy_clock_marker_1",
+        "y": 270
+      },
+      "when": {
+        "delay": "1",
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/energy_clock_marker_2",
+        "y": 270
+      },
+      "when": {
+        "delay": "2",
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/energy_clock_marker_3",
+        "y": 270
+      },
+      "when": {
+        "delay": "3",
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/energy_clock_marker_4",
+        "y": 270
+      },
+      "when": {
+        "delay": "4",
+        "facing": "west"
+      }
+    }
+  ]
+}

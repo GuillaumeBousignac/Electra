@@ -1,0 +1,28 @@
+{
+  "elements": [
+    {
+      "faces": {
+        "west": {
+          "cullface": "west",
+          "texture": "#glass",
+          "tintindex": 0
+        }
+      },
+      "from": [
+        0,
+        0,
+        2
+      ],
+      "to": [
+        0,
+        2,
+        14
+      ]
+    }
+  ],
+  "textures": {
+    "frame": "electra:block/electric_lamp_frame",
+    "glass": "electra:block/electric_lamp_glass_on",
+    "particle": "electra:block/electric_lamp_frame"
+  }
+}

@@ -23,6 +23,7 @@ public final class ModTags {
     public static final class Items {
         public static final TagKey<Item> INGOTS_ROSE_GOLD         = common("ingots/rose_gold");
         public static final TagKey<Item> INGOTS_RED_IRON          = common("ingots/red_iron");
+        public static final TagKey<Item> NUGGETS_ROSE_GOLD        = common("nuggets/rose_gold");
         public static final TagKey<Item> STORAGE_BLOCKS_ROSE_GOLD = common("storage_blocks/rose_gold");
         public static final TagKey<Item> STORAGE_BLOCKS_RED_IRON  = common("storage_blocks/red_iron");
 

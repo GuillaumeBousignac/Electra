@@ -1,6 +1,7 @@
 package com.electra.mod;
 
 import com.electra.mod.block.ElectricLampBlock;
+import com.electra.mod.client.ElectricLampRenderer;
 import com.electra.mod.client.LightningCollectorRenderer;
 import com.electra.mod.client.RedstoneDynamoRenderer;
 import com.electra.mod.screen.AdvancedFurnaceScreen;
@@ -47,5 +48,6 @@ public class ElectraClient {
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(ModBlockEntities.LIGHTNING_COLLECTOR_BE.get(), LightningCollectorRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.REDSTONE_DYNAMO_BE.get(), RedstoneDynamoRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.ELECTRIC_LAMP_BE.get(), ElectricLampRenderer::new);
     }
 }

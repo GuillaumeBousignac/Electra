@@ -1,0 +1,69 @@
+{
+  "ambientocclusion": false,
+  "textures": {
+    "lever": "electra:block/energy_switch_lever",
+    "particle": "electra:block/energy_switch_lever"
+  },
+  "elements": [
+    {
+      "name": "curseur",
+      "from": [
+        8.5,
+        12,
+        6.5
+      ],
+      "to": [
+        10,
+        13,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            4,
+            0,
+            5.5,
+            1
+          ],
+          "texture": "#lever"
+        },
+        "south": {
+          "uv": [
+            4,
+            0,
+            5.5,
+            1
+          ],
+          "texture": "#lever"
+        },
+        "east": {
+          "uv": [
+            4,
+            0,
+            5.5,
+            1
+          ],
+          "texture": "#lever"
+        },
+        "west": {
+          "uv": [
+            4,
+            0,
+            5.5,
+            1
+          ],
+          "texture": "#lever"
+        },
+        "up": {
+          "uv": [
+            4,
+            0,
+            5.5,
+            1.5
+          ],
+          "texture": "#lever"
+        }
+      }
+    }
+  ]
+}

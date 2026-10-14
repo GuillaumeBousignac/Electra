@@ -10,6 +10,7 @@
     "electra:and_gate",
     "electra:or_gate",
     "electra:not_gate",
-    "electra:energy_switch"
+    "electra:energy_switch",
+    "electra:energy_clock"
   ]
 }

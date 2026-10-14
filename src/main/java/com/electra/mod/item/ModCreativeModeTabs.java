@@ -40,8 +40,10 @@ public class ModCreativeModeTabs {
                     .title(Component.translatable("creativetab.electra.electra_items"))
                     .displayItems((parameters, output) -> {
                         output.accept(ModItems.ROSE_GOLD_INGOT.get());
+                        output.accept(ModItems.ROSE_GOLD_NUGGET.get());
                         output.accept(ModItems.RED_IRON_INGOT.get());
                         output.accept(ModItems.ENERGY_METER.get());
+                        output.accept(ModItems.ALPHABETIC_STICKER.get());
                     }).build());
 
     public static void register(IEventBus eventBus) {

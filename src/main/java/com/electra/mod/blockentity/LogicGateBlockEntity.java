@@ -42,6 +42,10 @@ public class LogicGateBlockEntity extends BlockEntity {
     private int extractedThisTick = 0;
     private boolean outputActive = false;
 
+    // Horloge : phase en cours et ticks écoulés dans cette phase
+    private boolean clockPhaseOn = true;
+    private int clockTimer = 0;
+
     private final IEnergyStorage[] sideStorages = new IEnergyStorage[6];
 
     public LogicGateBlockEntity(BlockPos pos, BlockState state) {
@@ -104,6 +108,14 @@ public class LogicGateBlockEntity extends BlockEntity {
         boolean b = type.hasInputs() && EnergySignals.isPowered(level, worldPosition, LogicGateBlock.inputB(facing));
         boolean logic;
         if (type == GateType.SWITCH) logic = type.evaluate(state.getValue(LogicGateBlock.ON), false);
+        else if (type == GateType.CLOCK) {
+            if (++clockTimer >= LogicGateBlock.clockPhaseTicks(state.getValue(LogicGateBlock.DELAY))) {
+                clockTimer = 0;
+                clockPhaseOn = !clockPhaseOn;
+                setChanged();
+            }
+            logic = type.evaluate(clockPhaseOn, false);
+        }
         else if (type == GateType.OR && state.getValue(LogicGateBlock.EXCLUSIVE)) logic = a ^ b;   // XOR
         else logic = type.evaluate(a, b);
         outputActive = logic;
@@ -172,6 +184,8 @@ public class LogicGateBlockEntity extends BlockEntity {
         super.saveAdditional(tag, registries);
         tag.putInt("energy", buffer.getEnergyStored());
         tag.putBoolean("output", outputActive);
+        tag.putBoolean("clockPhaseOn", clockPhaseOn);
+        tag.putInt("clockTimer", clockTimer);
     }
 
     @Override
@@ -179,5 +193,7 @@ public class LogicGateBlockEntity extends BlockEntity {
         super.loadAdditional(tag, registries);
         buffer.setEnergy(tag.getInt("energy"));
         outputActive = tag.getBoolean("output");
+        clockPhaseOn = !tag.contains("clockPhaseOn") || tag.getBoolean("clockPhaseOn");
+        clockTimer = tag.getInt("clockTimer");
     }
 }

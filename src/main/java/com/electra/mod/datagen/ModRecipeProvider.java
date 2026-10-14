@@ -100,6 +100,15 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_rose_gold_ingot", has(ModTags.Items.INGOTS_ROSE_GOLD))
                 .save(output);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModBlocks.LOGIC_GATE_ITEMS.get(GateType.CLOCK).get())
+                .pattern(" K ")
+                .pattern("WGW")
+                .define('K', Items.CLOCK)
+                .define('G', ModTags.Items.INGOTS_ROSE_GOLD)
+                .define('W', bareWire)
+                .unlockedBy("has_rose_gold_ingot", has(ModTags.Items.INGOTS_ROSE_GOLD))
+                .save(output);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModBlocks.ELECTRIC_LAMP_ITEM.get(), 4)
                 .pattern("GGG")
                 .pattern("GDG")
@@ -131,11 +140,32 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_copper_ingot", has(Tags.Items.INGOTS_COPPER))
                 .save(output);
 
+        // Autocollant alphabétique : papier + colle (slime) + encre pour les lettres
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, ModItems.ALPHABETIC_STICKER.get(), 8)
+                .requires(Items.PAPER)
+                .requires(Tags.Items.SLIME_BALLS)
+                .requires(Items.INK_SAC)
+                .unlockedBy(getHasName(ModBlocks.ELECTRIC_LAMP_ITEM.get()), has(ModBlocks.ELECTRIC_LAMP_ITEM.get()))
+                .save(output);
+
         // ── Blocs de stockage (9 lingots ⇄ 1 bloc) ─────────────────────────
         storageBlock(output, ModItems.ROSE_GOLD_INGOT.get(), ModTags.Items.INGOTS_ROSE_GOLD,
                 ModBlocks.ROSE_GOLD_BLOCK_ITEM.get(), "rose_gold_ingot_from_block");
         storageBlock(output, ModItems.RED_IRON_INGOT.get(), ModTags.Items.INGOTS_RED_IRON,
                 ModBlocks.RED_IRON_BLOCK_ITEM.get(), "red_iron_ingot_from_block");
+
+        // ── Pépites (9 pépites ⇄ 1 lingot) ─────────────────────────────────
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.ROSE_GOLD_NUGGET.get(), 9)
+                .requires(ModTags.Items.INGOTS_ROSE_GOLD)
+                .unlockedBy("has_rose_gold_ingot", has(ModTags.Items.INGOTS_ROSE_GOLD))
+                .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.ROSE_GOLD_INGOT.get())
+                .pattern("###")
+                .pattern("###")
+                .pattern("###")
+                .define('#', ModTags.Items.NUGGETS_ROSE_GOLD)
+                .unlockedBy("has_rose_gold_nugget", has(ModTags.Items.NUGGETS_ROSE_GOLD))
+                .save(output, ResourceLocation.fromNamespaceAndPath(Electra.MODID, "rose_gold_ingot_from_nuggets"));
 
         // ── Alliages (four avancé) ─────────────────────────────────────────
         alloying(output, "rose_gold_ingot",

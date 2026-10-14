@@ -13,6 +13,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
@@ -126,6 +127,14 @@ public class ModBlockStateProvider extends BlockStateProvider {
                     builder.part().modelFile(ledB).rotationY(rotation).addModel()
                             .condition(LogicGateBlock.FACING, facing).condition(LogicGateBlock.INPUT_B, true).end();
                 }
+                if (type == GateType.CLOCK) {
+                    // Curseur de réglage : 4 positions, comme la torche mobile d'un répéteur
+                    for (int delay = 1; delay <= 4; delay++) {
+                        builder.part().modelFile(models().getExistingFile(modLoc("block/energy_clock_marker_" + delay)))
+                                .rotationY(rotation).addModel()
+                                .condition(LogicGateBlock.FACING, facing).condition(LogicGateBlock.DELAY, delay).end();
+                    }
+                }
                 if (type == GateType.SWITCH) {
                     builder.part().modelFile(leverOn).rotationY(rotation).addModel()
                             .condition(LogicGateBlock.FACING, facing).condition(LogicGateBlock.ON, true).end();
@@ -136,12 +145,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
             simpleBlockItem(gate, gateModel);
         }
 
-        // ── Lampe électrique : allumée / éteinte ; la couleur est appliquée par teinte (ElectraClient)
-        ModelFile lampOff = models().getExistingFile(modLoc("block/electric_lamp"));
-        ModelFile lampOn = models().getExistingFile(modLoc("block/electric_lamp_on"));
-        getVariantBuilder(ModBlocks.ELECTRIC_LAMP.get()).forAllStates(state -> ConfiguredModel.builder()
-                .modelFile(state.getValue(ElectricLampBlock.LIT) ? lampOn : lampOff).build());
-        simpleBlockItem(ModBlocks.ELECTRIC_LAMP.get(), lampOff);
+        // ── Lampe électrique : texture connectée (voir electricLamp)
+        electricLamp();
 
         // ── Câbles ─────────────────────────────────────────────────────────
         wire(ModBlocks.BARE_WIRE.get(),
@@ -156,6 +161,146 @@ public class ModBlockStateProvider extends BlockStateProvider {
                     .texture("wire", modLoc("block/" + name));
             wire(ModBlocks.INSULATED_WIRES.get(color).get(), center, side);
         }
+    }
+
+    // ── Lampe électrique ───────────────────────────────────────────────────
+    //
+    // Chaque face est découpée en 9 morceaux plats : un centre, 4 bords (2 px) et 4 coins (2×2 px).
+    // Un bord montre la bordure en cuivre, sauf si une lampe de même couleur touche ce côté :
+    // il montre alors le verre et la bordure disparaît. Un coin reste en cuivre tant que l'un de
+    // ses deux côtés n'est pas connecté. Le verre (tintindex 0) prend la couleur de la lampe.
+
+    private static final String LAMP = "block/electric_lamp/";
+
+    private void electricLamp() {
+        var builder = getMultipartBuilder(ModBlocks.ELECTRIC_LAMP.get());
+        BlockModelBuilder inventory = models().withExistingParent("block/electric_lamp_inventory", mcLoc("block/block"))
+                .texture("frame", modLoc("block/electric_lamp_frame"))
+                .texture("glass", modLoc("block/electric_lamp_glass"))
+                .texture("particle", modLoc("block/electric_lamp_frame"));
+
+        for (boolean lit : new boolean[]{false, true}) {
+            String glass = lit ? "on" : "off";
+            // Centres des 6 faces
+            BlockModelBuilder center = lampModel(LAMP + "center_" + glass, lit);
+            for (Direction face : Direction.values()) lampQuad(center, face, 2, 14, 2, 14, "#glass", true);
+            builder.part().modelFile(center).addModel().condition(ElectricLampBlock.LIT, lit).end();
+        }
+        for (Direction face : Direction.values()) {
+            lampQuad(inventory, face, 2, 14, 2, 14, "#glass", false);
+            Direction[] sides = inPlane(face);   // [a-, a+, b-, b+]
+            for (Direction side : sides) {
+                int[] a = range(side, sides);
+                String name = face.getName() + "_" + side.getName();
+                // Bord en cuivre (côté non connecté)
+                ModelFile copper = lampPiece(LAMP + "edge_" + name, face, a, "#frame", false);
+                builder.part().modelFile(copper).addModel()
+                        .condition(ElectricLampBlock.CONNECTIONS.get(side), false).end();
+                lampQuad(inventory, face, a[0], a[1], a[2], a[3], "#frame", false);
+                // Bord en verre (côté connecté)
+                for (boolean lit : new boolean[]{false, true}) {
+                    ModelFile glass = lampPiece(LAMP + "edge_" + name + (lit ? "_on" : "_off"), face, a, "#glass", lit);
+                    builder.part().modelFile(glass).addModel()
+                            .condition(ElectricLampBlock.CONNECTIONS.get(side), true)
+                            .condition(ElectricLampBlock.LIT, lit).end();
+                }
+            }
+            // Coins : un côté de chaque axe du plan de la face
+            for (Direction sa : new Direction[]{sides[0], sides[1]}) {
+                for (Direction sb : new Direction[]{sides[2], sides[3]}) {
+                    int[] ra = range(sa, sides), rb = range(sb, sides);
+                    int[] c = {ra[0], ra[1], rb[2], rb[3]};
+                    String name = face.getName() + "_" + sa.getName() + "_" + sb.getName();
+                    ModelFile copper = lampPiece(LAMP + "corner_" + name, face, c, "#frame", false);
+                    builder.part().modelFile(copper).addModel()
+                            .condition(ElectricLampBlock.CONNECTIONS.get(sa), false).end();
+                    builder.part().modelFile(copper).addModel()
+                            .condition(ElectricLampBlock.CONNECTIONS.get(sa), true)
+                            .condition(ElectricLampBlock.CONNECTIONS.get(sb), false).end();
+                    lampQuad(inventory, face, c[0], c[1], c[2], c[3], "#frame", false);
+                    for (boolean lit : new boolean[]{false, true}) {
+                        ModelFile glass = lampPiece(LAMP + "corner_" + name + (lit ? "_on" : "_off"), face, c, "#glass", lit);
+                        builder.part().modelFile(glass).addModel()
+                                .condition(ElectricLampBlock.CONNECTIONS.get(sa), true)
+                                .condition(ElectricLampBlock.CONNECTIONS.get(sb), true)
+                                .condition(ElectricLampBlock.LIT, lit).end();
+                    }
+                }
+            }
+        }
+        simpleBlockItem(ModBlocks.ELECTRIC_LAMP.get(), inventory);
+    }
+
+    private BlockModelBuilder lampModel(String path, boolean lit) {
+        return models().getBuilder(path)
+                .texture("frame", modLoc("block/electric_lamp_frame"))
+                .texture("glass", modLoc("block/electric_lamp_glass" + (lit ? "_on" : "")))
+                .texture("particle", modLoc("block/electric_lamp_frame"));
+    }
+
+    /** Modèle d'un seul morceau de face (bord ou coin), masqué si une lampe recouvre cette face. */
+    private ModelFile lampPiece(String path, Direction face, int[] r, String texture, boolean lit) {
+        BlockModelBuilder model = lampModel(path, lit);
+        lampQuad(model, face, r[0], r[1], r[2], r[3], texture, true);
+        return model;
+    }
+
+    /**
+     * Les deux axes du plan d'une face, dans l'ordre [a-, a+, b-, b+] où a et b sont,
+     * dans cet ordre, les axes X, Y, Z privés de l'axe de la face.
+     */
+    private static Direction[] inPlane(Direction face) {
+        Direction.Axis[] axes = switch (face.getAxis()) {
+            case X -> new Direction.Axis[]{Direction.Axis.Y, Direction.Axis.Z};
+            case Y -> new Direction.Axis[]{Direction.Axis.X, Direction.Axis.Z};
+            case Z -> new Direction.Axis[]{Direction.Axis.X, Direction.Axis.Y};
+        };
+        return new Direction[]{
+                Direction.fromAxisAndDirection(axes[0], Direction.AxisDirection.NEGATIVE),
+                Direction.fromAxisAndDirection(axes[0], Direction.AxisDirection.POSITIVE),
+                Direction.fromAxisAndDirection(axes[1], Direction.AxisDirection.NEGATIVE),
+                Direction.fromAxisAndDirection(axes[1], Direction.AxisDirection.POSITIVE)};
+    }
+
+    /** Bornes {a0, a1, b0, b1} du bord tourné vers {@code side}, dans le plan de la face. */
+    private static int[] range(Direction side, Direction[] sides) {
+        boolean onA = side.getAxis() == sides[0].getAxis();
+        boolean positive = side.getAxisDirection() == Direction.AxisDirection.POSITIVE;
+        int lo = positive ? 14 : 0, hi = positive ? 16 : 2;
+        return onA ? new int[]{lo, hi, 2, 14} : new int[]{2, 14, lo, hi};
+    }
+
+    /**
+     * Ajoute un morceau plat (épaisseur nulle) sur une face du cube : a et b sont les coordonnées dans
+     * le plan de la face (voir inPlane). Les UV suivent la position (même règle que les UV automatiques
+     * de Minecraft), ce qui fait se raccorder les textures d'une lampe à l'autre.
+     */
+    private static void lampQuad(BlockModelBuilder model, Direction face, float a0, float a1, float b0, float b1,
+                                 String texture, boolean cull) {
+        float[] from = new float[3], to = new float[3];
+        Direction.Axis[] axes = switch (face.getAxis()) {
+            case X -> new Direction.Axis[]{Direction.Axis.Y, Direction.Axis.Z};
+            case Y -> new Direction.Axis[]{Direction.Axis.X, Direction.Axis.Z};
+            case Z -> new Direction.Axis[]{Direction.Axis.X, Direction.Axis.Y};
+        };
+        int ia = axes[0].ordinal(), ib = axes[1].ordinal(), in = face.getAxis().ordinal();
+        from[ia] = a0; to[ia] = a1; from[ib] = b0; to[ib] = b1;
+        from[in] = to[in] = face.getAxisDirection() == Direction.AxisDirection.POSITIVE ? 16 : 0;
+
+        float x0 = from[0], x1 = to[0], y0 = from[1], y1 = to[1], z0 = from[2], z1 = to[2];
+        float[] uv = switch (face) {
+            case NORTH -> new float[]{16 - x1, 16 - y1, 16 - x0, 16 - y0};
+            case SOUTH -> new float[]{x0, 16 - y1, x1, 16 - y0};
+            case EAST -> new float[]{16 - z1, 16 - y1, 16 - z0, 16 - y0};
+            case WEST -> new float[]{z0, 16 - y1, z1, 16 - y0};
+            case UP -> new float[]{x0, z0, x1, z1};
+            case DOWN -> new float[]{x0, 16 - z1, x1, 16 - z0};
+        };
+        var faceBuilder = model.element().from(from[0], from[1], from[2]).to(to[0], to[1], to[2])
+                .face(face).uvs(uv[0], uv[1], uv[2], uv[3]).texture(texture);
+        if (cull) faceBuilder.cullface(face);
+        if ("#glass".equals(texture)) faceBuilder.tintindex(0);
+        faceBuilder.end().end();
     }
 
     /** Câble : un centre toujours présent + un bras par face connectée. */

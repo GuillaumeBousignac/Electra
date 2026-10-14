@@ -1,0 +1,27 @@
+{
+  "elements": [
+    {
+      "faces": {
+        "south": {
+          "cullface": "south",
+          "texture": "#frame"
+        }
+      },
+      "from": [
+        0,
+        0,
+        16
+      ],
+      "to": [
+        2,
+        2,
+        16
+      ]
+    }
+  ],
+  "textures": {
+    "frame": "electra:block/electric_lamp_frame",
+    "glass": "electra:block/electric_lamp_glass",
+    "particle": "electra:block/electric_lamp_frame"
+  }
+}

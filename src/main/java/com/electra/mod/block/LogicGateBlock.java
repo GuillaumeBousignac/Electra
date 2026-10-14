@@ -31,6 +31,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -66,6 +67,8 @@ public class LogicGateBlock extends BaseEntityBlock {
     public static final BooleanProperty OUTPUT = BooleanProperty.create("output");
     /** Interrupteur enclenché (inutilisé par les portes). */
     public static final BooleanProperty ON = BooleanProperty.create("on");
+    /** Horloge : réglage de la durée de chaque phase, de 1 à 4 (voir clockPhaseTicks). Inutilisé ailleurs. */
+    public static final IntegerProperty DELAY = BlockStateProperties.DELAY;
     /** Porte OU en mode OU exclusif (XOR). Inutilisé par les autres types. */
     public static final BooleanProperty EXCLUSIVE = BooleanProperty.create("exclusive");
 
@@ -78,11 +81,21 @@ public class LogicGateBlock extends BaseEntityBlock {
         registerDefaultState(stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
                 .setValue(INPUT_A, false).setValue(INPUT_B, false)
-                .setValue(OUTPUT, false).setValue(ON, false).setValue(EXCLUSIVE, false));
+                .setValue(OUTPUT, false).setValue(ON, false).setValue(EXCLUSIVE, false).setValue(DELAY, 1));
         for (Direction facing : Direction.Plane.HORIZONTAL) shapes.put(facing, buildShape(facing));
     }
 
     public GateType getType() { return type; }
+
+    /** Horloge : durée d'une phase (allumée ou éteinte) en ticks : 0,5 s, 1 s, 2 s, 4 s. */
+    public static int clockPhaseTicks(int delay) {
+        return switch (delay) {
+            case 2 -> 20;
+            case 3 -> 40;
+            case 4 -> 80;
+            default -> 10;
+        };
+    }
 
     // ── Faces ──────────────────────────────────────────────────────────────
 
@@ -123,7 +136,7 @@ public class LogicGateBlock extends BaseEntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, INPUT_A, INPUT_B, OUTPUT, ON, EXCLUSIVE);
+        builder.add(FACING, INPUT_A, INPUT_B, OUTPUT, ON, EXCLUSIVE, DELAY);
     }
 
     /** La sortie pointe vers l'avant du joueur, comme un répéteur posé « dans le sens du courant ». */
@@ -156,6 +169,17 @@ public class LogicGateBlock extends BaseEntityBlock {
                 level.playSound(null, pos, SoundEvents.COMPARATOR_CLICK, SoundSource.BLOCKS, 0.4f, exclusive ? 0.6f : 0.5f);
                 player.displayClientMessage(Component.translatable(
                         exclusive ? "message.electra.gate_mode_xor" : "message.electra.gate_mode_or"), true);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide());
+        }
+        if (type == GateType.CLOCK) {
+            if (!level.isClientSide()) {
+                int delay = state.getValue(DELAY) % 4 + 1;
+                level.setBlock(pos, state.setValue(DELAY, delay), Block.UPDATE_ALL);
+                level.playSound(null, pos, SoundEvents.COMPARATOR_CLICK, SoundSource.BLOCKS, 0.4f, 0.5f + 0.1f * delay);
+                int ticks = clockPhaseTicks(delay);
+                String seconds = ticks % 20 == 0 ? String.valueOf(ticks / 20) : String.valueOf(ticks / 20.0);
+                player.displayClientMessage(Component.translatable("message.electra.clock_phase", seconds), true);
             }
             return InteractionResult.sidedSuccess(level.isClientSide());
         }

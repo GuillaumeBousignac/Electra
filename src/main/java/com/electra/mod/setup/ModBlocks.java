@@ -150,7 +150,6 @@ public class ModBlocks {
                             .mapColor(MapColor.COLOR_ORANGE)
                             .strength(1.5f, 3.0f)
                             .sound(SoundType.COPPER)
-                            .noOcclusion()
                             .lightLevel(state -> state.getValue(ElectricLampBlock.LIT) ? 15 : 0));
     public static final DeferredItem<BlockItem> ELECTRIC_LAMP_ITEM =
             ITEMS.registerSimpleBlockItem("electric_lamp", ELECTRIC_LAMP);

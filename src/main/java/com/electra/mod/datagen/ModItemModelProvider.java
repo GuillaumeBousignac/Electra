@@ -21,6 +21,8 @@ public class ModItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         basicItem(ModItems.ROSE_GOLD_INGOT.get());
+        basicItem(ModItems.ROSE_GOLD_NUGGET.get());
+        basicItem(ModItems.ALPHABETIC_STICKER.get());
         basicItem(ModItems.RED_IRON_INGOT.get());
 
         // Texture provisoire : bâton vanilla, tenu comme un outil

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "G": {
+      "tag": "c:ingots/rose_gold"
+    },
+    "K": {
+      "item": "minecraft:clock"
+    },
+    "W": {
+      "item": "electra:bare_wire"
+    }
+  },
+  "pattern": [
+    " K ",
+    "WGW"
+  ],
+  "result": {
+    "count": 1,
+    "id": "electra:energy_clock"
+  }
+}

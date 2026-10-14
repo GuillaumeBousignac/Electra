@@ -32,6 +32,7 @@ public class ModLanguageProvider extends LanguageProvider {
         add(ModBlocks.LOGIC_GATES.get(GateType.OR).get(), "OR Gate");
         add(ModBlocks.LOGIC_GATES.get(GateType.NOT).get(), "NOT Gate");
         add(ModBlocks.LOGIC_GATES.get(GateType.SWITCH).get(), "Energy Switch");
+        add(ModBlocks.LOGIC_GATES.get(GateType.CLOCK).get(), "Energy Clock");
         add(ModBlocks.ELECTRIC_LAMP.get(), "Electric Lamp");
 
         for (DyeColor color : DyeColor.values()) {
@@ -41,6 +42,7 @@ public class ModLanguageProvider extends LanguageProvider {
         // ── Objets ─────────────────────────────────────────────────────────
         add(ModItems.ENERGY_METER.get(), "Energy Meter");
         add(ModItems.ROSE_GOLD_INGOT.get(), "Rose Gold Ingot");
+        add(ModItems.ROSE_GOLD_NUGGET.get(), "Rose Gold Nugget");
         add(ModItems.RED_IRON_INGOT.get(), "Red Iron Ingot");
 
         // ── Onglets créatifs ───────────────────────────────────────────────
@@ -60,7 +62,12 @@ public class ModLanguageProvider extends LanguageProvider {
         add("message.electra.gate_mode_xor", "Mode: XOR (exclusive OR)");
         add("tooltip.electra.not_gate", "Output powered from the back while no side input is powered");
         add("tooltip.electra.energy_switch", "Right-click to let power flow from the back to the front");
-        add("tooltip.electra.electric_lamp", "Lights up while powered. Right-click with a dye to change its color");
+        add("tooltip.electra.energy_clock", "Turns the power from the back on and off in a loop. Right-click: change the phase length");
+        add("message.electra.clock_phase", "Clock: %1$s s on, then %1$s s off");
+        add("tooltip.electra.electric_lamp", "Lights up while powered; touching lamps share power. Right-click with a dye to change its color");
+        add("tooltip.electra.electric_lamp_symbol", "Sneak + right-click: next letter. Sneak + right-click with a dye: letter color");
+        add("message.electra.lamp_symbol", "Symbol: %s");
+        add("symbol.electra.none", "none");
 
         // ── JEI ────────────────────────────────────────────────────────────
         add("jei.electra.alloying", "Alloying");

@@ -29,6 +29,10 @@ public class ModItemTagsProvider extends ItemTagsProvider {
                 .addTag(ModTags.Items.INGOTS_ROSE_GOLD)
                 .addTag(ModTags.Items.INGOTS_RED_IRON);
 
+        // Pépites
+        tag(ModTags.Items.NUGGETS_ROSE_GOLD).add(ModItems.ROSE_GOLD_NUGGET.get());
+        tag(Tags.Items.NUGGETS).addTag(ModTags.Items.NUGGETS_ROSE_GOLD);
+
         // Blocs de stockage : recopiés depuis les étiquettes de blocs
         copy(ModTags.Blocks.STORAGE_BLOCKS_ROSE_GOLD, ModTags.Items.STORAGE_BLOCKS_ROSE_GOLD);
         copy(ModTags.Blocks.STORAGE_BLOCKS_RED_IRON, ModTags.Items.STORAGE_BLOCKS_RED_IRON);

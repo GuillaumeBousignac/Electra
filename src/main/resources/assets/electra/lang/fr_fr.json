@@ -7,6 +7,8 @@
   "block.electra.advanced_furnace": "Four avancé",
   "item.electra.energy_meter": "Mesureur d'énergie",
   "item.electra.rose_gold_ingot": "Lingot d'or rose",
+  "item.electra.rose_gold_nugget": "Pépite d'or rose",
+  "item.electra.alphabetic_sticker": "Autocollant alphabétique",
   "item.electra.red_iron_ingot": "Lingot de fer rouge",
   "creativetab.electra.electra_blocks": "Electra – Blocs",
   "creativetab.electra.electra_items": "Electra – Objets",
@@ -42,7 +44,15 @@
   "tooltip.electra.or_gate": "Sortie alimentée quand au moins une entrée latérale l'est. Accroupi + clic droit : passe en OU exclusif (une seule entrée)",
   "tooltip.electra.not_gate": "Sortie alimentée par l'arrière tant qu'aucune entrée latérale ne l'est",
   "tooltip.electra.energy_switch": "Clic droit : laisse passer le courant de l'arrière vers l'avant",
-  "tooltip.electra.electric_lamp": "S'allume quand elle est alimentée. Clic droit avec une teinture pour changer sa couleur",
+  "tooltip.electra.electric_lamp": "S'allume quand elle est alimentée ; les lampes qui se touchent partagent le courant. Clic droit avec une teinture pour changer sa couleur",
+  "tooltip.electra.electric_lamp_symbol": "Avec un autocollant : accroupi + clic droit pour la lettre suivante, accroupi + clic droit avec une teinture pour sa couleur, cisaille pour le retirer",
+  "tooltip.electra.lamp_sticker": "Clic droit sur une lampe électrique pour y coller une lettre",
+  "message.electra.lamp_has_sticker": "Cette lampe a déjà un autocollant : retire-le avec une cisaille",
+  "message.electra.lamp_symbol": "Symbole : %s",
+  "symbol.electra.none": "aucun",
   "message.electra.gate_mode_or": "Mode : OU",
-  "message.electra.gate_mode_xor": "Mode : OU exclusif (XOR)"
+  "message.electra.gate_mode_xor": "Mode : OU exclusif (XOR)",
+  "block.electra.energy_clock": "Horloge électrique",
+  "tooltip.electra.energy_clock": "Coupe et rétablit en boucle le courant venu de l'arrière. Clic droit : change la durée des phases",
+  "message.electra.clock_phase": "Horloge : %1$s s allumée, puis %1$s s éteinte"
 }

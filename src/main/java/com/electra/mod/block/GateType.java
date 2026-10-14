@@ -18,12 +18,15 @@ import org.jetbrains.annotations.NotNull;
  * - NOT : les entrées ne servent que de signal ; l'énergie vient de l'arrière.
  * - SWITCH (interrupteur) : pas d'entrées ; laisse passer le courant de l'arrière vers l'avant
  *   quand il est enclenché (clic droit).
+ * - CLOCK (horloge) : pas d'entrées ; coupe et rétablit le courant de l'arrière vers l'avant en boucle.
+ *   Clic droit : durée de chaque phase (4 réglages, comme un répéteur, voir LogicGateBlock#DELAY).
  */
 public enum GateType implements StringRepresentable {
     AND("and_gate", true, false),
     OR("or_gate", true, false),
     NOT("not_gate", true, true),
-    SWITCH("energy_switch", false, true);
+    SWITCH("energy_switch", false, true),
+    CLOCK("energy_clock", false, true);
 
     public static final Codec<GateType> CODEC = StringRepresentable.fromEnum(GateType::values);
 
@@ -37,7 +40,7 @@ public enum GateType implements StringRepresentable {
         this.hasPowerSide = hasPowerSide;
     }
 
-    /** Identifiant du bloc (and_gate, or_gate, not_gate, energy_switch). */
+    /** Identifiant du bloc (and_gate, or_gate, not_gate, energy_switch, energy_clock). */
     public String id()               { return id; }
     /** Faces gauche et droite raccordables (entrées A et B). */
     public boolean hasInputs()       { return hasInputs; }
@@ -46,13 +49,13 @@ public enum GateType implements StringRepresentable {
     /** Les entrées fournissent aussi l'énergie de sortie (AND / OR). */
     public boolean inputsCarryPower() { return hasInputs && !hasPowerSide; }
 
-    /** Résultat logique. Pour l'interrupteur, {@code a} porte sa position (enclenché ou non). */
+    /** Résultat logique. Interrupteur : {@code a} = enclenché ; horloge : {@code a} = phase active. */
     public boolean evaluate(boolean a, boolean b) {
         return switch (this) {
             case AND -> a && b;
             case OR -> a || b;
             case NOT -> !(a || b);
-            case SWITCH -> a;
+            case SWITCH, CLOCK -> a;
         };
     }
 

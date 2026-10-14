@@ -1,100 +1,1532 @@
 {
-  "variants": {
-    "color=black,lit=false": {
-      "model": "electra:block/electric_lamp"
+  "multipart": [
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/center_off"
+      },
+      "when": {
+        "lit": "false"
+      }
     },
-    "color=black,lit=true": {
-      "model": "electra:block/electric_lamp_on"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/center_on"
+      },
+      "when": {
+        "lit": "true"
+      }
     },
-    "color=blue,lit=false": {
-      "model": "electra:block/electric_lamp"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_down_west"
+      },
+      "when": {
+        "west": "false"
+      }
     },
-    "color=blue,lit=true": {
-      "model": "electra:block/electric_lamp_on"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_down_west_off"
+      },
+      "when": {
+        "lit": "false",
+        "west": "true"
+      }
     },
-    "color=brown,lit=false": {
-      "model": "electra:block/electric_lamp"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_down_west_on"
+      },
+      "when": {
+        "lit": "true",
+        "west": "true"
+      }
     },
-    "color=brown,lit=true": {
-      "model": "electra:block/electric_lamp_on"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_down_east"
+      },
+      "when": {
+        "east": "false"
+      }
     },
-    "color=cyan,lit=false": {
-      "model": "electra:block/electric_lamp"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_down_east_off"
+      },
+      "when": {
+        "east": "true",
+        "lit": "false"
+      }
     },
-    "color=cyan,lit=true": {
-      "model": "electra:block/electric_lamp_on"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_down_east_on"
+      },
+      "when": {
+        "east": "true",
+        "lit": "true"
+      }
     },
-    "color=gray,lit=false": {
-      "model": "electra:block/electric_lamp"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_down_north"
+      },
+      "when": {
+        "north": "false"
+      }
     },
-    "color=gray,lit=true": {
-      "model": "electra:block/electric_lamp_on"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_down_north_off"
+      },
+      "when": {
+        "lit": "false",
+        "north": "true"
+      }
     },
-    "color=green,lit=false": {
-      "model": "electra:block/electric_lamp"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_down_north_on"
+      },
+      "when": {
+        "lit": "true",
+        "north": "true"
+      }
     },
-    "color=green,lit=true": {
-      "model": "electra:block/electric_lamp_on"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_down_south"
+      },
+      "when": {
+        "south": "false"
+      }
     },
-    "color=light_blue,lit=false": {
-      "model": "electra:block/electric_lamp"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_down_south_off"
+      },
+      "when": {
+        "lit": "false",
+        "south": "true"
+      }
     },
-    "color=light_blue,lit=true": {
-      "model": "electra:block/electric_lamp_on"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_down_south_on"
+      },
+      "when": {
+        "lit": "true",
+        "south": "true"
+      }
     },
-    "color=light_gray,lit=false": {
-      "model": "electra:block/electric_lamp"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_down_west_north"
+      },
+      "when": {
+        "west": "false"
+      }
     },
-    "color=light_gray,lit=true": {
-      "model": "electra:block/electric_lamp_on"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_down_west_north"
+      },
+      "when": {
+        "north": "false",
+        "west": "true"
+      }
     },
-    "color=lime,lit=false": {
-      "model": "electra:block/electric_lamp"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_down_west_north_off"
+      },
+      "when": {
+        "lit": "false",
+        "north": "true",
+        "west": "true"
+      }
     },
-    "color=lime,lit=true": {
-      "model": "electra:block/electric_lamp_on"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_down_west_north_on"
+      },
+      "when": {
+        "lit": "true",
+        "north": "true",
+        "west": "true"
+      }
     },
-    "color=magenta,lit=false": {
-      "model": "electra:block/electric_lamp"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_down_west_south"
+      },
+      "when": {
+        "west": "false"
+      }
     },
-    "color=magenta,lit=true": {
-      "model": "electra:block/electric_lamp_on"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_down_west_south"
+      },
+      "when": {
+        "south": "false",
+        "west": "true"
+      }
     },
-    "color=orange,lit=false": {
-      "model": "electra:block/electric_lamp"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_down_west_south_off"
+      },
+      "when": {
+        "lit": "false",
+        "south": "true",
+        "west": "true"
+      }
     },
-    "color=orange,lit=true": {
-      "model": "electra:block/electric_lamp_on"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_down_west_south_on"
+      },
+      "when": {
+        "lit": "true",
+        "south": "true",
+        "west": "true"
+      }
     },
-    "color=pink,lit=false": {
-      "model": "electra:block/electric_lamp"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_down_east_north"
+      },
+      "when": {
+        "east": "false"
+      }
     },
-    "color=pink,lit=true": {
-      "model": "electra:block/electric_lamp_on"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_down_east_north"
+      },
+      "when": {
+        "east": "true",
+        "north": "false"
+      }
     },
-    "color=purple,lit=false": {
-      "model": "electra:block/electric_lamp"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_down_east_north_off"
+      },
+      "when": {
+        "east": "true",
+        "lit": "false",
+        "north": "true"
+      }
     },
-    "color=purple,lit=true": {
-      "model": "electra:block/electric_lamp_on"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_down_east_north_on"
+      },
+      "when": {
+        "east": "true",
+        "lit": "true",
+        "north": "true"
+      }
     },
-    "color=red,lit=false": {
-      "model": "electra:block/electric_lamp"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_down_east_south"
+      },
+      "when": {
+        "east": "false"
+      }
     },
-    "color=red,lit=true": {
-      "model": "electra:block/electric_lamp_on"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_down_east_south"
+      },
+      "when": {
+        "east": "true",
+        "south": "false"
+      }
     },
-    "color=white,lit=false": {
-      "model": "electra:block/electric_lamp"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_down_east_south_off"
+      },
+      "when": {
+        "east": "true",
+        "lit": "false",
+        "south": "true"
+      }
     },
-    "color=white,lit=true": {
-      "model": "electra:block/electric_lamp_on"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_down_east_south_on"
+      },
+      "when": {
+        "east": "true",
+        "lit": "true",
+        "south": "true"
+      }
     },
-    "color=yellow,lit=false": {
-      "model": "electra:block/electric_lamp"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_up_west"
+      },
+      "when": {
+        "west": "false"
+      }
     },
-    "color=yellow,lit=true": {
-      "model": "electra:block/electric_lamp_on"
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_up_west_off"
+      },
+      "when": {
+        "lit": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_up_west_on"
+      },
+      "when": {
+        "lit": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_up_east"
+      },
+      "when": {
+        "east": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_up_east_off"
+      },
+      "when": {
+        "east": "true",
+        "lit": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_up_east_on"
+      },
+      "when": {
+        "east": "true",
+        "lit": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_up_north"
+      },
+      "when": {
+        "north": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_up_north_off"
+      },
+      "when": {
+        "lit": "false",
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_up_north_on"
+      },
+      "when": {
+        "lit": "true",
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_up_south"
+      },
+      "when": {
+        "south": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_up_south_off"
+      },
+      "when": {
+        "lit": "false",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_up_south_on"
+      },
+      "when": {
+        "lit": "true",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_up_west_north"
+      },
+      "when": {
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_up_west_north"
+      },
+      "when": {
+        "north": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_up_west_north_off"
+      },
+      "when": {
+        "lit": "false",
+        "north": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_up_west_north_on"
+      },
+      "when": {
+        "lit": "true",
+        "north": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_up_west_south"
+      },
+      "when": {
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_up_west_south"
+      },
+      "when": {
+        "south": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_up_west_south_off"
+      },
+      "when": {
+        "lit": "false",
+        "south": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_up_west_south_on"
+      },
+      "when": {
+        "lit": "true",
+        "south": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_up_east_north"
+      },
+      "when": {
+        "east": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_up_east_north"
+      },
+      "when": {
+        "east": "true",
+        "north": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_up_east_north_off"
+      },
+      "when": {
+        "east": "true",
+        "lit": "false",
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_up_east_north_on"
+      },
+      "when": {
+        "east": "true",
+        "lit": "true",
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_up_east_south"
+      },
+      "when": {
+        "east": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_up_east_south"
+      },
+      "when": {
+        "east": "true",
+        "south": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_up_east_south_off"
+      },
+      "when": {
+        "east": "true",
+        "lit": "false",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_up_east_south_on"
+      },
+      "when": {
+        "east": "true",
+        "lit": "true",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_north_west"
+      },
+      "when": {
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_north_west_off"
+      },
+      "when": {
+        "lit": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_north_west_on"
+      },
+      "when": {
+        "lit": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_north_east"
+      },
+      "when": {
+        "east": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_north_east_off"
+      },
+      "when": {
+        "east": "true",
+        "lit": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_north_east_on"
+      },
+      "when": {
+        "east": "true",
+        "lit": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_north_down"
+      },
+      "when": {
+        "down": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_north_down_off"
+      },
+      "when": {
+        "down": "true",
+        "lit": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_north_down_on"
+      },
+      "when": {
+        "down": "true",
+        "lit": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_north_up"
+      },
+      "when": {
+        "up": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_north_up_off"
+      },
+      "when": {
+        "lit": "false",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_north_up_on"
+      },
+      "when": {
+        "lit": "true",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_north_west_down"
+      },
+      "when": {
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_north_west_down"
+      },
+      "when": {
+        "down": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_north_west_down_off"
+      },
+      "when": {
+        "down": "true",
+        "lit": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_north_west_down_on"
+      },
+      "when": {
+        "down": "true",
+        "lit": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_north_west_up"
+      },
+      "when": {
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_north_west_up"
+      },
+      "when": {
+        "up": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_north_west_up_off"
+      },
+      "when": {
+        "lit": "false",
+        "up": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_north_west_up_on"
+      },
+      "when": {
+        "lit": "true",
+        "up": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_north_east_down"
+      },
+      "when": {
+        "east": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_north_east_down"
+      },
+      "when": {
+        "down": "false",
+        "east": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_north_east_down_off"
+      },
+      "when": {
+        "down": "true",
+        "east": "true",
+        "lit": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_north_east_down_on"
+      },
+      "when": {
+        "down": "true",
+        "east": "true",
+        "lit": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_north_east_up"
+      },
+      "when": {
+        "east": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_north_east_up"
+      },
+      "when": {
+        "east": "true",
+        "up": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_north_east_up_off"
+      },
+      "when": {
+        "east": "true",
+        "lit": "false",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_north_east_up_on"
+      },
+      "when": {
+        "east": "true",
+        "lit": "true",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_south_west"
+      },
+      "when": {
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_south_west_off"
+      },
+      "when": {
+        "lit": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_south_west_on"
+      },
+      "when": {
+        "lit": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_south_east"
+      },
+      "when": {
+        "east": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_south_east_off"
+      },
+      "when": {
+        "east": "true",
+        "lit": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_south_east_on"
+      },
+      "when": {
+        "east": "true",
+        "lit": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_south_down"
+      },
+      "when": {
+        "down": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_south_down_off"
+      },
+      "when": {
+        "down": "true",
+        "lit": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_south_down_on"
+      },
+      "when": {
+        "down": "true",
+        "lit": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_south_up"
+      },
+      "when": {
+        "up": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_south_up_off"
+      },
+      "when": {
+        "lit": "false",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_south_up_on"
+      },
+      "when": {
+        "lit": "true",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_south_west_down"
+      },
+      "when": {
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_south_west_down"
+      },
+      "when": {
+        "down": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_south_west_down_off"
+      },
+      "when": {
+        "down": "true",
+        "lit": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_south_west_down_on"
+      },
+      "when": {
+        "down": "true",
+        "lit": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_south_west_up"
+      },
+      "when": {
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_south_west_up"
+      },
+      "when": {
+        "up": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_south_west_up_off"
+      },
+      "when": {
+        "lit": "false",
+        "up": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_south_west_up_on"
+      },
+      "when": {
+        "lit": "true",
+        "up": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_south_east_down"
+      },
+      "when": {
+        "east": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_south_east_down"
+      },
+      "when": {
+        "down": "false",
+        "east": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_south_east_down_off"
+      },
+      "when": {
+        "down": "true",
+        "east": "true",
+        "lit": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_south_east_down_on"
+      },
+      "when": {
+        "down": "true",
+        "east": "true",
+        "lit": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_south_east_up"
+      },
+      "when": {
+        "east": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_south_east_up"
+      },
+      "when": {
+        "east": "true",
+        "up": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_south_east_up_off"
+      },
+      "when": {
+        "east": "true",
+        "lit": "false",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_south_east_up_on"
+      },
+      "when": {
+        "east": "true",
+        "lit": "true",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_west_down"
+      },
+      "when": {
+        "down": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_west_down_off"
+      },
+      "when": {
+        "down": "true",
+        "lit": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_west_down_on"
+      },
+      "when": {
+        "down": "true",
+        "lit": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_west_up"
+      },
+      "when": {
+        "up": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_west_up_off"
+      },
+      "when": {
+        "lit": "false",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_west_up_on"
+      },
+      "when": {
+        "lit": "true",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_west_north"
+      },
+      "when": {
+        "north": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_west_north_off"
+      },
+      "when": {
+        "lit": "false",
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_west_north_on"
+      },
+      "when": {
+        "lit": "true",
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_west_south"
+      },
+      "when": {
+        "south": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_west_south_off"
+      },
+      "when": {
+        "lit": "false",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_west_south_on"
+      },
+      "when": {
+        "lit": "true",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_west_down_north"
+      },
+      "when": {
+        "down": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_west_down_north"
+      },
+      "when": {
+        "down": "true",
+        "north": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_west_down_north_off"
+      },
+      "when": {
+        "down": "true",
+        "lit": "false",
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_west_down_north_on"
+      },
+      "when": {
+        "down": "true",
+        "lit": "true",
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_west_down_south"
+      },
+      "when": {
+        "down": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_west_down_south"
+      },
+      "when": {
+        "down": "true",
+        "south": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_west_down_south_off"
+      },
+      "when": {
+        "down": "true",
+        "lit": "false",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_west_down_south_on"
+      },
+      "when": {
+        "down": "true",
+        "lit": "true",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_west_up_north"
+      },
+      "when": {
+        "up": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_west_up_north"
+      },
+      "when": {
+        "north": "false",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_west_up_north_off"
+      },
+      "when": {
+        "lit": "false",
+        "north": "true",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_west_up_north_on"
+      },
+      "when": {
+        "lit": "true",
+        "north": "true",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_west_up_south"
+      },
+      "when": {
+        "up": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_west_up_south"
+      },
+      "when": {
+        "south": "false",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_west_up_south_off"
+      },
+      "when": {
+        "lit": "false",
+        "south": "true",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_west_up_south_on"
+      },
+      "when": {
+        "lit": "true",
+        "south": "true",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_east_down"
+      },
+      "when": {
+        "down": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_east_down_off"
+      },
+      "when": {
+        "down": "true",
+        "lit": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_east_down_on"
+      },
+      "when": {
+        "down": "true",
+        "lit": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_east_up"
+      },
+      "when": {
+        "up": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_east_up_off"
+      },
+      "when": {
+        "lit": "false",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_east_up_on"
+      },
+      "when": {
+        "lit": "true",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_east_north"
+      },
+      "when": {
+        "north": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_east_north_off"
+      },
+      "when": {
+        "lit": "false",
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_east_north_on"
+      },
+      "when": {
+        "lit": "true",
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_east_south"
+      },
+      "when": {
+        "south": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_east_south_off"
+      },
+      "when": {
+        "lit": "false",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/edge_east_south_on"
+      },
+      "when": {
+        "lit": "true",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_east_down_north"
+      },
+      "when": {
+        "down": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_east_down_north"
+      },
+      "when": {
+        "down": "true",
+        "north": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_east_down_north_off"
+      },
+      "when": {
+        "down": "true",
+        "lit": "false",
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_east_down_north_on"
+      },
+      "when": {
+        "down": "true",
+        "lit": "true",
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_east_down_south"
+      },
+      "when": {
+        "down": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_east_down_south"
+      },
+      "when": {
+        "down": "true",
+        "south": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_east_down_south_off"
+      },
+      "when": {
+        "down": "true",
+        "lit": "false",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_east_down_south_on"
+      },
+      "when": {
+        "down": "true",
+        "lit": "true",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_east_up_north"
+      },
+      "when": {
+        "up": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_east_up_north"
+      },
+      "when": {
+        "north": "false",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_east_up_north_off"
+      },
+      "when": {
+        "lit": "false",
+        "north": "true",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_east_up_north_on"
+      },
+      "when": {
+        "lit": "true",
+        "north": "true",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_east_up_south"
+      },
+      "when": {
+        "up": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_east_up_south"
+      },
+      "when": {
+        "south": "false",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_east_up_south_off"
+      },
+      "when": {
+        "lit": "false",
+        "south": "true",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/electric_lamp/corner_east_up_south_on"
+      },
+      "when": {
+        "lit": "true",
+        "south": "true",
+        "up": "true"
+      }
     }
-  }
+  ]
 }
