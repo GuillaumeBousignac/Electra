@@ -4,6 +4,7 @@ import com.electra.mod.block.ElectricLampBlock;
 import com.electra.mod.client.ElectricLampRenderer;
 import com.electra.mod.client.LightningCollectorRenderer;
 import com.electra.mod.client.RedstoneDynamoRenderer;
+import com.electra.mod.client.SilhouetteSpriteSource;
 import com.electra.mod.screen.AdvancedFurnaceScreen;
 import com.electra.mod.setup.ModBlockEntities;
 import com.electra.mod.setup.ModBlocks;
@@ -16,6 +17,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.event.RegisterSpriteSourceTypesEvent;
 
 // Cette classe n'est jamais chargée sur un serveur dédié.
 @Mod(value = Electra.MODID, dist = Dist.CLIENT)
@@ -36,6 +38,12 @@ public class ElectraClient {
                         ? state.getValue(ElectricLampBlock.COLOR).getTextureDiffuseColor()
                         : 0xFFFFFFFF,
                 ModBlocks.ELECTRIC_LAMP.get());
+    }
+
+    /** Silhouettes des outils de Minecraft pour les motifs de lampe (voir assets/minecraft/atlases/blocks.json). */
+    @SubscribeEvent
+    public static void onRegisterSpriteSources(RegisterSpriteSourceTypesEvent event) {
+        event.register(SilhouetteSpriteSource.ID, SilhouetteSpriteSource.TYPE);
     }
 
     /** Modèles dessinés par le code, sans bloc associé : le bras de la Redstone Dynamo. */

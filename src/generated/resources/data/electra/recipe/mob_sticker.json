@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "tag": "c:slime_balls"
+    },
+    {
+      "tag": "c:bones"
+    }
+  ],
+  "result": {
+    "count": 8,
+    "id": "electra:mob_sticker"
+  }
+}

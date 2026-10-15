@@ -61,7 +61,7 @@ public class ElectricLampRenderer implements BlockEntityRenderer<ElectricLampBlo
 
             int light = lit ? LightTexture.FULL_BRIGHT : LevelRenderer.getLightColor(level, neighborPos);
             float shade = level.getShade(face, true);   // même ombrage que les faces du bloc
-            quad(consumer, pose, face, sprite,
+            quad(consumer, pose, face, sprite, symbol.scale(),
                     (int) (red * shade), (int) (green * shade), (int) (blue * shade), light);
         }
     }
@@ -72,7 +72,7 @@ public class ElectricLampRenderer implements BlockEntityRenderer<ElectricLampBlo
      * attendu par Minecraft (face visible de l'extérieur).
      */
     private static void quad(VertexConsumer consumer, PoseStack.Pose pose, Direction face, TextureAtlasSprite sprite,
-                             int red, int green, int blue, int light) {
+                             float scale, int red, int green, int blue, int light) {
         float[] n = {face.getStepX(), face.getStepY(), face.getStepZ()};
         float[] r, u;
         switch (face) {
@@ -87,7 +87,7 @@ public class ElectricLampRenderer implements BlockEntityRenderer<ElectricLampBlo
         // (s, t) : 0 = gauche / bas, 1 = droite / haut
         float[][] corners = {{0, 0}, {1, 0}, {1, 1}, {0, 1}};
         for (float[] c : corners) {
-            float s = c[0] - 0.5f, t = c[1] - 0.5f;
+            float s = (c[0] - 0.5f) * scale, t = (c[1] - 0.5f) * scale;
             float x = 0.5f + n[0] * depth + r[0] * s + u[0] * t;
             float y = 0.5f + n[1] * depth + r[1] * s + u[1] * t;
             float z = 0.5f + n[2] * depth + r[2] * s + u[2] * t;

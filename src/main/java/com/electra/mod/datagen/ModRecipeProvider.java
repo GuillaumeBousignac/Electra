@@ -148,6 +148,46 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(ModBlocks.ELECTRIC_LAMP_ITEM.get()), has(ModBlocks.ELECTRIC_LAMP_ITEM.get()))
                 .save(output);
 
+        // Autocollant d'outils : papier + colle (slime) + pépite de fer pour les outils
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, ModItems.TOOL_STICKER.get(), 8)
+                .requires(Items.PAPER)
+                .requires(Tags.Items.SLIME_BALLS)
+                .requires(Tags.Items.NUGGETS_IRON)
+                .unlockedBy(getHasName(ModBlocks.ELECTRIC_LAMP_ITEM.get()), has(ModBlocks.ELECTRIC_LAMP_ITEM.get()))
+                .save(output);
+
+        // Autocollant de symboles : papier + colle (slime) + poche d'encre luisante, comme pour les panneaux
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, ModItems.SYMBOL_STICKER.get(), 8)
+                .requires(Items.PAPER)
+                .requires(Tags.Items.SLIME_BALLS)
+                .requires(Items.GLOW_INK_SAC)
+                .unlockedBy(getHasName(ModBlocks.ELECTRIC_LAMP_ITEM.get()), has(ModBlocks.ELECTRIC_LAMP_ITEM.get()))
+                .save(output);
+
+        // Autocollant de chiffres : papier + colle (slime) + redstone, pour les calculs
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, ModItems.NUMBER_STICKER.get(), 8)
+                .requires(Items.PAPER)
+                .requires(Tags.Items.SLIME_BALLS)
+                .requires(Tags.Items.DUSTS_REDSTONE)
+                .unlockedBy(getHasName(ModBlocks.ELECTRIC_LAMP_ITEM.get()), has(ModBlocks.ELECTRIC_LAMP_ITEM.get()))
+                .save(output);
+
+        // Autocollant de créatures : papier + colle (slime) + os
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, ModItems.MOB_STICKER.get(), 8)
+                .requires(Items.PAPER)
+                .requires(Tags.Items.SLIME_BALLS)
+                .requires(Tags.Items.BONES)
+                .unlockedBy(getHasName(ModBlocks.ELECTRIC_LAMP_ITEM.get()), has(ModBlocks.ELECTRIC_LAMP_ITEM.get()))
+                .save(output);
+
+        // Autocollant d'objets : papier + colle (slime) + cadre, qui sert à exposer les objets
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, ModItems.ITEM_STICKER.get(), 8)
+                .requires(Items.PAPER)
+                .requires(Tags.Items.SLIME_BALLS)
+                .requires(Items.ITEM_FRAME)
+                .unlockedBy(getHasName(ModBlocks.ELECTRIC_LAMP_ITEM.get()), has(ModBlocks.ELECTRIC_LAMP_ITEM.get()))
+                .save(output);
+
         // ── Blocs de stockage (9 lingots ⇄ 1 bloc) ─────────────────────────
         storageBlock(output, ModItems.ROSE_GOLD_INGOT.get(), ModTags.Items.INGOTS_ROSE_GOLD,
                 ModBlocks.ROSE_GOLD_BLOCK_ITEM.get(), "rose_gold_ingot_from_block");

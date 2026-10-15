@@ -71,6 +71,13 @@ public class ElectricLampBlockEntity extends BlockEntity {
         syncToClients();
     }
 
+    /** Autocollant retiré : plus de motif, couleur par défaut pour le prochain. */
+    public void clearSymbol() {
+        this.symbol = LampSymbol.NONE;
+        this.symbolColor = DyeColor.BLACK;
+        syncToClients();
+    }
+
     private void syncToClients() {
         setChanged();
         if (level != null && !level.isClientSide()) {

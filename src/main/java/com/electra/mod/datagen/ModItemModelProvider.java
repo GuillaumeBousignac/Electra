@@ -23,6 +23,11 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.ROSE_GOLD_INGOT.get());
         basicItem(ModItems.ROSE_GOLD_NUGGET.get());
         basicItem(ModItems.ALPHABETIC_STICKER.get());
+        basicItem(ModItems.TOOL_STICKER.get());
+        basicItem(ModItems.ITEM_STICKER.get());
+        basicItem(ModItems.SYMBOL_STICKER.get());
+        basicItem(ModItems.NUMBER_STICKER.get());
+        basicItem(ModItems.MOB_STICKER.get());
         basicItem(ModItems.RED_IRON_INGOT.get());
 
         // Texture provisoire : bâton vanilla, tenu comme un outil

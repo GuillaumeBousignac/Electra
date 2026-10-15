@@ -1,0 +1,258 @@
+{
+  "sources": [
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/iron_pickaxe",
+      "sprite": "electra:lamp_symbol/pickaxe"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/iron_shovel",
+      "sprite": "electra:lamp_symbol/shovel"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/iron_sword",
+      "sprite": "electra:lamp_symbol/sword"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/iron_axe",
+      "sprite": "electra:lamp_symbol/axe"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/iron_hoe",
+      "sprite": "electra:lamp_symbol/hoe"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/bow",
+      "sprite": "electra:lamp_symbol/bow"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/crossbow_standby",
+      "sprite": "electra:lamp_symbol/crossbow"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/trident",
+      "sprite": "electra:lamp_symbol/trident"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/mace",
+      "sprite": "electra:lamp_symbol/mace"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/shears",
+      "sprite": "electra:lamp_symbol/shears"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/bucket",
+      "sprite": "electra:lamp_symbol/bucket"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:entity/creeper/creeper",
+      "sprite": "electra:lamp_symbol/creeper",
+      "mode": "grayscale",
+      "region": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "reference_width": 64
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:entity/skeleton/skeleton",
+      "sprite": "electra:lamp_symbol/skeleton",
+      "mode": "grayscale",
+      "region": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "reference_width": 64
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:entity/zombie/zombie",
+      "sprite": "electra:lamp_symbol/zombie",
+      "mode": "grayscale",
+      "region": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "reference_width": 64
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:entity/villager/villager",
+      "sprite": "electra:lamp_symbol/villager",
+      "mode": "grayscale",
+      "region": [
+        8,
+        8,
+        8,
+        10
+      ],
+      "reference_width": 64,
+      "overlays": [
+        {
+          "region": [
+            26,
+            2,
+            2,
+            4
+          ],
+          "at": [
+            3,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:entity/spider/spider",
+      "sprite": "electra:lamp_symbol/spider",
+      "mode": "grayscale",
+      "region": [
+        40,
+        12,
+        8,
+        8
+      ],
+      "reference_width": 64
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:entity/pig/pig",
+      "sprite": "electra:lamp_symbol/pig",
+      "mode": "grayscale",
+      "region": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "reference_width": 64,
+      "overlays": [
+        {
+          "region": [
+            17,
+            17,
+            4,
+            3
+          ],
+          "at": [
+            2,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:entity/cow/cow",
+      "sprite": "electra:lamp_symbol/cow",
+      "mode": "grayscale",
+      "region": [
+        6,
+        6,
+        8,
+        8
+      ],
+      "reference_width": 64
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/iron_ingot",
+      "sprite": "electra:lamp_symbol/ingot"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/stick",
+      "sprite": "electra:lamp_symbol/stick"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/diamond",
+      "sprite": "electra:lamp_symbol/diamond"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/redstone",
+      "sprite": "electra:lamp_symbol/dust"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/emerald",
+      "sprite": "electra:lamp_symbol/emerald"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/amethyst_shard",
+      "sprite": "electra:lamp_symbol/amethyst"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/coal",
+      "sprite": "electra:lamp_symbol/coal"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/gunpowder",
+      "sprite": "electra:lamp_symbol/gunpowder"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/ender_pearl",
+      "sprite": "electra:lamp_symbol/ender_pearl"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/nether_star",
+      "sprite": "electra:lamp_symbol/nether_star"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/apple",
+      "sprite": "electra:lamp_symbol/apple"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/bread",
+      "sprite": "electra:lamp_symbol/bread"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/bone",
+      "sprite": "electra:lamp_symbol/bone"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/string",
+      "sprite": "electra:lamp_symbol/string"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/feather",
+      "sprite": "electra:lamp_symbol/feather"
+    },
+    {
+      "type": "electra:silhouette",
+      "resource": "minecraft:item/book",
+      "sprite": "electra:lamp_symbol/book"
+    }
+  ]
+}

@@ -1,7 +1,9 @@
 package com.electra.mod.block;
 
 import com.electra.mod.blockentity.ElectricLampBlockEntity;
+import com.electra.mod.item.LampStickerItem;
 import com.electra.mod.setup.ModBlockEntities;
+import com.electra.mod.setup.ModItems;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -12,6 +14,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
@@ -34,6 +37,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,8 +47,13 @@ import java.util.Map;
 /**
  * Lampe électrique : s'allume tant que du courant arrive sur l'une de ses faces, et consomme un peu de FE.
  * Clic droit avec une teinture : change la couleur du verre (la teinture est consommée).
- * Accroupi + clic droit, main vide : passe au motif suivant (aucun → A → … → Z → aucun).
- * Accroupi + clic droit avec une teinture : change la couleur du motif seulement.
+ *
+ * Motif (lettre…) : clic droit avec un autocollant (consommé) pour coller le premier motif de sa famille.
+ * Ensuite, sur une lampe qui porte un autocollant :
+ *   accroupi + clic droit, main vide       → motif suivant (A → … → Z → A) ;
+ *   accroupi + clic droit avec une teinture → couleur du motif seulement ;
+ *   clic droit avec une cisaille            → retire l'autocollant, qui est rendu.
+ * Une lampe cassée rend aussi son autocollant.
  * (Accroupi, Minecraft ignore normalement le bloc quand on tient un objet : voir LampInteractionEvents.)
  *
  * Texture connectée : les propriétés NORTH…DOWN indiquent qu'une lampe de même couleur touche cette face.
@@ -104,14 +113,47 @@ public class ElectricLampBlock extends BaseEntityBlock {
                                                        @NotNull Level level, @NotNull BlockPos pos,
                                                        @NotNull Player player, @NotNull InteractionHand hand,
                                                        @NotNull BlockHitResult hit) {
+        ElectricLampBlockEntity lamp = level.getBlockEntity(pos) instanceof ElectricLampBlockEntity be ? be : null;
+
+        // ── Autocollant : pose le premier motif de sa famille (une seule fois par lampe)
+        if (stack.getItem() instanceof LampStickerItem sticker) {
+            if (lamp == null) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            if (!lamp.getSymbol().isNone()) {
+                if (!level.isClientSide()) {
+                    player.displayClientMessage(Component.translatable("message.electra.lamp_has_sticker"), true);
+                }
+                return ItemInteractionResult.CONSUME;
+            }
+            if (!level.isClientSide()) {
+                LampSymbol symbol = LampSymbol.firstOf(sticker.getFamily());
+                lamp.setSymbol(symbol);
+                level.playSound(null, pos, SoundEvents.ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 1.0f, 1.2f);
+                player.displayClientMessage(Component.translatable("message.electra.lamp_symbol", symbol.displayName()), true);
+                stack.consume(1, player);
+            }
+            return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        }
+
+        // ── Cisaille : retire l'autocollant et le rend
+        if (stack.is(Tags.Items.TOOLS_SHEAR)) {
+            if (lamp == null || lamp.getSymbol().isNone()) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            if (!level.isClientSide()) {
+                ItemStack removed = ModItems.stickerFor(lamp.getSymbol().family());
+                lamp.clearSymbol();
+                Block.popResourceFromFace(level, pos, hit.getDirection(), removed);
+                level.playSound(null, pos, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 1.0f, 1.0f);
+                stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
+            }
+            return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        }
+
         if (!(stack.getItem() instanceof DyeItem dye)) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
+
+        // ── Accroupi + teinture : couleur du motif (il faut un autocollant)
         if (player.isShiftKeyDown()) {
-            // Couleur du motif
-            if (!(level.getBlockEntity(pos) instanceof ElectricLampBlockEntity lamp)) {
-                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-            }
+            if (lamp == null || lamp.getSymbol().isNone()) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
             if (lamp.getSymbolColor() == dye.getDyeColor()) return ItemInteractionResult.CONSUME;
             if (!level.isClientSide()) {
                 lamp.setSymbolColor(dye.getDyeColor());
@@ -120,6 +162,8 @@ public class ElectricLampBlock extends BaseEntityBlock {
             }
             return ItemInteractionResult.sidedSuccess(level.isClientSide());
         }
+
+        // ── Teinture : couleur de la lampe
         if (state.getValue(COLOR) == dye.getDyeColor()) return ItemInteractionResult.CONSUME;
         if (!level.isClientSide()) {
             // Nouvelle couleur : ses connexions changent ; les voisines se mettent à jour via updateShape
@@ -130,13 +174,15 @@ public class ElectricLampBlock extends BaseEntityBlock {
         return ItemInteractionResult.sidedSuccess(level.isClientSide());
     }
 
-    /** Accroupi + clic droit, main vide : motif suivant. */
+    /** Accroupi + clic droit, main vide, sur une lampe qui porte un autocollant : motif suivant. */
     @Override
     protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level,
                                                         @NotNull BlockPos pos, @NotNull Player player,
                                                         @NotNull BlockHitResult hit) {
         if (!player.isShiftKeyDown()) return InteractionResult.PASS;
-        if (!(level.getBlockEntity(pos) instanceof ElectricLampBlockEntity lamp)) return InteractionResult.PASS;
+        if (!(level.getBlockEntity(pos) instanceof ElectricLampBlockEntity lamp) || lamp.getSymbol().isNone()) {
+            return InteractionResult.PASS;
+        }
         if (!level.isClientSide()) {
             LampSymbol symbol = lamp.getSymbol().next();
             lamp.setSymbol(symbol);
@@ -144,6 +190,18 @@ public class ElectricLampBlock extends BaseEntityBlock {
             player.displayClientMessage(Component.translatable("message.electra.lamp_symbol", symbol.displayName()), true);
         }
         return InteractionResult.sidedSuccess(level.isClientSide());
+    }
+
+    /** Lampe cassée (ou remplacée) : l'autocollant est rendu en plus de la lampe. */
+    @Override
+    protected void onRemove(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
+                            @NotNull BlockState newState, boolean movedByPiston) {
+        if (!state.is(newState.getBlock())
+                && level.getBlockEntity(pos) instanceof ElectricLampBlockEntity lamp
+                && !lamp.getSymbol().isNone()) {
+            Block.popResource(level, pos, ModItems.stickerFor(lamp.getSymbol().family()));
+        }
+        super.onRemove(state, level, pos, newState, movedByPiston);
     }
 
     @Override

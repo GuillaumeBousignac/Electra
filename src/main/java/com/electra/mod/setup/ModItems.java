@@ -36,10 +36,40 @@ public class ModItems {
             ITEMS.register("alphabetic_sticker",
                     () -> new LampStickerItem(LampSymbol.Family.ALPHABETIC, new Item.Properties()));
 
+    /** Autocollant d'outils (pioche, pelle, épée…) pour les lampes électriques. */
+    public static final DeferredItem<LampStickerItem> TOOL_STICKER =
+            ITEMS.register("tool_sticker",
+                    () -> new LampStickerItem(LampSymbol.Family.TOOLS, new Item.Properties()));
+
+    /** Autocollant de symboles de signalisation (attention, flèches, éclair…) pour les lampes électriques. */
+    public static final DeferredItem<LampStickerItem> SYMBOL_STICKER =
+            ITEMS.register("symbol_sticker",
+                    () -> new LampStickerItem(LampSymbol.Family.SYMBOLS, new Item.Properties()));
+
+    /** Autocollant de chiffres et de signes mathématiques pour les lampes électriques. */
+    public static final DeferredItem<LampStickerItem> NUMBER_STICKER =
+            ITEMS.register("number_sticker",
+                    () -> new LampStickerItem(LampSymbol.Family.NUMBERS, new Item.Properties()));
+
+    /** Autocollant de visages de créatures pour les lampes électriques. */
+    public static final DeferredItem<LampStickerItem> MOB_STICKER =
+            ITEMS.register("mob_sticker",
+                    () -> new LampStickerItem(LampSymbol.Family.MOBS, new Item.Properties()));
+
+    /** Autocollant d'objets (lingot, diamant, poudre…) pour les lampes électriques. */
+    public static final DeferredItem<LampStickerItem> ITEM_STICKER =
+            ITEMS.register("item_sticker",
+                    () -> new LampStickerItem(LampSymbol.Family.ITEMS, new Item.Properties()));
+
     /** Autocollant rendu quand on retire un motif de cette famille (cisaille, lampe cassée). */
     public static ItemStack stickerFor(LampSymbol.Family family) {
         return switch (family) {
             case ALPHABETIC -> new ItemStack(ALPHABETIC_STICKER.get());
+            case TOOLS -> new ItemStack(TOOL_STICKER.get());
+            case ITEMS -> new ItemStack(ITEM_STICKER.get());
+            case SYMBOLS -> new ItemStack(SYMBOL_STICKER.get());
+            case NUMBERS -> new ItemStack(NUMBER_STICKER.get());
+            case MOBS -> new ItemStack(MOB_STICKER.get());
             case NONE -> ItemStack.EMPTY;
         };
     }

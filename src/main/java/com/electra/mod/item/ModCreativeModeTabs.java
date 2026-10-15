@@ -44,6 +44,11 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.RED_IRON_INGOT.get());
                         output.accept(ModItems.ENERGY_METER.get());
                         output.accept(ModItems.ALPHABETIC_STICKER.get());
+                        output.accept(ModItems.TOOL_STICKER.get());
+                        output.accept(ModItems.ITEM_STICKER.get());
+                        output.accept(ModItems.NUMBER_STICKER.get());
+                        output.accept(ModItems.SYMBOL_STICKER.get());
+                        output.accept(ModItems.MOB_STICKER.get());
                     }).build());
 
     public static void register(IEventBus eventBus) {
