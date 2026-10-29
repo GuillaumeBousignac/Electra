@@ -25,9 +25,15 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.LIGHTNING_COLLECTOR.get());
                         output.accept(ModBlocks.REDSTONE_DYNAMO.get());
                         output.accept(ModBlocks.ADVANCED_FURNACE.get());
+                        output.accept(ModBlocks.GRINDER.get());
+                        output.accept(ModBlocks.FREEZER.get());
                         output.accept(ModBlocks.REDSTONE_CONVERTER.get());
                         ModBlocks.LOGIC_GATES.values().forEach(gate -> output.accept(gate.get()));
                         output.accept(ModBlocks.ELECTRIC_LAMP.get());
+                        output.accept(ModBlocks.FLUID_PUMP.get());
+                        output.accept(ModBlocks.FLUID_RESERVOIR.get());
+                        output.accept(ModBlocks.SPRINKLER.get());
+                        output.accept(ModBlocks.IRON_PIPE.get());
                         output.accept(ModBlocks.BARE_WIRE.get());
                         ModBlocks.INSULATED_WIRES.values().forEach(wire -> output.accept(wire.get()));
                         output.accept(ModBlocks.ROSE_GOLD_BLOCK.get());

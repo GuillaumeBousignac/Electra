@@ -3,6 +3,10 @@ package com.electra.mod.setup;
 import com.electra.mod.Electra;
 import com.electra.mod.recipe.AlloyingRecipe;
 import com.electra.mod.recipe.AlloyingRecipeSerializer;
+import com.electra.mod.recipe.FreezingRecipe;
+import com.electra.mod.recipe.FreezingRecipeSerializer;
+import com.electra.mod.recipe.GrindingRecipe;
+import com.electra.mod.recipe.GrindingRecipeSerializer;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -23,4 +27,18 @@ public class ModRecipes {
 
     public static final DeferredHolder<RecipeSerializer<?>, AlloyingRecipeSerializer> ALLOYING_SERIALIZER =
             SERIALIZERS.register("alloying", AlloyingRecipeSerializer::new);
+
+    public static final DeferredHolder<RecipeType<?>, RecipeType<GrindingRecipe>> GRINDING_TYPE =
+            TYPES.register("grinding", () -> RecipeType.simple(
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(Electra.MODID, "grinding")));
+
+    public static final DeferredHolder<RecipeSerializer<?>, GrindingRecipeSerializer> GRINDING_SERIALIZER =
+            SERIALIZERS.register("grinding", GrindingRecipeSerializer::new);
+
+    public static final DeferredHolder<RecipeType<?>, RecipeType<FreezingRecipe>> FREEZING_TYPE =
+            TYPES.register("freezing", () -> RecipeType.simple(
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(Electra.MODID, "freezing")));
+
+    public static final DeferredHolder<RecipeSerializer<?>, FreezingRecipeSerializer> FREEZING_SERIALIZER =
+            SERIALIZERS.register("freezing", FreezingRecipeSerializer::new);
 }

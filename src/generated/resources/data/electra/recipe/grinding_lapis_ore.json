@@ -1,0 +1,11 @@
+{
+  "type": "electra:grinding",
+  "energy_cost": 120,
+  "input": {
+    "item": "minecraft:lapis_ore"
+  },
+  "result": {
+    "count": 12,
+    "id": "minecraft:lapis_lazuli"
+  }
+}

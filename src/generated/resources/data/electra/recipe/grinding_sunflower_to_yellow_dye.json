@@ -1,0 +1,11 @@
+{
+  "type": "electra:grinding",
+  "energy_cost": 60,
+  "input": {
+    "item": "minecraft:sunflower"
+  },
+  "result": {
+    "count": 4,
+    "id": "minecraft:yellow_dye"
+  }
+}

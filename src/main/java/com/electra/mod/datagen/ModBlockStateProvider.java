@@ -3,10 +3,14 @@ package com.electra.mod.datagen;
 import com.electra.mod.Electra;
 import com.electra.mod.block.AdvancedFurnaceBlock;
 import com.electra.mod.block.ElectricLampBlock;
+import com.electra.mod.block.FreezerBlock;
+import com.electra.mod.block.GrinderBlock;
+import com.electra.mod.block.FluidReservoirBlock;
 import com.electra.mod.block.GateType;
 import com.electra.mod.block.LogicGateBlock;
 import com.electra.mod.block.RedstoneConverterBlock;
 import com.electra.mod.block.RedstoneDynamoBlock;
+import com.electra.mod.block.SprinklerBlock;
 import com.electra.mod.block.WireBlock;
 import com.electra.mod.setup.ModBlocks;
 import net.minecraft.core.Direction;
@@ -80,6 +84,48 @@ public class ModBlockStateProvider extends BlockStateProvider {
         });
         simpleBlockItem(ModBlocks.ADVANCED_FURNACE.get(), furnaceOff);
 
+        // ── Broyeur : même carcasse que le four avancé, face avant et dessus propres ──
+        ModelFile grinderOff = models().orientableWithBottom("grinder",
+                modLoc("block/advanced_furnace_side"),
+                modLoc("block/grinder_front"),
+                modLoc("block/advanced_furnace_bottom"),
+                modLoc("block/grinder_top"));
+        ModelFile grinderOn = models().orientableWithBottom("grinder_on",
+                modLoc("block/advanced_furnace_side"),
+                modLoc("block/grinder_front_on"),
+                modLoc("block/advanced_furnace_bottom"),
+                modLoc("block/grinder_top_on"));
+        getVariantBuilder(ModBlocks.GRINDER.get()).forAllStates(state -> {
+            Direction facing = state.getValue(GrinderBlock.FACING);
+            boolean lit = state.getValue(GrinderBlock.LIT);
+            return ConfiguredModel.builder()
+                    .modelFile(lit ? grinderOn : grinderOff)
+                    .rotationY(((int) facing.toYRot() + 180) % 360)
+                    .build();
+        });
+        simpleBlockItem(ModBlocks.GRINDER.get(), grinderOff);
+
+        // ── Congélateur ────────────────────────────────────────────────────
+        ModelFile freezerOff = models().orientableWithBottom("freezer",
+                modLoc("block/freezer_side"),
+                modLoc("block/freezer_front"),
+                modLoc("block/freezer_bottom"),
+                modLoc("block/freezer_top"));
+        ModelFile freezerOn = models().orientableWithBottom("freezer_on",
+                modLoc("block/freezer_side"),
+                modLoc("block/freezer_front_on"),
+                modLoc("block/freezer_bottom"),
+                modLoc("block/freezer_top"));
+        getVariantBuilder(ModBlocks.FREEZER.get()).forAllStates(state -> {
+            Direction facing = state.getValue(FreezerBlock.FACING);
+            boolean lit = state.getValue(FreezerBlock.LIT);
+            return ConfiguredModel.builder()
+                    .modelFile(lit ? freezerOn : freezerOff)
+                    .rotationY(((int) facing.toYRot() + 180) % 360)
+                    .build();
+        });
+        simpleBlockItem(ModBlocks.FREEZER.get(), freezerOff);
+
         // ── Redstone Dynamo ────────────────────────────────────────────────
         // Modèle écrit à la main (socle, bobine, chapeau) ; le bras est dessiné par RedstoneDynamoRenderer.
         // Orientation selon l'axe, comme une bûche.
@@ -147,6 +193,32 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         // ── Lampe électrique : texture connectée (voir electricLamp)
         electricLamp();
+
+        // ── Fluides ────────────────────────────────────────────────────────
+        // Tuyau : même construction que les câbles (centre + un bras par côté connecté).
+        // Modèles écrits à la main (fenêtres de verre) ; le fluide est dessiné par IronPipeRenderer.
+        wire(ModBlocks.IRON_PIPE.get(),
+                models().getExistingFile(modLoc("block/iron_pipe_center")),
+                models().getExistingFile(modLoc("block/iron_pipe_side")));
+
+        // Pompe : cube simple ; le tube d'aspiration est dessiné par FluidPumpRenderer.
+        ModelFile pump = models().cubeBottomTop("fluid_pump",
+                modLoc("block/fluid_pump_side"),
+                modLoc("block/fluid_pump_bottom"),
+                modLoc("block/fluid_pump_top"));
+        simpleBlock(ModBlocks.FLUID_PUMP.get(), pump);
+        simpleBlockItem(ModBlocks.FLUID_PUMP.get(), pump);
+
+        // Réservoir : cadre de fer et vitres écrits à la main ; le liquide est dessiné par FluidReservoirRenderer.
+        ModelFile reservoir = models().getExistingFile(modLoc("block/fluid_reservoir"));
+        reservoirParts();
+        simpleBlockItem(ModBlocks.FLUID_RESERVOIR.get(), reservoir);
+
+        // Arroseur : même modèle dans les trois états (les gouttes sont des particules)
+        ModelFile sprinkler = models().getExistingFile(modLoc("block/sprinkler"));
+        getVariantBuilder(ModBlocks.SPRINKLER.get()).forAllStates(state ->
+                ConfiguredModel.builder().modelFile(sprinkler).build());
+        simpleBlockItem(ModBlocks.SPRINKLER.get(), sprinkler);
 
         // ── Câbles ─────────────────────────────────────────────────────────
         wire(ModBlocks.BARE_WIRE.get(),
@@ -319,5 +391,40 @@ public class ModBlockStateProvider extends BlockStateProvider {
                     .condition(WireBlock.UP, true).end()
                 .part().modelFile(side).rotationX(90).addModel()
                     .condition(WireBlock.DOWN, true).end();
+    }
+
+    /**
+     * Réservoir relié à ses voisins : plaques haut/bas et vitres seulement sur les faces libres,
+     * montants d'angle tant qu'une des deux faces voisines est libre.
+     */
+    private void reservoirParts() {
+        Block block = ModBlocks.FLUID_RESERVOIR.get();
+        var builder = getMultipartBuilder(block);
+        builder.part().modelFile(reservoirModel("plate_bottom")).addModel()
+                .condition(FluidReservoirBlock.DOWN, false).end();
+        builder.part().modelFile(reservoirModel("plate_top")).addModel()
+                .condition(FluidReservoirBlock.UP, false).end();
+
+        corner(builder, "nw", FluidReservoirBlock.NORTH, FluidReservoirBlock.WEST);
+        corner(builder, "ne", FluidReservoirBlock.NORTH, FluidReservoirBlock.EAST);
+        corner(builder, "sw", FluidReservoirBlock.SOUTH, FluidReservoirBlock.WEST);
+        corner(builder, "se", FluidReservoirBlock.SOUTH, FluidReservoirBlock.EAST);
+
+        builder.part().modelFile(reservoirModel("glass_north")).addModel().condition(FluidReservoirBlock.NORTH, false).end();
+        builder.part().modelFile(reservoirModel("glass_south")).addModel().condition(FluidReservoirBlock.SOUTH, false).end();
+        builder.part().modelFile(reservoirModel("glass_west")).addModel().condition(FluidReservoirBlock.WEST, false).end();
+        builder.part().modelFile(reservoirModel("glass_east")).addModel().condition(FluidReservoirBlock.EAST, false).end();
+    }
+
+    private void corner(net.neoforged.neoforge.client.model.generators.MultiPartBlockStateBuilder builder, String name,
+                        net.minecraft.world.level.block.state.properties.BooleanProperty a,
+                        net.minecraft.world.level.block.state.properties.BooleanProperty b) {
+        ModelFile pillar = reservoirModel("pillar_" + name);
+        builder.part().modelFile(pillar).addModel().condition(a, false).end();
+        builder.part().modelFile(pillar).addModel().condition(a, true).condition(b, false).end();
+    }
+
+    private ModelFile reservoirModel(String part) {
+        return models().getExistingFile(modLoc("block/fluid_reservoir_" + part));
     }
 }

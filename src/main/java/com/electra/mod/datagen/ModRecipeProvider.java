@@ -3,6 +3,8 @@ package com.electra.mod.datagen;
 import com.electra.mod.Electra;
 import com.electra.mod.block.GateType;
 import com.electra.mod.recipe.AlloyingRecipe;
+import com.electra.mod.recipe.FreezingRecipe;
+import com.electra.mod.recipe.GrindingRecipe;
 import com.electra.mod.setup.ModBlocks;
 import com.electra.mod.setup.ModItems;
 import net.minecraft.core.HolderLookup;
@@ -14,6 +16,7 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -24,6 +27,7 @@ import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class ModRecipeProvider extends RecipeProvider {
@@ -76,6 +80,27 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(bareWire), has(bareWire))
                 .save(output);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.FREEZER_ITEM.get())
+                .pattern("CCC")
+                .pattern("RPR")
+                .pattern("CWC")
+                .define('C', Tags.Items.INGOTS_COPPER)
+                .define('R', ModTags.Items.INGOTS_ROSE_GOLD)
+                .define('P', Items.PACKED_ICE)
+                .define('W', bareWire)
+                .unlockedBy(getHasName(bareWire), has(bareWire))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.GRINDER_ITEM.get())
+                .pattern("CCC")
+                .pattern("CGC")
+                .pattern("CWC")
+                .define('C', Tags.Items.INGOTS_COPPER)
+                .define('G', Items.GRINDSTONE)
+                .define('W', bareWire)
+                .unlockedBy(getHasName(bareWire), has(bareWire))
+                .save(output);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.REDSTONE_DYNAMO_ITEM.get())
                 .pattern("CCC")
                 .pattern("RWR")
@@ -84,6 +109,50 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('R', ModTags.Items.INGOTS_RED_IRON)
                 .define('W', bareWire)
                 .unlockedBy("has_red_iron_ingot", has(ModTags.Items.INGOTS_RED_IRON))
+                .save(output);
+
+        // ── Fluides ────────────────────────────────────────────────────────
+        // I = lingot de fer, G = verre, C = lingot de cuivre, W = câble nu, B = seau, P = tuyau, R = barreaux de fer
+        Item ironPipe = ModBlocks.IRON_PIPE_ITEM.get();
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ironPipe, 8)
+                .pattern("III")
+                .pattern("GGG")
+                .pattern("III")
+                .define('I', Tags.Items.INGOTS_IRON)
+                .define('G', Tags.Items.GLASS_BLOCKS)
+                .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.FLUID_PUMP_ITEM.get())
+                .pattern("CWC")
+                .pattern("IBI")
+                .pattern("IPI")
+                .define('C', Tags.Items.INGOTS_COPPER)
+                .define('W', bareWire)
+                .define('I', Tags.Items.INGOTS_IRON)
+                .define('B', Items.BUCKET)
+                .define('P', ironPipe)
+                .unlockedBy(getHasName(ironPipe), has(ironPipe))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.FLUID_RESERVOIR_ITEM.get())
+                .pattern("IGI")
+                .pattern("GBG")
+                .pattern("IGI")
+                .define('I', Tags.Items.INGOTS_IRON)
+                .define('G', Tags.Items.GLASS_BLOCKS)
+                .define('B', Items.BUCKET)
+                .unlockedBy(getHasName(ironPipe), has(ironPipe))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.SPRINKLER_ITEM.get())
+                .pattern("IPI")
+                .pattern("RRR")
+                .define('I', Tags.Items.INGOTS_IRON)
+                .define('P', ironPipe)
+                .define('R', Items.IRON_BARS)
+                .unlockedBy(getHasName(ironPipe), has(ironPipe))
                 .save(output);
 
         // ── Logique ────────────────────────────────────────────────────────
@@ -217,6 +286,66 @@ public class ModRecipeProvider extends RecipeProvider {
         alloying(output, "netherite_ingot",
                 Ingredient.of(Tags.Items.INGOTS_GOLD), Ingredient.of(Items.NETHERITE_SCRAP),
                 Items.NETHERITE_INGOT, 200);
+
+        // ── Congélation (congélateur) ──────────────────────────────────────
+        freezing(output, "ice", Optional.empty(), 1, 1000, Items.ICE, 200);
+        freezing(output, "packed_ice", Optional.of(Ingredient.of(Items.ICE)), 1, 1000, Items.PACKED_ICE, 300);
+        freezing(output, "blue_ice", Optional.of(Ingredient.of(Items.PACKED_ICE)), 1, 1000, Items.BLUE_ICE, 400);
+        freezing(output, "powder_snow_bucket", Optional.of(Ingredient.of(Items.BUCKET)), 1, 1000, Items.POWDER_SNOW_BUCKET, 250);
+        freezing(output, "obsidian", Optional.of(Ingredient.of(Items.MAGMA_BLOCK)), 1, 1000, Items.OBSIDIAN, 500);
+        freezing(output, "leather", Optional.of(Ingredient.of(Items.ROTTEN_FLESH)), 3, 500, Items.LEATHER, 150);
+
+        // ── Broyage (broyeur) ──────────────────────────────────────────────
+        grinding(output, "stone_to_cobblestone", Ingredient.of(Items.STONE), Items.COBBLESTONE, 1, 80);
+        grinding(output, "cobblestone_to_gravel", Ingredient.of(Items.COBBLESTONE), Items.GRAVEL, 1, 80);
+        grinding(output, "gravel_to_sand", Ingredient.of(Items.GRAVEL), Items.SAND, 1, 80);
+        grinding(output, "deepslate_to_cobbled_deepslate", Ingredient.of(Items.DEEPSLATE), Items.COBBLED_DEEPSLATE, 1, 80);
+        grinding(output, "cobbled_deepslate_to_gravel", Ingredient.of(Items.COBBLED_DEEPSLATE), Items.GRAVEL, 1, 80);
+        grinding(output, "sandstone_to_sand", Ingredient.of(Items.SANDSTONE), Items.SAND, 4, 80);
+        grinding(output, "red_sandstone_to_red_sand", Ingredient.of(Items.RED_SANDSTONE), Items.RED_SAND, 4, 80);
+        grinding(output, "bricks_to_brick", Ingredient.of(Items.BRICKS), Items.BRICK, 4, 80);
+        grinding(output, "nether_bricks_to_nether_brick", Ingredient.of(Items.NETHER_BRICKS), Items.NETHER_BRICK, 4, 80);
+        grinding(output, "clay_to_clay_ball", Ingredient.of(Items.CLAY), Items.CLAY_BALL, 4, 80);
+        grinding(output, "snow_block_to_snowball", Ingredient.of(Items.SNOW_BLOCK), Items.SNOWBALL, 4, 80);
+        grinding(output, "bone_to_bone_meal", Ingredient.of(Items.BONE), Items.BONE_MEAL, 6, 80);
+        grinding(output, "blaze_rod_to_blaze_powder", Ingredient.of(Items.BLAZE_ROD), Items.BLAZE_POWDER, 5, 80);
+        grinding(output, "wool_to_string", Ingredient.of(ItemTags.WOOL), Items.STRING, 4, 80);
+        grinding(output, "iron_ore", Ingredient.of(Items.IRON_ORE), Items.RAW_IRON, 2, 120);
+        grinding(output, "deepslate_iron_ore", Ingredient.of(Items.DEEPSLATE_IRON_ORE), Items.RAW_IRON, 2, 120);
+        grinding(output, "copper_ore", Ingredient.of(Items.COPPER_ORE), Items.RAW_COPPER, 6, 120);
+        grinding(output, "deepslate_copper_ore", Ingredient.of(Items.DEEPSLATE_COPPER_ORE), Items.RAW_COPPER, 6, 120);
+        grinding(output, "gold_ore", Ingredient.of(Items.GOLD_ORE), Items.RAW_GOLD, 2, 120);
+        grinding(output, "deepslate_gold_ore", Ingredient.of(Items.DEEPSLATE_GOLD_ORE), Items.RAW_GOLD, 2, 120);
+        grinding(output, "coal_ore", Ingredient.of(Items.COAL_ORE), Items.COAL, 2, 120);
+        grinding(output, "deepslate_coal_ore", Ingredient.of(Items.DEEPSLATE_COAL_ORE), Items.COAL, 2, 120);
+        grinding(output, "redstone_ore", Ingredient.of(Items.REDSTONE_ORE), Items.REDSTONE, 8, 120);
+        grinding(output, "deepslate_redstone_ore", Ingredient.of(Items.DEEPSLATE_REDSTONE_ORE), Items.REDSTONE, 8, 120);
+        grinding(output, "lapis_ore", Ingredient.of(Items.LAPIS_ORE), Items.LAPIS_LAZULI, 12, 120);
+        grinding(output, "deepslate_lapis_ore", Ingredient.of(Items.DEEPSLATE_LAPIS_ORE), Items.LAPIS_LAZULI, 12, 120);
+        grinding(output, "diamond_ore", Ingredient.of(Items.DIAMOND_ORE), Items.DIAMOND, 2, 120);
+        grinding(output, "deepslate_diamond_ore", Ingredient.of(Items.DEEPSLATE_DIAMOND_ORE), Items.DIAMOND, 2, 120);
+        grinding(output, "emerald_ore", Ingredient.of(Items.EMERALD_ORE), Items.EMERALD, 2, 120);
+        grinding(output, "deepslate_emerald_ore", Ingredient.of(Items.DEEPSLATE_EMERALD_ORE), Items.EMERALD, 2, 120);
+        grinding(output, "nether_quartz_ore", Ingredient.of(Items.NETHER_QUARTZ_ORE), Items.QUARTZ, 2, 120);
+        grinding(output, "nether_gold_ore", Ingredient.of(Items.NETHER_GOLD_ORE), Items.GOLD_NUGGET, 8, 120);
+        grinding(output, "dandelion_to_yellow_dye", Ingredient.of(Items.DANDELION), Items.YELLOW_DYE, 2, 60);
+        grinding(output, "poppy_to_red_dye", Ingredient.of(Items.POPPY), Items.RED_DYE, 2, 60);
+        grinding(output, "blue_orchid_to_light_blue_dye", Ingredient.of(Items.BLUE_ORCHID), Items.LIGHT_BLUE_DYE, 2, 60);
+        grinding(output, "allium_to_magenta_dye", Ingredient.of(Items.ALLIUM), Items.MAGENTA_DYE, 2, 60);
+        grinding(output, "azure_bluet_to_light_gray_dye", Ingredient.of(Items.AZURE_BLUET), Items.LIGHT_GRAY_DYE, 2, 60);
+        grinding(output, "red_tulip_to_red_dye", Ingredient.of(Items.RED_TULIP), Items.RED_DYE, 2, 60);
+        grinding(output, "orange_tulip_to_orange_dye", Ingredient.of(Items.ORANGE_TULIP), Items.ORANGE_DYE, 2, 60);
+        grinding(output, "white_tulip_to_light_gray_dye", Ingredient.of(Items.WHITE_TULIP), Items.LIGHT_GRAY_DYE, 2, 60);
+        grinding(output, "pink_tulip_to_pink_dye", Ingredient.of(Items.PINK_TULIP), Items.PINK_DYE, 2, 60);
+        grinding(output, "oxeye_daisy_to_light_gray_dye", Ingredient.of(Items.OXEYE_DAISY), Items.LIGHT_GRAY_DYE, 2, 60);
+        grinding(output, "cornflower_to_blue_dye", Ingredient.of(Items.CORNFLOWER), Items.BLUE_DYE, 2, 60);
+        grinding(output, "lily_of_the_valley_to_white_dye", Ingredient.of(Items.LILY_OF_THE_VALLEY), Items.WHITE_DYE, 2, 60);
+        grinding(output, "wither_rose_to_black_dye", Ingredient.of(Items.WITHER_ROSE), Items.BLACK_DYE, 2, 60);
+        grinding(output, "torchflower_to_orange_dye", Ingredient.of(Items.TORCHFLOWER), Items.ORANGE_DYE, 2, 60);
+        grinding(output, "sunflower_to_yellow_dye", Ingredient.of(Items.SUNFLOWER), Items.YELLOW_DYE, 4, 60);
+        grinding(output, "lilac_to_magenta_dye", Ingredient.of(Items.LILAC), Items.MAGENTA_DYE, 4, 60);
+        grinding(output, "rose_bush_to_red_dye", Ingredient.of(Items.ROSE_BUSH), Items.RED_DYE, 4, 60);
+        grinding(output, "peony_to_pink_dye", Ingredient.of(Items.PEONY), Items.PINK_DYE, 4, 60);
     }
 
     /** Le bloc accepte les lingots de l'étiquette commune (lingots équivalents d'autres mods compris). */
@@ -252,6 +381,22 @@ public class ModRecipeProvider extends RecipeProvider {
                                  ItemLike result, int energyCost) {
         output.accept(ResourceLocation.fromNamespaceAndPath(Electra.MODID, id),
                 new AlloyingRecipe(input1, input2, new ItemStack(result), energyCost),
+                null);
+    }
+
+    /** Recette de broyage : un objet → une quantité d'un autre, coût en FE. */
+    private static void grinding(RecipeOutput output, String id, Ingredient input, ItemLike result,
+                                 int count, int energyCost) {
+        output.accept(ResourceLocation.fromNamespaceAndPath(Electra.MODID, "grinding_" + id),
+                new GrindingRecipe(input, new ItemStack(result, count), energyCost),
+                null);
+    }
+
+    /** Recette de congélation : eau (mB) et objet facultatif → objet, coût en FE. */
+    private static void freezing(RecipeOutput output, String id, Optional<Ingredient> input, int inputCount, int fluidAmount,
+                                 ItemLike result, int energyCost) {
+        output.accept(ResourceLocation.fromNamespaceAndPath(Electra.MODID, "freezing_" + id),
+                new FreezingRecipe(input, inputCount, fluidAmount, new ItemStack(result), energyCost),
                 null);
     }
 }

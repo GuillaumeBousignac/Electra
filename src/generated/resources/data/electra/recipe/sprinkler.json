@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "P": {
+      "item": "electra:iron_pipe"
+    },
+    "R": {
+      "item": "minecraft:iron_bars"
+    }
+  },
+  "pattern": [
+    "IPI",
+    "RRR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "electra:sprinkler"
+  }
+}

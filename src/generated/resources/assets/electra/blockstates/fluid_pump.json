@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "electra:block/fluid_pump"
+    }
+  }
+}

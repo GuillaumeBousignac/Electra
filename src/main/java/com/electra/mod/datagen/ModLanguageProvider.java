@@ -27,6 +27,8 @@ public class ModLanguageProvider extends LanguageProvider {
         add(ModBlocks.ROSE_GOLD_BLOCK.get(), "Rose Gold Block");
         add(ModBlocks.RED_IRON_BLOCK.get(), "Red Iron Block");
         add(ModBlocks.ADVANCED_FURNACE.get(), "Advanced Furnace");
+        add(ModBlocks.GRINDER.get(), "Grinder");
+        add(ModBlocks.FREEZER.get(), "Freezer");
         add(ModBlocks.REDSTONE_DYNAMO.get(), "Redstone Dynamo");
         add(ModBlocks.LOGIC_GATES.get(GateType.AND).get(), "AND Gate");
         add(ModBlocks.LOGIC_GATES.get(GateType.OR).get(), "OR Gate");
@@ -34,6 +36,10 @@ public class ModLanguageProvider extends LanguageProvider {
         add(ModBlocks.LOGIC_GATES.get(GateType.SWITCH).get(), "Energy Switch");
         add(ModBlocks.LOGIC_GATES.get(GateType.CLOCK).get(), "Energy Clock");
         add(ModBlocks.ELECTRIC_LAMP.get(), "Electric Lamp");
+        add(ModBlocks.IRON_PIPE.get(), "Iron Pipe");
+        add(ModBlocks.FLUID_PUMP.get(), "Fluid Pump");
+        add(ModBlocks.FLUID_RESERVOIR.get(), "Fluid Reservoir");
+        add(ModBlocks.SPRINKLER.get(), "Sprinkler");
 
         for (DyeColor color : DyeColor.values()) {
             add(ModBlocks.INSULATED_WIRES.get(color).get(), toTitle(color.getName()) + " Insulated Wire");
@@ -59,6 +65,7 @@ public class ModLanguageProvider extends LanguageProvider {
         add("death.attack.electra.electrocution", "%1$s was electrocuted");
         add("death.attack.electra.electrocution.player", "%1$s was electrocuted while fighting %2$s");
         add("gui.electra.energy", "%s / %s FE");
+        add("gui.electra.water", "%s / %s mB");
         add("message.electra.energy_meter", "⚡ %s : %s / %s FE (%s%%)");
 
         // ── Infobulles ─────────────────────────────────────────────────────
@@ -70,6 +77,10 @@ public class ModLanguageProvider extends LanguageProvider {
         add("tooltip.electra.energy_switch", "Right-click to let power flow from the back to the front");
         add("tooltip.electra.energy_clock", "Turns the power from the back on and off in a loop. Right-click: change the phase length");
         add("message.electra.clock_phase", "Clock: %1$s s on, then %1$s s off");
+        add("tooltip.electra.iron_pipe", "Carries water, lava or any other fluid between pumps, reservoirs and machines. The fluid shows through the glass");
+        add("tooltip.electra.fluid_pump", "Powered by FE: sucks up the first water or lava source within 6 blocks below it, 1000 mB per second");
+        add("tooltip.electra.fluid_reservoir", "Stores fluids, level visible through the glass. Right-click with a bucket to fill or empty it. Adjacent reservoirs join into one big tank");
+        add("tooltip.electra.sprinkler", "Fed with water: irrigates and speeds up crops below. Fed with lava: speeds up nether wart and burns creatures below");
         add("tooltip.electra.electric_lamp", "Lights up while powered; touching lamps share power. Right-click with a dye to change its color");
         add("tooltip.electra.electric_lamp_symbol", "With a sticker: sneak + right-click for the next symbol, sneak + right-click with a dye for its color, shears to remove it");
         add("tooltip.electra.lamp_sticker", "Right-click an Electric Lamp to stick a symbol on it");
@@ -126,6 +137,8 @@ public class ModLanguageProvider extends LanguageProvider {
 
         // ── JEI ────────────────────────────────────────────────────────────
         add("jei.electra.alloying", "Alloying");
+        add("jei.electra.grinding", "Grinding");
+        add("jei.electra.freezing", "Freezing");
         add("jei.electra.energy", "%s FE");
     }
 

@@ -2,14 +2,20 @@ package com.electra.mod.setup;
 
 import com.electra.mod.Electra;
 import com.electra.mod.block.AdvancedFurnaceBlock;
+import com.electra.mod.block.FreezerBlock;
+import com.electra.mod.block.GrinderBlock;
 import com.electra.mod.block.BareWireBlock;
 import com.electra.mod.block.ElectricLampBlock;
+import com.electra.mod.block.FluidPumpBlock;
+import com.electra.mod.block.FluidReservoirBlock;
 import com.electra.mod.block.GateType;
 import com.electra.mod.block.InsulatedWireBlock;
+import com.electra.mod.block.IronPipeBlock;
 import com.electra.mod.block.LightningCollectorBlock;
 import com.electra.mod.block.LogicGateBlock;
 import com.electra.mod.block.RedstoneConverterBlock;
 import com.electra.mod.block.RedstoneDynamoBlock;
+import com.electra.mod.block.SprinklerBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
@@ -113,6 +119,27 @@ public class ModBlocks {
     public static final DeferredItem<BlockItem> ADVANCED_FURNACE_ITEM =
             ITEMS.registerSimpleBlockItem("advanced_furnace", ADVANCED_FURNACE);
 
+    public static final DeferredBlock<GrinderBlock> GRINDER =
+            BLOCKS.registerBlock("grinder", GrinderBlock::new,
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_ORANGE)
+                            .strength(3.5f)
+                            .sound(SoundType.METAL)
+                            .lightLevel(state -> state.getValue(GrinderBlock.LIT) ? 6 : 0)
+                            .requiresCorrectToolForDrops());
+    public static final DeferredItem<BlockItem> GRINDER_ITEM =
+            ITEMS.registerSimpleBlockItem("grinder", GRINDER);
+
+    public static final DeferredBlock<FreezerBlock> FREEZER =
+            BLOCKS.registerBlock("freezer", FreezerBlock::new,
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.ICE)
+                            .strength(3.5f)
+                            .sound(SoundType.METAL)
+                            .requiresCorrectToolForDrops());
+    public static final DeferredItem<BlockItem> FREEZER_ITEM =
+            ITEMS.registerSimpleBlockItem("freezer", FREEZER);
+
     // Redstone Dynamo : cœur du multibloc
     public static final DeferredBlock<RedstoneDynamoBlock> REDSTONE_DYNAMO =
             BLOCKS.registerBlock("redstone_dynamo", RedstoneDynamoBlock::new,
@@ -142,6 +169,56 @@ public class ModBlocks {
             LOGIC_GATE_ITEMS.put(type, ITEMS.registerSimpleBlockItem(type.id(), block));
         }
     }
+
+    // ── Fluides (0.3) ─────────────────────────────────────────────────────
+    // Tuyau en fer à vitres : transporte un fluide, visible à travers le verre
+    public static final DeferredBlock<IronPipeBlock> IRON_PIPE =
+            BLOCKS.registerBlock("iron_pipe", IronPipeBlock::new,
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.METAL)
+                            .sound(SoundType.METAL)
+                            .strength(1.5f, 4.0f)
+                            .noOcclusion()
+                            .requiresCorrectToolForDrops());
+    public static final DeferredItem<BlockItem> IRON_PIPE_ITEM =
+            ITEMS.registerSimpleBlockItem("iron_pipe", IRON_PIPE);
+
+    // Pompe : aspire eau, lave... sous elle, alimentée en FE
+    public static final DeferredBlock<FluidPumpBlock> FLUID_PUMP =
+            BLOCKS.registerBlock("fluid_pump", FluidPumpBlock::new,
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.METAL)
+                            .sound(SoundType.METAL)
+                            .strength(3.5f, 6.0f)
+                            .requiresCorrectToolForDrops());
+    public static final DeferredItem<BlockItem> FLUID_PUMP_ITEM =
+            ITEMS.registerSimpleBlockItem("fluid_pump", FLUID_PUMP);
+
+    // Réservoir : cuve à vitres, le niveau se voit de l'extérieur
+    public static final DeferredBlock<FluidReservoirBlock> FLUID_RESERVOIR =
+            BLOCKS.registerBlock("fluid_reservoir", FluidReservoirBlock::new,
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.METAL)
+                            .sound(SoundType.METAL)
+                            .strength(3.0f, 6.0f)
+                            .noOcclusion()
+                            .isViewBlocking((state, level, pos) -> false)
+                            .requiresCorrectToolForDrops());
+    public static final DeferredItem<BlockItem> FLUID_RESERVOIR_ITEM =
+            ITEMS.registerSimpleBlockItem("fluid_reservoir", FLUID_RESERVOIR);
+
+    // Arroseur : eau pour les cultures, lave pour les verrues du Nether
+    public static final DeferredBlock<SprinklerBlock> SPRINKLER =
+            BLOCKS.registerBlock("sprinkler", SprinklerBlock::new,
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.METAL)
+                            .sound(SoundType.METAL)
+                            .strength(2.0f, 4.0f)
+                            .noOcclusion()
+                            .lightLevel(state -> state.getValue(SprinklerBlock.MODE) == SprinklerBlock.Mode.LAVA ? 8 : 0)
+                            .requiresCorrectToolForDrops());
+    public static final DeferredItem<BlockItem> SPRINKLER_ITEM =
+            ITEMS.registerSimpleBlockItem("sprinkler", SPRINKLER);
 
     // Lampe électrique : couleur au choix (teinture)
     public static final DeferredBlock<ElectricLampBlock> ELECTRIC_LAMP =

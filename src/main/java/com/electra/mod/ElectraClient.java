@@ -2,10 +2,15 @@ package com.electra.mod;
 
 import com.electra.mod.block.ElectricLampBlock;
 import com.electra.mod.client.ElectricLampRenderer;
+import com.electra.mod.client.FluidPumpRenderer;
+import com.electra.mod.client.FluidReservoirRenderer;
+import com.electra.mod.client.IronPipeRenderer;
 import com.electra.mod.client.LightningCollectorRenderer;
 import com.electra.mod.client.RedstoneDynamoRenderer;
 import com.electra.mod.client.SilhouetteSpriteSource;
 import com.electra.mod.screen.AdvancedFurnaceScreen;
+import com.electra.mod.screen.FreezerScreen;
+import com.electra.mod.screen.GrinderScreen;
 import com.electra.mod.setup.ModBlockEntities;
 import com.electra.mod.setup.ModBlocks;
 import com.electra.mod.setup.ModMenuTypes;
@@ -29,6 +34,8 @@ public class ElectraClient {
     @SubscribeEvent
     public static void onRegisterScreens(RegisterMenuScreensEvent event) {
         event.register(ModMenuTypes.ADVANCED_FURNACE_MENU.get(), AdvancedFurnaceScreen::new);
+        event.register(ModMenuTypes.GRINDER_MENU.get(), GrinderScreen::new);
+        event.register(ModMenuTypes.FREEZER_MENU.get(), FreezerScreen::new);
     }
 
     /** Lampe électrique : le verre (tintindex 0) prend la couleur de la teinture appliquée. */
@@ -57,5 +64,9 @@ public class ElectraClient {
         event.registerBlockEntityRenderer(ModBlockEntities.LIGHTNING_COLLECTOR_BE.get(), LightningCollectorRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.REDSTONE_DYNAMO_BE.get(), RedstoneDynamoRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.ELECTRIC_LAMP_BE.get(), ElectricLampRenderer::new);
+        // Fluides : le liquide est dessiné par le code (niveau variable), derrière les vitres des modèles
+        event.registerBlockEntityRenderer(ModBlockEntities.IRON_PIPE_BE.get(), IronPipeRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.FLUID_RESERVOIR_BE.get(), FluidReservoirRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.FLUID_PUMP_BE.get(), FluidPumpRenderer::new);
     }
 }

@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:bucket"
+    },
+    "C": {
+      "tag": "c:ingots/copper"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "P": {
+      "item": "electra:iron_pipe"
+    },
+    "W": {
+      "item": "electra:bare_wire"
+    }
+  },
+  "pattern": [
+    "CWC",
+    "IBI",
+    "IPI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "electra:fluid_pump"
+  }
+}

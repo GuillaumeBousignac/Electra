@@ -1,0 +1,11 @@
+{
+  "type": "electra:grinding",
+  "energy_cost": 60,
+  "input": {
+    "item": "minecraft:rose_bush"
+  },
+  "result": {
+    "count": 4,
+    "id": "minecraft:red_dye"
+  }
+}

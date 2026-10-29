@@ -1,0 +1,12 @@
+{
+  "type": "electra:freezing",
+  "energy_cost": 250,
+  "fluid_amount": 1000,
+  "input": {
+    "item": "minecraft:bucket"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:powder_snow_bucket"
+  }
+}

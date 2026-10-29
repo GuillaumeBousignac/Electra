@@ -2,7 +2,11 @@ package com.electra.mod.compat.jei;
 
 import com.electra.mod.Electra;
 import com.electra.mod.recipe.AlloyingRecipe;
+import com.electra.mod.recipe.FreezingRecipe;
+import com.electra.mod.recipe.GrindingRecipe;
 import com.electra.mod.screen.AdvancedFurnaceScreen;
+import com.electra.mod.screen.FreezerScreen;
+import com.electra.mod.screen.GrinderScreen;
 import com.electra.mod.setup.ModBlocks;
 import com.electra.mod.setup.ModRecipes;
 import mezz.jei.api.IModPlugin;
@@ -34,7 +38,10 @@ public class ElectraJeiPlugin implements IModPlugin {
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
-        registration.addRecipeCategories(new AlloyingRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(
+                new AlloyingRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
+                new GrindingRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
+                new FreezingRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
@@ -50,6 +57,20 @@ public class ElectraJeiPlugin implements IModPlugin {
                 .toList();
 
         registration.addRecipes(AlloyingRecipeCategory.TYPE, recipes);
+
+        List<GrindingRecipe> grindings = level.getRecipeManager()
+                .getAllRecipesFor(ModRecipes.GRINDING_TYPE.get())
+                .stream()
+                .map(RecipeHolder::value)
+                .toList();
+        registration.addRecipes(GrindingRecipeCategory.TYPE, grindings);
+
+        List<FreezingRecipe> freezings = level.getRecipeManager()
+                .getAllRecipesFor(ModRecipes.FREEZING_TYPE.get())
+                .stream()
+                .map(RecipeHolder::value)
+                .toList();
+        registration.addRecipes(FreezingRecipeCategory.TYPE, freezings);
     }
 
     @Override
@@ -57,6 +78,8 @@ public class ElectraJeiPlugin implements IModPlugin {
         // Le four avancé fait aussi la cuisson vanilla (four, haut fourneau, fumoir)
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.ADVANCED_FURNACE_ITEM.get()),
                 AlloyingRecipeCategory.TYPE, RecipeTypes.SMELTING, RecipeTypes.BLASTING, RecipeTypes.SMOKING);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.GRINDER_ITEM.get()), GrindingRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.FREEZER_ITEM.get()), FreezingRecipeCategory.TYPE);
     }
 
     @Override
@@ -64,5 +87,7 @@ public class ElectraJeiPlugin implements IModPlugin {
         // Clic sur la flèche de l'interface → ouvre les recettes du four
         registration.addRecipeClickArea(AdvancedFurnaceScreen.class, 79, 34, 24, 16,
                 AlloyingRecipeCategory.TYPE, RecipeTypes.SMELTING);
+        registration.addRecipeClickArea(GrinderScreen.class, 79, 34, 24, 16, GrindingRecipeCategory.TYPE);
+        registration.addRecipeClickArea(FreezerScreen.class, 79, 34, 24, 16, FreezingRecipeCategory.TYPE);
     }
 }

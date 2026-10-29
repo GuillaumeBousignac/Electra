@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:bucket"
+    },
+    "G": {
+      "tag": "c:glass_blocks"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    }
+  },
+  "pattern": [
+    "IGI",
+    "GBG",
+    "IGI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "electra:fluid_reservoir"
+  }
+}

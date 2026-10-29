@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "bottom": "electra:block/freezer_bottom",
+    "front": "electra:block/freezer_front",
+    "side": "electra:block/freezer_side",
+    "top": "electra:block/freezer_top"
+  }
+}

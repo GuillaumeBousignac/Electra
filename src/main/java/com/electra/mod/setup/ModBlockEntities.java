@@ -2,11 +2,17 @@ package com.electra.mod.setup;
 
 import com.electra.mod.Electra;
 import com.electra.mod.blockentity.AdvancedFurnaceBlockEntity;
+import com.electra.mod.blockentity.FreezerBlockEntity;
+import com.electra.mod.blockentity.GrinderBlockEntity;
 import com.electra.mod.blockentity.ElectricLampBlockEntity;
+import com.electra.mod.blockentity.FluidPumpBlockEntity;
+import com.electra.mod.blockentity.FluidReservoirBlockEntity;
+import com.electra.mod.blockentity.IronPipeBlockEntity;
 import com.electra.mod.blockentity.LightningCollectorBlockEntity;
 import com.electra.mod.blockentity.LogicGateBlockEntity;
 import com.electra.mod.blockentity.RedstoneConverterBlockEntity;
 import com.electra.mod.blockentity.RedstoneDynamoBlockEntity;
+import com.electra.mod.blockentity.SprinklerBlockEntity;
 import com.electra.mod.blockentity.WireBlockEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
@@ -47,6 +53,16 @@ public class ModBlockEntities {
                     .of(AdvancedFurnaceBlockEntity::new, ModBlocks.ADVANCED_FURNACE.get())
                     .build(null));
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GrinderBlockEntity>> GRINDER_BE =
+            BLOCK_ENTITIES.register("grinder_be", () -> BlockEntityType.Builder
+                    .of(GrinderBlockEntity::new, ModBlocks.GRINDER.get())
+                    .build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FreezerBlockEntity>> FREEZER_BE =
+            BLOCK_ENTITIES.register("freezer_be", () -> BlockEntityType.Builder
+                    .of(FreezerBlockEntity::new, ModBlocks.FREEZER.get())
+                    .build(null));
+
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RedstoneDynamoBlockEntity>> REDSTONE_DYNAMO_BE =
             BLOCK_ENTITIES.register("redstone_dynamo_be", () -> BlockEntityType.Builder
                     .of(RedstoneDynamoBlockEntity::new, ModBlocks.REDSTONE_DYNAMO.get())
@@ -57,6 +73,27 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("logic_gate_be", () -> BlockEntityType.Builder
                     .of(LogicGateBlockEntity::new, ModBlocks.LOGIC_GATES.values().stream()
                             .map(holder -> (Block) holder.get()).toArray(Block[]::new))
+                    .build(null));
+
+    // ── Fluides (0.3) ─────────────────────────────────────────────────────
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<IronPipeBlockEntity>> IRON_PIPE_BE =
+            BLOCK_ENTITIES.register("iron_pipe_be", () -> BlockEntityType.Builder
+                    .of(IronPipeBlockEntity::new, ModBlocks.IRON_PIPE.get())
+                    .build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FluidPumpBlockEntity>> FLUID_PUMP_BE =
+            BLOCK_ENTITIES.register("fluid_pump_be", () -> BlockEntityType.Builder
+                    .of(FluidPumpBlockEntity::new, ModBlocks.FLUID_PUMP.get())
+                    .build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FluidReservoirBlockEntity>> FLUID_RESERVOIR_BE =
+            BLOCK_ENTITIES.register("fluid_reservoir_be", () -> BlockEntityType.Builder
+                    .of(FluidReservoirBlockEntity::new, ModBlocks.FLUID_RESERVOIR.get())
+                    .build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SprinklerBlockEntity>> SPRINKLER_BE =
+            BLOCK_ENTITIES.register("sprinkler_be", () -> BlockEntityType.Builder
+                    .of(SprinklerBlockEntity::new, ModBlocks.SPRINKLER.get())
                     .build(null));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ElectricLampBlockEntity>> ELECTRIC_LAMP_BE =

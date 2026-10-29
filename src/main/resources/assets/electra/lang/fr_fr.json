@@ -106,5 +106,18 @@
   "message.electra.gate_mode_xor": "Mode : OU exclusif (XOR)",
   "block.electra.energy_clock": "Horloge électrique",
   "tooltip.electra.energy_clock": "Coupe et rétablit en boucle le courant venu de l'arrière. Clic droit : change la durée des phases",
-  "message.electra.clock_phase": "Horloge : %1$s s allumée, puis %1$s s éteinte"
+  "message.electra.clock_phase": "Horloge : %1$s s allumée, puis %1$s s éteinte",
+  "block.electra.iron_pipe": "Tuyau en fer",
+  "block.electra.fluid_pump": "Pompe à fluides",
+  "block.electra.fluid_reservoir": "Réservoir à fluides",
+  "block.electra.sprinkler": "Arroseur",
+  "tooltip.electra.iron_pipe": "Transporte l'eau, la lave ou tout autre fluide entre pompes, réservoirs et machines. Le fluide se voit à travers les vitres",
+  "tooltip.electra.fluid_pump": "Alimentée en FE : aspire la première source d'eau ou de lave dans les 6 blocs sous elle, 1000 mB par seconde",
+  "tooltip.electra.fluid_reservoir": "Stocke les fluides, niveau visible à travers les vitres. Clic droit avec un seau pour le remplir ou le vider. Les réservoirs adjacents forment une seule grande cuve",
+  "tooltip.electra.sprinkler": "Alimenté en eau : irrigue et accélère les cultures en dessous. Alimenté en lave : accélère les verrues du Nether et brûle les créatures en dessous",
+  "block.electra.grinder": "Broyeur",
+  "jei.electra.grinding": "Broyage",
+  "block.electra.freezer": "Congélateur",
+  "jei.electra.freezing": "Congélation",
+  "gui.electra.water": "%s / %s mB"
 }

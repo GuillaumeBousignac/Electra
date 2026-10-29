@@ -1,0 +1,9 @@
+{
+  "type": "electra:freezing",
+  "energy_cost": 200,
+  "fluid_amount": 1000,
+  "result": {
+    "count": 1,
+    "id": "minecraft:ice"
+  }
+}

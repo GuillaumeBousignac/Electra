@@ -1,0 +1,13 @@
+{
+  "type": "electra:freezing",
+  "energy_cost": 150,
+  "fluid_amount": 500,
+  "input": {
+    "item": "minecraft:rotten_flesh"
+  },
+  "input_count": 3,
+  "result": {
+    "count": 1,
+    "id": "minecraft:leather"
+  }
+}

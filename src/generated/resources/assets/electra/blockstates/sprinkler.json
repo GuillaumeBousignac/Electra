@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "mode=idle": {
+      "model": "electra:block/sprinkler"
+    },
+    "mode=lava": {
+      "model": "electra:block/sprinkler"
+    },
+    "mode=water": {
+      "model": "electra:block/sprinkler"
+    }
+  }
+}

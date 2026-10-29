@@ -1,0 +1,11 @@
+{
+  "type": "electra:grinding",
+  "energy_cost": 120,
+  "input": {
+    "item": "minecraft:nether_gold_ore"
+  },
+  "result": {
+    "count": 8,
+    "id": "minecraft:gold_nugget"
+  }
+}

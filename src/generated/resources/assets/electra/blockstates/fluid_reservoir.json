@@ -1,0 +1,120 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "electra:block/fluid_reservoir_plate_bottom"
+      },
+      "when": {
+        "down": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/fluid_reservoir_plate_top"
+      },
+      "when": {
+        "up": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/fluid_reservoir_pillar_nw"
+      },
+      "when": {
+        "north": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/fluid_reservoir_pillar_nw"
+      },
+      "when": {
+        "north": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/fluid_reservoir_pillar_ne"
+      },
+      "when": {
+        "north": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/fluid_reservoir_pillar_ne"
+      },
+      "when": {
+        "east": "false",
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/fluid_reservoir_pillar_sw"
+      },
+      "when": {
+        "south": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/fluid_reservoir_pillar_sw"
+      },
+      "when": {
+        "south": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/fluid_reservoir_pillar_se"
+      },
+      "when": {
+        "south": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/fluid_reservoir_pillar_se"
+      },
+      "when": {
+        "east": "false",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/fluid_reservoir_glass_north"
+      },
+      "when": {
+        "north": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/fluid_reservoir_glass_south"
+      },
+      "when": {
+        "south": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/fluid_reservoir_glass_west"
+      },
+      "when": {
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "electra:block/fluid_reservoir_glass_east"
+      },
+      "when": {
+        "east": "false"
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "G": {
+      "tag": "c:glass_blocks"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    }
+  },
+  "pattern": [
+    "III",
+    "GGG",
+    "III"
+  ],
+  "result": {
+    "count": 8,
+    "id": "electra:iron_pipe"
+  }
+}

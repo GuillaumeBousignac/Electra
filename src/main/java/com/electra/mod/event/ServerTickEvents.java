@@ -1,6 +1,7 @@
 package com.electra.mod.event;
 
 import com.electra.mod.network.EnergyNetworkManager;
+import com.electra.mod.network.FluidNetworkManager;
 import net.minecraft.server.level.ServerLevel;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
@@ -15,15 +16,20 @@ public class ServerTickEvents {
         if (event.getLevel() instanceof ServerLevel serverLevel && EnergyNetworkManager.isActive()) {
             EnergyNetworkManager.get(serverLevel).tick(serverLevel);
         }
+        if (event.getLevel() instanceof ServerLevel serverLevel && FluidNetworkManager.isActive()) {
+            FluidNetworkManager.get(serverLevel).tick(serverLevel);
+        }
     }
 
     @SubscribeEvent
     public void onServerAboutToStart(ServerAboutToStartEvent event) {
         EnergyNetworkManager.start();
+        FluidNetworkManager.start();
     }
 
     @SubscribeEvent
     public void onServerStopping(ServerStoppingEvent event) {
         EnergyNetworkManager.shutdown();
+        FluidNetworkManager.shutdown();
     }
 }

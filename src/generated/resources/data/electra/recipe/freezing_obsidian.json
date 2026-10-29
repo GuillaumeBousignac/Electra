@@ -1,0 +1,12 @@
+{
+  "type": "electra:freezing",
+  "energy_cost": 500,
+  "fluid_amount": 1000,
+  "input": {
+    "item": "minecraft:magma_block"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:obsidian"
+  }
+}

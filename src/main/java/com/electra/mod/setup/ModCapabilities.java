@@ -33,8 +33,41 @@ public final class ModCapabilities {
         event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK,
                 ModBlockEntities.ELECTRIC_LAMP_BE.get(), (be, side) -> be.getEnergyStorage());
 
+        // ── Fluides : tuyau (verser seulement), pompe (puiser seulement), réservoir (les deux), arroseur (verser seulement)
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,
+                ModBlockEntities.IRON_PIPE_BE.get(), (be, side) -> be.getExternalHandler());
+
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,
+                ModBlockEntities.FLUID_PUMP_BE.get(), (be, side) -> be.getFluidPort());
+
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,
+                ModBlockEntities.FLUID_RESERVOIR_BE.get(), (be, side) -> be.getFluidPort());
+
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,
+                ModBlockEntities.SPRINKLER_BE.get(), (be, side) -> be.getFluidPort());
+
+        // La pompe se branche aussi sur le réseau électrique
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK,
+                ModBlockEntities.FLUID_PUMP_BE.get(), (be, side) -> be.getEnergyStorage());
+
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,
                 ModBlockEntities.ADVANCED_FURNACE_BE.get(),
+                (be, side) -> side == null ? new InvWrapper(be) : new SidedInvWrapper(be, side));
+
+        // Congélateur : énergie, objets et eau (les tuyaux ne font que verser)
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK,
+                ModBlockEntities.FREEZER_BE.get(), (be, side) -> be.getEnergyStorage());
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,
+                ModBlockEntities.FREEZER_BE.get(), (be, side) -> be.getFluidPort());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,
+                ModBlockEntities.FREEZER_BE.get(),
+                (be, side) -> side == null ? new InvWrapper(be) : new SidedInvWrapper(be, side));
+
+        // Broyeur : énergie et objets, comme le four avancé
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK,
+                ModBlockEntities.GRINDER_BE.get(), (be, side) -> be.getEnergyStorage());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,
+                ModBlockEntities.GRINDER_BE.get(),
                 (be, side) -> side == null ? new InvWrapper(be) : new SidedInvWrapper(be, side));
     }
 }
