@@ -1,0 +1,11 @@
+{
+  "type": "electra:oxidizing",
+  "fluid_amount": 100,
+  "input": {
+    "item": "minecraft:chiseled_copper"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:exposed_chiseled_copper"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "c:ingots/copper"
+    },
+    "U": {
+      "item": "minecraft:cauldron"
+    },
+    "W": {
+      "item": "electra:bare_wire"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "CUC",
+    "CWC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "electra:concrete_mixer"
+  }
+}

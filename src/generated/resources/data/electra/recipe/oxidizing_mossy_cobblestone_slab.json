@@ -1,0 +1,12 @@
+{
+  "type": "electra:oxidizing",
+  "energy_cost": 40,
+  "fluid_amount": 250,
+  "input": {
+    "item": "minecraft:cobblestone_slab"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:mossy_cobblestone_slab"
+  }
+}

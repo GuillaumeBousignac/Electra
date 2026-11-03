@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "electra:block/rusted_red_iron_block"
+    }
+  }
+}

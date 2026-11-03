@@ -3,6 +3,14 @@ package com.electra.mod.setup;
 import com.electra.mod.Electra;
 import com.electra.mod.recipe.AlloyingRecipe;
 import com.electra.mod.recipe.AlloyingRecipeSerializer;
+import com.electra.mod.recipe.MixingRecipe;
+import com.electra.mod.recipe.MixingRecipeSerializer;
+import com.electra.mod.recipe.OxidizingRecipe;
+import com.electra.mod.recipe.OxidizingRecipeSerializer;
+import com.electra.mod.recipe.DyeingRecipe;
+import com.electra.mod.recipe.DyeingRecipeSerializer;
+import com.electra.mod.recipe.DebarkingRecipe;
+import com.electra.mod.recipe.DebarkingRecipeSerializer;
 import com.electra.mod.recipe.FreezingRecipe;
 import com.electra.mod.recipe.FreezingRecipeSerializer;
 import com.electra.mod.recipe.GrindingRecipe;
@@ -41,4 +49,32 @@ public class ModRecipes {
 
     public static final DeferredHolder<RecipeSerializer<?>, FreezingRecipeSerializer> FREEZING_SERIALIZER =
             SERIALIZERS.register("freezing", FreezingRecipeSerializer::new);
+
+    public static final DeferredHolder<RecipeType<?>, RecipeType<DebarkingRecipe>> DEBARKING_TYPE =
+            TYPES.register("debarking", () -> RecipeType.simple(
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(Electra.MODID, "debarking")));
+
+    public static final DeferredHolder<RecipeSerializer<?>, DebarkingRecipeSerializer> DEBARKING_SERIALIZER =
+            SERIALIZERS.register("debarking", DebarkingRecipeSerializer::new);
+
+    public static final DeferredHolder<RecipeType<?>, RecipeType<MixingRecipe>> MIXING_TYPE =
+            TYPES.register("mixing", () -> RecipeType.simple(
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(Electra.MODID, "mixing")));
+
+    public static final DeferredHolder<RecipeSerializer<?>, MixingRecipeSerializer> MIXING_SERIALIZER =
+            SERIALIZERS.register("mixing", MixingRecipeSerializer::new);
+
+    public static final DeferredHolder<RecipeType<?>, RecipeType<OxidizingRecipe>> OXIDIZING_TYPE =
+            TYPES.register("oxidizing", () -> RecipeType.simple(
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(Electra.MODID, "oxidizing")));
+
+    public static final DeferredHolder<RecipeSerializer<?>, OxidizingRecipeSerializer> OXIDIZING_SERIALIZER =
+            SERIALIZERS.register("oxidizing", OxidizingRecipeSerializer::new);
+
+    public static final DeferredHolder<RecipeType<?>, RecipeType<DyeingRecipe>> DYEING_TYPE =
+            TYPES.register("dyeing", () -> RecipeType.simple(
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(Electra.MODID, "dyeing")));
+
+    public static final DeferredHolder<RecipeSerializer<?>, DyeingRecipeSerializer> DYEING_SERIALIZER =
+            SERIALIZERS.register("dyeing", DyeingRecipeSerializer::new);
 }

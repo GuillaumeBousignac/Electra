@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "c:ingots/copper"
+    },
+    "D": {
+      "tag": "c:dyes"
+    },
+    "W": {
+      "item": "electra:bare_wire"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "CDC",
+    "CWC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "electra:dyer"
+  }
+}

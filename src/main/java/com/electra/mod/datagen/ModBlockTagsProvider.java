@@ -27,9 +27,14 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 ModBlocks.ADVANCED_FURNACE.get(),
                 ModBlocks.GRINDER.get(),
                 ModBlocks.FREEZER.get(),
+                ModBlocks.DEBARKER.get(),
+                ModBlocks.CONCRETE_MIXER.get(),
                 ModBlocks.REDSTONE_CONVERTER.get(),
                 ModBlocks.ROSE_GOLD_BLOCK.get(),
                 ModBlocks.RED_IRON_BLOCK.get(),
+                ModBlocks.RUSTED_RED_IRON_BLOCK.get(),
+                ModBlocks.OXIDATION_STATION.get(),
+                ModBlocks.DYER.get(),
                 ModBlocks.REDSTONE_DYNAMO.get(),
                 ModBlocks.ELECTRIC_LAMP.get(),
                 ModBlocks.IRON_PIPE.get(),
@@ -38,7 +43,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 ModBlocks.SPRINKLER.get());
         ModBlocks.LOGIC_GATES.values().forEach(gate -> tag(BlockTags.MINEABLE_WITH_PICKAXE).add(gate.get()));
 
-        tag(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.RED_IRON_BLOCK.get());
+        tag(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.RED_IRON_BLOCK.get(), ModBlocks.RUSTED_RED_IRON_BLOCK.get());
 
         // Blocs de stockage (compatibilité avec les autres mods)
         tag(ModTags.Blocks.STORAGE_BLOCKS_ROSE_GOLD).add(ModBlocks.ROSE_GOLD_BLOCK.get());

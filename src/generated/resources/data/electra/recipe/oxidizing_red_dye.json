@@ -1,0 +1,13 @@
+{
+  "type": "electra:oxidizing",
+  "energy_cost": 40,
+  "fluid_amount": 100,
+  "input": {
+    "item": "minecraft:iron_nugget"
+  },
+  "input_count": 3,
+  "result": {
+    "count": 1,
+    "id": "minecraft:red_dye"
+  }
+}

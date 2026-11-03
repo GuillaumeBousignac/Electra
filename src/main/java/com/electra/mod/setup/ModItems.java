@@ -27,6 +27,11 @@ public class ModItems {
             ITEMS.register("red_iron_ingot",
                     () -> new Item(new Item.Properties()));
 
+    /** Lingot de fer rouge oxydé (station d'oxydation). */
+    public static final DeferredItem<Item> RUSTED_RED_IRON_INGOT =
+            ITEMS.register("rusted_red_iron_ingot",
+                    () -> new Item(new Item.Properties()));
+
     public static final DeferredItem<EnergyMeterItem> ENERGY_METER =
             ITEMS.register("energy_meter",
                     () -> new EnergyMeterItem(new Item.Properties().stacksTo(1)));

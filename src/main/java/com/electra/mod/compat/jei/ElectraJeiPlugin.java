@@ -2,9 +2,17 @@ package com.electra.mod.compat.jei;
 
 import com.electra.mod.Electra;
 import com.electra.mod.recipe.AlloyingRecipe;
+import com.electra.mod.recipe.MixingRecipe;
+import com.electra.mod.recipe.OxidizingRecipe;
+import com.electra.mod.recipe.DyeingRecipe;
+import com.electra.mod.recipe.DebarkingRecipe;
 import com.electra.mod.recipe.FreezingRecipe;
 import com.electra.mod.recipe.GrindingRecipe;
 import com.electra.mod.screen.AdvancedFurnaceScreen;
+import com.electra.mod.screen.ConcreteMixerScreen;
+import com.electra.mod.screen.OxidationStationScreen;
+import com.electra.mod.screen.DyerScreen;
+import com.electra.mod.screen.DebarkerScreen;
 import com.electra.mod.screen.FreezerScreen;
 import com.electra.mod.screen.GrinderScreen;
 import com.electra.mod.setup.ModBlocks;
@@ -18,7 +26,13 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.DyedItemColor;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import org.jetbrains.annotations.NotNull;
 
@@ -41,7 +55,11 @@ public class ElectraJeiPlugin implements IModPlugin {
         registration.addRecipeCategories(
                 new AlloyingRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
                 new GrindingRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
-                new FreezingRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
+                new FreezingRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
+                new DebarkingRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
+                new MixingRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
+                new OxidizingRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
+                new DyeingRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
@@ -71,6 +89,45 @@ public class ElectraJeiPlugin implements IModPlugin {
                 .map(RecipeHolder::value)
                 .toList();
         registration.addRecipes(FreezingRecipeCategory.TYPE, freezings);
+
+        List<DebarkingRecipe> debarkings = level.getRecipeManager()
+                .getAllRecipesFor(ModRecipes.DEBARKING_TYPE.get())
+                .stream()
+                .map(RecipeHolder::value)
+                .toList();
+        registration.addRecipes(DebarkingRecipeCategory.TYPE, debarkings);
+
+        List<MixingRecipe> mixings = level.getRecipeManager()
+                .getAllRecipesFor(ModRecipes.MIXING_TYPE.get())
+                .stream()
+                .map(RecipeHolder::value)
+                .toList();
+        registration.addRecipes(MixingRecipeCategory.TYPE, mixings);
+
+        List<OxidizingRecipe> oxidizings = level.getRecipeManager()
+                .getAllRecipesFor(ModRecipes.OXIDIZING_TYPE.get())
+                .stream()
+                .map(RecipeHolder::value)
+                .toList();
+        registration.addRecipes(OxidizingRecipeCategory.TYPE, oxidizings);
+
+        List<DyeingRecipe> dyeings = new java.util.ArrayList<>(level.getRecipeManager()
+                .getAllRecipesFor(ModRecipes.DYEING_TYPE.get())
+                .stream()
+                .map(RecipeHolder::value)
+                .toList());
+
+        // Armures en cuir et autres objets « dyeable » : exemple de mélange rouge + jaune (1 à 3 colorants possibles)
+        DyeItem[] allDyes = java.util.Arrays.stream(DyeColor.values()).map(DyeItem::byColor).toArray(DyeItem[]::new);
+        List<DyeItem> sample = List.of(DyeItem.byColor(DyeColor.RED), DyeItem.byColor(DyeColor.YELLOW));
+        for (net.minecraft.world.item.Item item : BuiltInRegistries.ITEM) {
+            ItemStack base = item.getDefaultInstance();
+            if (base.is(ItemTags.DYEABLE)) {
+                dyeings.add(new DyeingRecipe(Ingredient.of(item), Ingredient.of(allDyes), 100,
+                        DyedItemColor.applyDyes(base, sample), 40, false));
+            }
+        }
+        registration.addRecipes(DyeingRecipeCategory.TYPE, dyeings);
     }
 
     @Override
@@ -80,6 +137,10 @@ public class ElectraJeiPlugin implements IModPlugin {
                 AlloyingRecipeCategory.TYPE, RecipeTypes.SMELTING, RecipeTypes.BLASTING, RecipeTypes.SMOKING);
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.GRINDER_ITEM.get()), GrindingRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.FREEZER_ITEM.get()), FreezingRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.DEBARKER_ITEM.get()), DebarkingRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.CONCRETE_MIXER_ITEM.get()), MixingRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.OXIDATION_STATION_ITEM.get()), OxidizingRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.DYER_ITEM.get()), DyeingRecipeCategory.TYPE);
     }
 
     @Override
@@ -89,5 +150,9 @@ public class ElectraJeiPlugin implements IModPlugin {
                 AlloyingRecipeCategory.TYPE, RecipeTypes.SMELTING);
         registration.addRecipeClickArea(GrinderScreen.class, 79, 34, 24, 16, GrindingRecipeCategory.TYPE);
         registration.addRecipeClickArea(FreezerScreen.class, 79, 34, 24, 16, FreezingRecipeCategory.TYPE);
+        registration.addRecipeClickArea(DebarkerScreen.class, 79, 34, 24, 16, DebarkingRecipeCategory.TYPE);
+        registration.addRecipeClickArea(ConcreteMixerScreen.class, 79, 34, 24, 16, MixingRecipeCategory.TYPE);
+        registration.addRecipeClickArea(OxidationStationScreen.class, 79, 34, 24, 16, OxidizingRecipeCategory.TYPE);
+        registration.addRecipeClickArea(DyerScreen.class, 79, 34, 24, 16, DyeingRecipeCategory.TYPE);
     }
 }

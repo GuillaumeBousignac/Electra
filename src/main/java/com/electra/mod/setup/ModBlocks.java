@@ -2,6 +2,10 @@ package com.electra.mod.setup;
 
 import com.electra.mod.Electra;
 import com.electra.mod.block.AdvancedFurnaceBlock;
+import com.electra.mod.block.ConcreteMixerBlock;
+import com.electra.mod.block.OxidationStationBlock;
+import com.electra.mod.block.DebarkerBlock;
+import com.electra.mod.block.DyerBlock;
 import com.electra.mod.block.FreezerBlock;
 import com.electra.mod.block.GrinderBlock;
 import com.electra.mod.block.BareWireBlock;
@@ -97,6 +101,17 @@ public class ModBlocks {
     public static final DeferredItem<BlockItem> RED_IRON_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("red_iron_block", RED_IRON_BLOCK);
 
+    /** Fer rouge oxydé : un seul stade, pensé pour l'usure future de la Redstone Dynamo. */
+    public static final DeferredBlock<Block> RUSTED_RED_IRON_BLOCK =
+            BLOCKS.registerSimpleBlock("rusted_red_iron_block",
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.TERRACOTTA_BROWN)
+                            .strength(5.0f, 6.0f)
+                            .sound(SoundType.METAL)
+                            .requiresCorrectToolForDrops());
+    public static final DeferredItem<BlockItem> RUSTED_RED_IRON_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem("rusted_red_iron_block", RUSTED_RED_IRON_BLOCK);
+
     public static final DeferredBlock<RedstoneConverterBlock> REDSTONE_CONVERTER =
             BLOCKS.registerBlock("redstone_converter", RedstoneConverterBlock::new,
                     BlockBehaviour.Properties.of()
@@ -139,6 +154,47 @@ public class ModBlocks {
                             .requiresCorrectToolForDrops());
     public static final DeferredItem<BlockItem> FREEZER_ITEM =
             ITEMS.registerSimpleBlockItem("freezer", FREEZER);
+
+    public static final DeferredBlock<ConcreteMixerBlock> CONCRETE_MIXER =
+            BLOCKS.registerBlock("concrete_mixer", ConcreteMixerBlock::new,
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_ORANGE)
+                            .strength(3.5f)
+                            .sound(SoundType.METAL)
+                            .requiresCorrectToolForDrops());
+    public static final DeferredItem<BlockItem> CONCRETE_MIXER_ITEM =
+            ITEMS.registerSimpleBlockItem("concrete_mixer", CONCRETE_MIXER);
+
+    public static final DeferredBlock<OxidationStationBlock> OXIDATION_STATION =
+            BLOCKS.registerBlock("oxidation_station", OxidationStationBlock::new,
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_ORANGE)
+                            .strength(3.5f)
+                            .sound(SoundType.METAL)
+                            .requiresCorrectToolForDrops());
+    public static final DeferredItem<BlockItem> OXIDATION_STATION_ITEM =
+            ITEMS.registerSimpleBlockItem("oxidation_station", OXIDATION_STATION);
+
+    public static final DeferredBlock<DyerBlock> DYER =
+            BLOCKS.registerBlock("dyer", DyerBlock::new,
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_ORANGE)
+                            .strength(3.5f)
+                            .sound(SoundType.METAL)
+                            .requiresCorrectToolForDrops());
+    public static final DeferredItem<BlockItem> DYER_ITEM =
+            ITEMS.registerSimpleBlockItem("dyer", DYER);
+
+    public static final DeferredBlock<DebarkerBlock> DEBARKER =
+            BLOCKS.registerBlock("debarker", DebarkerBlock::new,
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_ORANGE)
+                            .strength(3.5f)
+                            .sound(SoundType.METAL)
+                            .lightLevel(state -> state.getValue(DebarkerBlock.LIT) ? 6 : 0)
+                            .requiresCorrectToolForDrops());
+    public static final DeferredItem<BlockItem> DEBARKER_ITEM =
+            ITEMS.registerSimpleBlockItem("debarker", DEBARKER);
 
     // Redstone Dynamo : cœur du multibloc
     public static final DeferredBlock<RedstoneDynamoBlock> REDSTONE_DYNAMO =

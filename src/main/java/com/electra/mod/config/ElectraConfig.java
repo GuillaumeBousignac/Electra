@@ -38,6 +38,26 @@ public final class ElectraConfig {
     public static final ModConfigSpec.IntValue FREEZER_TANK;
     public static final ModConfigSpec.IntValue FREEZER_TIME;
 
+    // ── Debarker ───────────────────────────────────────────────────────────
+    public static final ModConfigSpec.IntValue CONCRETE_MIXER_CAPACITY;
+    public static final ModConfigSpec.IntValue CONCRETE_MIXER_MAX_RECEIVE;
+    public static final ModConfigSpec.IntValue CONCRETE_MIXER_TANK;
+    public static final ModConfigSpec.IntValue CONCRETE_MIXER_TIME;
+
+    public static final ModConfigSpec.IntValue OXIDATION_STATION_CAPACITY;
+    public static final ModConfigSpec.IntValue OXIDATION_STATION_MAX_RECEIVE;
+    public static final ModConfigSpec.IntValue OXIDATION_STATION_TANK;
+    public static final ModConfigSpec.IntValue OXIDATION_STATION_TIME;
+
+    public static final ModConfigSpec.IntValue DYER_CAPACITY;
+    public static final ModConfigSpec.IntValue DYER_MAX_RECEIVE;
+    public static final ModConfigSpec.IntValue DYER_TANK;
+    public static final ModConfigSpec.IntValue DYER_TIME;
+
+    public static final ModConfigSpec.IntValue DEBARKER_CAPACITY;
+    public static final ModConfigSpec.IntValue DEBARKER_MAX_RECEIVE;
+    public static final ModConfigSpec.IntValue DEBARKER_TIME;
+
     // ── Redstone Dynamo ────────────────────────────────────────────────────
     public static final ModConfigSpec.IntValue DYNAMO_GENERATION;
     public static final ModConfigSpec.IntValue DYNAMO_CAPACITY;
@@ -133,6 +153,70 @@ public final class ElectraConfig {
         FREEZER_TIME = builder
                 .comment("Duration of one freezing operation (ticks, 20 = 1 second).")
                 .defineInRange("freezeTime", 60, 1, 1_200);
+        builder.pop();
+
+        builder.comment("Concrete mixer: concrete powder to concrete, mud, clay, mud bricks (water from pipes or bucket).",
+                        "Water amounts and energy costs are defined in each recipe (datapack), not here.")
+                .push("concrete_mixer");
+        CONCRETE_MIXER_CAPACITY = builder
+                .comment("Maximum energy stored (FE).")
+                .defineInRange("capacity", 50_000, 1_000, 10_000_000);
+        CONCRETE_MIXER_MAX_RECEIVE = builder
+                .comment("Maximum input rate (FE/tick).")
+                .defineInRange("maxReceive", 1_000, 1, 1_000_000);
+        CONCRETE_MIXER_TANK = builder
+                .comment("Water tank capacity (mB).")
+                .defineInRange("tankCapacity", 4_000, 1_000, 1_000_000);
+        CONCRETE_MIXER_TIME = builder
+                .comment("Duration of one mixing operation (ticks, 20 = 1 second).")
+                .defineInRange("mixTime", 50, 1, 1_200);
+        builder.pop();
+
+        builder.comment("Oxidation station: ages copper, mosses stone, rusts red iron, makes dyes from iron and copper.",
+                        "Water amounts and energy costs are defined in each recipe (datapack), not here.")
+                .push("oxidation_station");
+        OXIDATION_STATION_CAPACITY = builder
+                .comment("Maximum energy stored (FE).")
+                .defineInRange("capacity", 50_000, 1_000, 10_000_000);
+        OXIDATION_STATION_MAX_RECEIVE = builder
+                .comment("Maximum input rate (FE/tick).")
+                .defineInRange("maxReceive", 1_000, 1, 1_000_000);
+        OXIDATION_STATION_TANK = builder
+                .comment("Water tank capacity (mB).")
+                .defineInRange("tankCapacity", 4_000, 1_000, 1_000_000);
+        OXIDATION_STATION_TIME = builder
+                .comment("Duration of one oxidation operation (ticks, 20 = 1 second).")
+                .defineInRange("oxidizeTime", 80, 1, 1_200);
+        builder.pop();
+
+        builder.comment("Dyer: dyes anything dyeable (item + dye + water), from any colour to any colour.",
+                        "Water amounts and energy costs are defined in each recipe (datapack), not here.")
+                .push("dyer");
+        DYER_CAPACITY = builder
+                .comment("Maximum energy stored (FE).")
+                .defineInRange("capacity", 50_000, 1_000, 10_000_000);
+        DYER_MAX_RECEIVE = builder
+                .comment("Maximum input rate (FE/tick).")
+                .defineInRange("maxReceive", 1_000, 1, 1_000_000);
+        DYER_TANK = builder
+                .comment("Water tank capacity (mB).")
+                .defineInRange("tankCapacity", 4_000, 1_000, 1_000_000);
+        DYER_TIME = builder
+                .comment("Duration of one dyeing operation (ticks, 20 = 1 second).")
+                .defineInRange("dyeTime", 30, 1, 1_200);
+        builder.pop();
+
+        builder.comment("Debarker: electric log stripping. Energy costs are defined in each recipe (datapack), not here.")
+                .push("debarker");
+        DEBARKER_CAPACITY = builder
+                .comment("Maximum energy stored (FE).")
+                .defineInRange("capacity", 50_000, 1_000, 10_000_000);
+        DEBARKER_MAX_RECEIVE = builder
+                .comment("Maximum input rate (FE/tick).")
+                .defineInRange("maxReceive", 1_000, 1, 1_000_000);
+        DEBARKER_TIME = builder
+                .comment("Duration of one stripping operation (ticks, 20 = 1 second).")
+                .defineInRange("stripTime", 30, 1, 1_200);
         builder.pop();
 
         builder.comment("Redstone Dynamo: multiblock generator. A Red Iron block held by the Dynamo's arm orbits",

@@ -29,6 +29,11 @@ public class ModLanguageProvider extends LanguageProvider {
         add(ModBlocks.ADVANCED_FURNACE.get(), "Advanced Furnace");
         add(ModBlocks.GRINDER.get(), "Grinder");
         add(ModBlocks.FREEZER.get(), "Freezer");
+        add(ModBlocks.DEBARKER.get(), "Debarker");
+        add(ModBlocks.CONCRETE_MIXER.get(), "Concrete Mixer");
+        add(ModBlocks.OXIDATION_STATION.get(), "Oxidation Station");
+        add(ModBlocks.DYER.get(), "Dyer");
+        add(ModBlocks.RUSTED_RED_IRON_BLOCK.get(), "Rusted Red Iron Block");
         add(ModBlocks.REDSTONE_DYNAMO.get(), "Redstone Dynamo");
         add(ModBlocks.LOGIC_GATES.get(GateType.AND).get(), "AND Gate");
         add(ModBlocks.LOGIC_GATES.get(GateType.OR).get(), "OR Gate");
@@ -56,6 +61,7 @@ public class ModLanguageProvider extends LanguageProvider {
         add(ModItems.NUMBER_STICKER.get(), "Number Sticker");
         add(ModItems.MOB_STICKER.get(), "Mob Sticker");
         add(ModItems.RED_IRON_INGOT.get(), "Red Iron Ingot");
+        add(ModItems.RUSTED_RED_IRON_INGOT.get(), "Rusted Red Iron Ingot");
 
         // ── Onglets créatifs ───────────────────────────────────────────────
         add("creativetab.electra.electra_blocks", "Electra Blocks");
@@ -139,6 +145,10 @@ public class ModLanguageProvider extends LanguageProvider {
         add("jei.electra.alloying", "Alloying");
         add("jei.electra.grinding", "Grinding");
         add("jei.electra.freezing", "Freezing");
+        add("jei.electra.debarking", "Debarking");
+        add("jei.electra.mixing", "Mixing");
+        add("jei.electra.oxidizing", "Oxidation");
+        add("jei.electra.dyeing", "Dyeing");
         add("jei.electra.energy", "%s FE");
     }
 

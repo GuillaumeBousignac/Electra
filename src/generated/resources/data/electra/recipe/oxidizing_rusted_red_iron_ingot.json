@@ -1,0 +1,12 @@
+{
+  "type": "electra:oxidizing",
+  "energy_cost": 80,
+  "fluid_amount": 250,
+  "input": {
+    "item": "electra:red_iron_ingot"
+  },
+  "result": {
+    "count": 1,
+    "id": "electra:rusted_red_iron_ingot"
+  }
+}

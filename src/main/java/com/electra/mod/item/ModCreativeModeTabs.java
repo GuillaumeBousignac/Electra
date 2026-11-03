@@ -27,6 +27,10 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.ADVANCED_FURNACE.get());
                         output.accept(ModBlocks.GRINDER.get());
                         output.accept(ModBlocks.FREEZER.get());
+                        output.accept(ModBlocks.DEBARKER.get());
+                        output.accept(ModBlocks.CONCRETE_MIXER.get());
+                        output.accept(ModBlocks.OXIDATION_STATION.get());
+                        output.accept(ModBlocks.DYER.get());
                         output.accept(ModBlocks.REDSTONE_CONVERTER.get());
                         ModBlocks.LOGIC_GATES.values().forEach(gate -> output.accept(gate.get()));
                         output.accept(ModBlocks.ELECTRIC_LAMP.get());
@@ -38,6 +42,7 @@ public class ModCreativeModeTabs {
                         ModBlocks.INSULATED_WIRES.values().forEach(wire -> output.accept(wire.get()));
                         output.accept(ModBlocks.ROSE_GOLD_BLOCK.get());
                         output.accept(ModBlocks.RED_IRON_BLOCK.get());
+                        output.accept(ModBlocks.RUSTED_RED_IRON_BLOCK.get());
                     }).build());
 
     public static final Supplier<CreativeModeTab> ELECTRA_ITEMS_TAB = CREATIVE_MODE_TAB.register("electra_items_tab",
@@ -48,6 +53,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.ROSE_GOLD_INGOT.get());
                         output.accept(ModItems.ROSE_GOLD_NUGGET.get());
                         output.accept(ModItems.RED_IRON_INGOT.get());
+                        output.accept(ModItems.RUSTED_RED_IRON_INGOT.get());
                         output.accept(ModItems.ENERGY_METER.get());
                         output.accept(ModItems.ALPHABETIC_STICKER.get());
                         output.accept(ModItems.TOOL_STICKER.get());

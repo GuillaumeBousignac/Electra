@@ -2,6 +2,10 @@ package com.electra.mod.datagen;
 
 import com.electra.mod.Electra;
 import com.electra.mod.block.AdvancedFurnaceBlock;
+import com.electra.mod.block.ConcreteMixerBlock;
+import com.electra.mod.block.OxidationStationBlock;
+import com.electra.mod.block.DebarkerBlock;
+import com.electra.mod.block.DyerBlock;
 import com.electra.mod.block.ElectricLampBlock;
 import com.electra.mod.block.FreezerBlock;
 import com.electra.mod.block.GrinderBlock;
@@ -104,6 +108,92 @@ public class ModBlockStateProvider extends BlockStateProvider {
                     .build();
         });
         simpleBlockItem(ModBlocks.GRINDER.get(), grinderOff);
+
+        // ── Bétonnière : même carcasse, façade et dessus propres ──
+        ModelFile mixerOff = models().orientableWithBottom("concrete_mixer",
+                modLoc("block/advanced_furnace_side"),
+                modLoc("block/concrete_mixer_front"),
+                modLoc("block/advanced_furnace_bottom"),
+                modLoc("block/concrete_mixer_top"));
+        ModelFile mixerOn = models().orientableWithBottom("concrete_mixer_on",
+                modLoc("block/advanced_furnace_side"),
+                modLoc("block/concrete_mixer_front_on"),
+                modLoc("block/advanced_furnace_bottom"),
+                modLoc("block/concrete_mixer_top_on"));
+        getVariantBuilder(ModBlocks.CONCRETE_MIXER.get()).forAllStates(state -> {
+            Direction facing = state.getValue(ConcreteMixerBlock.FACING);
+            boolean lit = state.getValue(ConcreteMixerBlock.LIT);
+            return ConfiguredModel.builder()
+                    .modelFile(lit ? mixerOn : mixerOff)
+                    .rotationY(((int) facing.toYRot() + 180) % 360)
+                    .build();
+        });
+        simpleBlockItem(ModBlocks.CONCRETE_MIXER.get(), mixerOff);
+
+        // ── Station d'oxydation : même carcasse, façade et dessus propres ──
+        ModelFile oxidationOff = models().orientableWithBottom("oxidation_station",
+                modLoc("block/advanced_furnace_side"),
+                modLoc("block/oxidation_station_front"),
+                modLoc("block/advanced_furnace_bottom"),
+                modLoc("block/oxidation_station_top"));
+        ModelFile oxidationOn = models().orientableWithBottom("oxidation_station_on",
+                modLoc("block/advanced_furnace_side"),
+                modLoc("block/oxidation_station_front_on"),
+                modLoc("block/advanced_furnace_bottom"),
+                modLoc("block/oxidation_station_top_on"));
+        getVariantBuilder(ModBlocks.OXIDATION_STATION.get()).forAllStates(state -> {
+            Direction facing = state.getValue(OxidationStationBlock.FACING);
+            boolean lit = state.getValue(OxidationStationBlock.LIT);
+            return ConfiguredModel.builder()
+                    .modelFile(lit ? oxidationOn : oxidationOff)
+                    .rotationY(((int) facing.toYRot() + 180) % 360)
+                    .build();
+        });
+        simpleBlockItem(ModBlocks.OXIDATION_STATION.get(), oxidationOff);
+
+        simpleBlockWithItem(ModBlocks.RUSTED_RED_IRON_BLOCK.get(), cubeAll(ModBlocks.RUSTED_RED_IRON_BLOCK.get()));
+
+        // ── Teinturière : même carcasse, façade et dessus propres ──
+        ModelFile dyerOff = models().orientableWithBottom("dyer",
+                modLoc("block/advanced_furnace_side"),
+                modLoc("block/dyer_front"),
+                modLoc("block/advanced_furnace_bottom"),
+                modLoc("block/dyer_top"));
+        ModelFile dyerOn = models().orientableWithBottom("dyer_on",
+                modLoc("block/advanced_furnace_side"),
+                modLoc("block/dyer_front_on"),
+                modLoc("block/advanced_furnace_bottom"),
+                modLoc("block/dyer_top_on"));
+        getVariantBuilder(ModBlocks.DYER.get()).forAllStates(state -> {
+            Direction facing = state.getValue(DyerBlock.FACING);
+            boolean lit = state.getValue(DyerBlock.LIT);
+            return ConfiguredModel.builder()
+                    .modelFile(lit ? dyerOn : dyerOff)
+                    .rotationY(((int) facing.toYRot() + 180) % 360)
+                    .build();
+        });
+        simpleBlockItem(ModBlocks.DYER.get(), dyerOff);
+
+        // ── Écorceuse : même carcasse, face avant et dessus propres (dessus animé en marche) ──
+        ModelFile debarkerOff = models().orientableWithBottom("debarker",
+                modLoc("block/advanced_furnace_side"),
+                modLoc("block/debarker_front"),
+                modLoc("block/advanced_furnace_bottom"),
+                modLoc("block/debarker_top"));
+        ModelFile debarkerOn = models().orientableWithBottom("debarker_on",
+                modLoc("block/advanced_furnace_side"),
+                modLoc("block/debarker_front_on"),
+                modLoc("block/advanced_furnace_bottom"),
+                modLoc("block/debarker_top_on"));
+        getVariantBuilder(ModBlocks.DEBARKER.get()).forAllStates(state -> {
+            Direction facing = state.getValue(DebarkerBlock.FACING);
+            boolean lit = state.getValue(DebarkerBlock.LIT);
+            return ConfiguredModel.builder()
+                    .modelFile(lit ? debarkerOn : debarkerOff)
+                    .rotationY(((int) facing.toYRot() + 180) % 360)
+                    .build();
+        });
+        simpleBlockItem(ModBlocks.DEBARKER.get(), debarkerOff);
 
         // ── Congélateur ────────────────────────────────────────────────────
         ModelFile freezerOff = models().orientableWithBottom("freezer",

@@ -1,0 +1,12 @@
+{
+  "type": "electra:oxidizing",
+  "energy_cost": 40,
+  "fluid_amount": 250,
+  "input": {
+    "item": "minecraft:stone_brick_stairs"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:mossy_stone_brick_stairs"
+  }
+}

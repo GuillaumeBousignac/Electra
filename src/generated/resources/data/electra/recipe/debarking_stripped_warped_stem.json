@@ -1,0 +1,10 @@
+{
+  "type": "electra:debarking",
+  "input": {
+    "item": "minecraft:warped_stem"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:stripped_warped_stem"
+  }
+}

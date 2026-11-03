@@ -54,6 +54,40 @@ public final class ModCapabilities {
                 ModBlockEntities.ADVANCED_FURNACE_BE.get(),
                 (be, side) -> side == null ? new InvWrapper(be) : new SidedInvWrapper(be, side));
 
+        // Bétonnière : énergie, objets et eau, comme le congélateur
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK,
+                ModBlockEntities.CONCRETE_MIXER_BE.get(), (be, side) -> be.getEnergyStorage());
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,
+                ModBlockEntities.CONCRETE_MIXER_BE.get(), (be, side) -> be.getFluidPort());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,
+                ModBlockEntities.CONCRETE_MIXER_BE.get(),
+                (be, side) -> side == null ? new InvWrapper(be) : new SidedInvWrapper(be, side));
+
+        // Station d'oxydation : énergie, objets et eau, comme la bétonnière
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK,
+                ModBlockEntities.OXIDATION_STATION_BE.get(), (be, side) -> be.getEnergyStorage());
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,
+                ModBlockEntities.OXIDATION_STATION_BE.get(), (be, side) -> be.getFluidPort());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,
+                ModBlockEntities.OXIDATION_STATION_BE.get(),
+                (be, side) -> side == null ? new InvWrapper(be) : new SidedInvWrapper(be, side));
+
+        // Teinturière : énergie, objets et eau
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK,
+                ModBlockEntities.DYER_BE.get(), (be, side) -> be.getEnergyStorage());
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,
+                ModBlockEntities.DYER_BE.get(), (be, side) -> be.getFluidPort());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,
+                ModBlockEntities.DYER_BE.get(),
+                (be, side) -> side == null ? new InvWrapper(be) : new SidedInvWrapper(be, side));
+
+        // Écorceuse : énergie et objets, comme le broyeur
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK,
+                ModBlockEntities.DEBARKER_BE.get(), (be, side) -> be.getEnergyStorage());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,
+                ModBlockEntities.DEBARKER_BE.get(),
+                (be, side) -> side == null ? new InvWrapper(be) : new SidedInvWrapper(be, side));
+
         // Congélateur : énergie, objets et eau (les tuyaux ne font que verser)
         event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK,
                 ModBlockEntities.FREEZER_BE.get(), (be, side) -> be.getEnergyStorage());

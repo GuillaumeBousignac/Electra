@@ -1,0 +1,12 @@
+{
+  "type": "electra:mixing",
+  "energy_cost": 60,
+  "fluid_amount": 250,
+  "input": {
+    "item": "minecraft:green_concrete_powder"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:green_concrete"
+  }
+}

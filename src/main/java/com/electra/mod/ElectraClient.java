@@ -9,6 +9,10 @@ import com.electra.mod.client.LightningCollectorRenderer;
 import com.electra.mod.client.RedstoneDynamoRenderer;
 import com.electra.mod.client.SilhouetteSpriteSource;
 import com.electra.mod.screen.AdvancedFurnaceScreen;
+import com.electra.mod.screen.ConcreteMixerScreen;
+import com.electra.mod.screen.DebarkerScreen;
+import com.electra.mod.screen.DyerScreen;
+import com.electra.mod.screen.OxidationStationScreen;
 import com.electra.mod.screen.FreezerScreen;
 import com.electra.mod.screen.GrinderScreen;
 import com.electra.mod.setup.ModBlockEntities;
@@ -36,6 +40,10 @@ public class ElectraClient {
         event.register(ModMenuTypes.ADVANCED_FURNACE_MENU.get(), AdvancedFurnaceScreen::new);
         event.register(ModMenuTypes.GRINDER_MENU.get(), GrinderScreen::new);
         event.register(ModMenuTypes.FREEZER_MENU.get(), FreezerScreen::new);
+        event.register(ModMenuTypes.DEBARKER_MENU.get(), DebarkerScreen::new);
+        event.register(ModMenuTypes.CONCRETE_MIXER_MENU.get(), ConcreteMixerScreen::new);
+        event.register(ModMenuTypes.OXIDATION_STATION_MENU.get(), OxidationStationScreen::new);
+        event.register(ModMenuTypes.DYER_MENU.get(), DyerScreen::new);
     }
 
     /** Lampe électrique : le verre (tintindex 0) prend la couleur de la teinture appliquée. */

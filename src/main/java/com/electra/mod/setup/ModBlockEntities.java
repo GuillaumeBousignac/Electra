@@ -2,6 +2,10 @@ package com.electra.mod.setup;
 
 import com.electra.mod.Electra;
 import com.electra.mod.blockentity.AdvancedFurnaceBlockEntity;
+import com.electra.mod.blockentity.ConcreteMixerBlockEntity;
+import com.electra.mod.blockentity.DebarkerBlockEntity;
+import com.electra.mod.blockentity.DyerBlockEntity;
+import com.electra.mod.blockentity.OxidationStationBlockEntity;
 import com.electra.mod.blockentity.FreezerBlockEntity;
 import com.electra.mod.blockentity.GrinderBlockEntity;
 import com.electra.mod.blockentity.ElectricLampBlockEntity;
@@ -61,6 +65,26 @@ public class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FreezerBlockEntity>> FREEZER_BE =
             BLOCK_ENTITIES.register("freezer_be", () -> BlockEntityType.Builder
                     .of(FreezerBlockEntity::new, ModBlocks.FREEZER.get())
+                    .build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ConcreteMixerBlockEntity>> CONCRETE_MIXER_BE =
+            BLOCK_ENTITIES.register("concrete_mixer_be", () -> BlockEntityType.Builder
+                    .of(ConcreteMixerBlockEntity::new, ModBlocks.CONCRETE_MIXER.get())
+                    .build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<OxidationStationBlockEntity>> OXIDATION_STATION_BE =
+            BLOCK_ENTITIES.register("oxidation_station_be", () -> BlockEntityType.Builder
+                    .of(OxidationStationBlockEntity::new, ModBlocks.OXIDATION_STATION.get())
+                    .build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<DyerBlockEntity>> DYER_BE =
+            BLOCK_ENTITIES.register("dyer_be", () -> BlockEntityType.Builder
+                    .of(DyerBlockEntity::new, ModBlocks.DYER.get())
+                    .build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<DebarkerBlockEntity>> DEBARKER_BE =
+            BLOCK_ENTITIES.register("debarker_be", () -> BlockEntityType.Builder
+                    .of(DebarkerBlockEntity::new, ModBlocks.DEBARKER.get())
                     .build(null));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RedstoneDynamoBlockEntity>> REDSTONE_DYNAMO_BE =

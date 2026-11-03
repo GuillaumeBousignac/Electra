@@ -119,5 +119,15 @@
   "jei.electra.grinding": "Broyage",
   "block.electra.freezer": "Congélateur",
   "jei.electra.freezing": "Congélation",
-  "gui.electra.water": "%s / %s mB"
+  "gui.electra.water": "%s / %s mB",
+  "block.electra.debarker": "Écorceuse",
+  "jei.electra.debarking": "Écorçage",
+  "block.electra.concrete_mixer": "Bétonnière",
+  "jei.electra.mixing": "Malaxage",
+  "block.electra.oxidation_station": "Station d'oxydation",
+  "block.electra.rusted_red_iron_block": "Bloc de fer rouge rouillé",
+  "item.electra.rusted_red_iron_ingot": "Lingot de fer rouge rouillé",
+  "jei.electra.oxidizing": "Oxydation",
+  "block.electra.dyer": "Teinturière",
+  "jei.electra.dyeing": "Teinture"
 }

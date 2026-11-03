@@ -1,0 +1,61 @@
+{
+  "type": "electra:dyeing",
+  "dye": {
+    "item": "minecraft:white_dye"
+  },
+  "fluid_amount": 100,
+  "input": [
+    {
+      "item": "electra:white_insulated_wire"
+    },
+    {
+      "item": "electra:orange_insulated_wire"
+    },
+    {
+      "item": "electra:magenta_insulated_wire"
+    },
+    {
+      "item": "electra:light_blue_insulated_wire"
+    },
+    {
+      "item": "electra:yellow_insulated_wire"
+    },
+    {
+      "item": "electra:lime_insulated_wire"
+    },
+    {
+      "item": "electra:pink_insulated_wire"
+    },
+    {
+      "item": "electra:gray_insulated_wire"
+    },
+    {
+      "item": "electra:light_gray_insulated_wire"
+    },
+    {
+      "item": "electra:cyan_insulated_wire"
+    },
+    {
+      "item": "electra:purple_insulated_wire"
+    },
+    {
+      "item": "electra:blue_insulated_wire"
+    },
+    {
+      "item": "electra:brown_insulated_wire"
+    },
+    {
+      "item": "electra:green_insulated_wire"
+    },
+    {
+      "item": "electra:red_insulated_wire"
+    },
+    {
+      "item": "electra:black_insulated_wire"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "electra:white_insulated_wire"
+  }
+}

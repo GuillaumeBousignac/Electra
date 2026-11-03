@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:iron_axe"
+    },
+    "C": {
+      "tag": "c:ingots/copper"
+    },
+    "W": {
+      "item": "electra:bare_wire"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "CAC",
+    "CWC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "electra:debarker"
+  }
+}

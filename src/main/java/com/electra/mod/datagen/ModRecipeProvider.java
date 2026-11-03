@@ -3,6 +3,10 @@ package com.electra.mod.datagen;
 import com.electra.mod.Electra;
 import com.electra.mod.block.GateType;
 import com.electra.mod.recipe.AlloyingRecipe;
+import com.electra.mod.recipe.MixingRecipe;
+import com.electra.mod.recipe.OxidizingRecipe;
+import com.electra.mod.recipe.DyeingRecipe;
+import com.electra.mod.recipe.DebarkingRecipe;
 import com.electra.mod.recipe.FreezingRecipe;
 import com.electra.mod.recipe.GrindingRecipe;
 import com.electra.mod.setup.ModBlocks;
@@ -19,6 +23,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
+import java.util.function.Function;
+import java.util.List;
+import java.util.ArrayList;
+import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -76,6 +84,46 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("CWC")
                 .define('C', Tags.Items.INGOTS_COPPER)
                 .define('F', Items.FURNACE)
+                .define('W', bareWire)
+                .unlockedBy(getHasName(bareWire), has(bareWire))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.CONCRETE_MIXER_ITEM.get())
+                .pattern("CCC")
+                .pattern("CUC")
+                .pattern("CWC")
+                .define('C', Tags.Items.INGOTS_COPPER)
+                .define('U', Items.CAULDRON)
+                .define('W', bareWire)
+                .unlockedBy(getHasName(bareWire), has(bareWire))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.OXIDATION_STATION_ITEM.get())
+                .pattern("CCC")
+                .pattern("CBC")
+                .pattern("CWC")
+                .define('C', Tags.Items.INGOTS_COPPER)
+                .define('B', Items.WATER_BUCKET)
+                .define('W', bareWire)
+                .unlockedBy(getHasName(bareWire), has(bareWire))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.DYER_ITEM.get())
+                .pattern("CCC")
+                .pattern("CDC")
+                .pattern("CWC")
+                .define('C', Tags.Items.INGOTS_COPPER)
+                .define('D', Tags.Items.DYES)
+                .define('W', bareWire)
+                .unlockedBy(getHasName(bareWire), has(bareWire))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.DEBARKER_ITEM.get())
+                .pattern("CCC")
+                .pattern("CAC")
+                .pattern("CWC")
+                .define('C', Tags.Items.INGOTS_COPPER)
+                .define('A', Items.IRON_AXE)
                 .define('W', bareWire)
                 .unlockedBy(getHasName(bareWire), has(bareWire))
                 .save(output);
@@ -287,6 +335,105 @@ public class ModRecipeProvider extends RecipeProvider {
                 Ingredient.of(Tags.Items.INGOTS_GOLD), Ingredient.of(Items.NETHERITE_SCRAP),
                 Items.NETHERITE_INGOT, 200);
 
+        // ── Malaxage (bétonnière) ──────────────────────────────────────────
+        mixing(output, "white_concrete", Items.WHITE_CONCRETE_POWDER, 1, 250, Items.WHITE_CONCRETE, 60);
+        mixing(output, "orange_concrete", Items.ORANGE_CONCRETE_POWDER, 1, 250, Items.ORANGE_CONCRETE, 60);
+        mixing(output, "magenta_concrete", Items.MAGENTA_CONCRETE_POWDER, 1, 250, Items.MAGENTA_CONCRETE, 60);
+        mixing(output, "light_blue_concrete", Items.LIGHT_BLUE_CONCRETE_POWDER, 1, 250, Items.LIGHT_BLUE_CONCRETE, 60);
+        mixing(output, "yellow_concrete", Items.YELLOW_CONCRETE_POWDER, 1, 250, Items.YELLOW_CONCRETE, 60);
+        mixing(output, "lime_concrete", Items.LIME_CONCRETE_POWDER, 1, 250, Items.LIME_CONCRETE, 60);
+        mixing(output, "pink_concrete", Items.PINK_CONCRETE_POWDER, 1, 250, Items.PINK_CONCRETE, 60);
+        mixing(output, "gray_concrete", Items.GRAY_CONCRETE_POWDER, 1, 250, Items.GRAY_CONCRETE, 60);
+        mixing(output, "light_gray_concrete", Items.LIGHT_GRAY_CONCRETE_POWDER, 1, 250, Items.LIGHT_GRAY_CONCRETE, 60);
+        mixing(output, "cyan_concrete", Items.CYAN_CONCRETE_POWDER, 1, 250, Items.CYAN_CONCRETE, 60);
+        mixing(output, "purple_concrete", Items.PURPLE_CONCRETE_POWDER, 1, 250, Items.PURPLE_CONCRETE, 60);
+        mixing(output, "blue_concrete", Items.BLUE_CONCRETE_POWDER, 1, 250, Items.BLUE_CONCRETE, 60);
+        mixing(output, "brown_concrete", Items.BROWN_CONCRETE_POWDER, 1, 250, Items.BROWN_CONCRETE, 60);
+        mixing(output, "green_concrete", Items.GREEN_CONCRETE_POWDER, 1, 250, Items.GREEN_CONCRETE, 60);
+        mixing(output, "red_concrete", Items.RED_CONCRETE_POWDER, 1, 250, Items.RED_CONCRETE, 60);
+        mixing(output, "black_concrete", Items.BLACK_CONCRETE_POWDER, 1, 250, Items.BLACK_CONCRETE, 60);
+        mixing(output, "mud", Items.DIRT, 1, 250, Items.MUD, 40);
+        mixing(output, "clay_ball", Items.SAND, 1, 100, Items.CLAY_BALL, 40);
+        mixing(output, "mud_bricks", Items.MUD, 1, 100, Items.MUD_BRICKS, 40);
+
+        // ── Oxydation (station d'oxydation) ────────────────────────────────
+        oxidizing(output, "exposed_copper", Items.COPPER_BLOCK, 1, 100, Items.EXPOSED_COPPER, 60);
+        oxidizing(output, "weathered_copper", Items.EXPOSED_COPPER, 1, 100, Items.WEATHERED_COPPER, 60);
+        oxidizing(output, "oxidized_copper", Items.WEATHERED_COPPER, 1, 100, Items.OXIDIZED_COPPER, 60);
+        oxidizing(output, "exposed_cut_copper", Items.CUT_COPPER, 1, 100, Items.EXPOSED_CUT_COPPER, 60);
+        oxidizing(output, "weathered_cut_copper", Items.EXPOSED_CUT_COPPER, 1, 100, Items.WEATHERED_CUT_COPPER, 60);
+        oxidizing(output, "oxidized_cut_copper", Items.WEATHERED_CUT_COPPER, 1, 100, Items.OXIDIZED_CUT_COPPER, 60);
+        oxidizing(output, "exposed_cut_copper_stairs", Items.CUT_COPPER_STAIRS, 1, 100, Items.EXPOSED_CUT_COPPER_STAIRS, 60);
+        oxidizing(output, "weathered_cut_copper_stairs", Items.EXPOSED_CUT_COPPER_STAIRS, 1, 100, Items.WEATHERED_CUT_COPPER_STAIRS, 60);
+        oxidizing(output, "oxidized_cut_copper_stairs", Items.WEATHERED_CUT_COPPER_STAIRS, 1, 100, Items.OXIDIZED_CUT_COPPER_STAIRS, 60);
+        oxidizing(output, "exposed_cut_copper_slab", Items.CUT_COPPER_SLAB, 1, 100, Items.EXPOSED_CUT_COPPER_SLAB, 60);
+        oxidizing(output, "weathered_cut_copper_slab", Items.EXPOSED_CUT_COPPER_SLAB, 1, 100, Items.WEATHERED_CUT_COPPER_SLAB, 60);
+        oxidizing(output, "oxidized_cut_copper_slab", Items.WEATHERED_CUT_COPPER_SLAB, 1, 100, Items.OXIDIZED_CUT_COPPER_SLAB, 60);
+        oxidizing(output, "exposed_chiseled_copper", Items.CHISELED_COPPER, 1, 100, Items.EXPOSED_CHISELED_COPPER, 60);
+        oxidizing(output, "weathered_chiseled_copper", Items.EXPOSED_CHISELED_COPPER, 1, 100, Items.WEATHERED_CHISELED_COPPER, 60);
+        oxidizing(output, "oxidized_chiseled_copper", Items.WEATHERED_CHISELED_COPPER, 1, 100, Items.OXIDIZED_CHISELED_COPPER, 60);
+        oxidizing(output, "exposed_copper_grate", Items.COPPER_GRATE, 1, 100, Items.EXPOSED_COPPER_GRATE, 60);
+        oxidizing(output, "weathered_copper_grate", Items.EXPOSED_COPPER_GRATE, 1, 100, Items.WEATHERED_COPPER_GRATE, 60);
+        oxidizing(output, "oxidized_copper_grate", Items.WEATHERED_COPPER_GRATE, 1, 100, Items.OXIDIZED_COPPER_GRATE, 60);
+        oxidizing(output, "exposed_copper_bulb", Items.COPPER_BULB, 1, 100, Items.EXPOSED_COPPER_BULB, 60);
+        oxidizing(output, "weathered_copper_bulb", Items.EXPOSED_COPPER_BULB, 1, 100, Items.WEATHERED_COPPER_BULB, 60);
+        oxidizing(output, "oxidized_copper_bulb", Items.WEATHERED_COPPER_BULB, 1, 100, Items.OXIDIZED_COPPER_BULB, 60);
+        oxidizing(output, "exposed_copper_door", Items.COPPER_DOOR, 1, 100, Items.EXPOSED_COPPER_DOOR, 60);
+        oxidizing(output, "weathered_copper_door", Items.EXPOSED_COPPER_DOOR, 1, 100, Items.WEATHERED_COPPER_DOOR, 60);
+        oxidizing(output, "oxidized_copper_door", Items.WEATHERED_COPPER_DOOR, 1, 100, Items.OXIDIZED_COPPER_DOOR, 60);
+        oxidizing(output, "exposed_copper_trapdoor", Items.COPPER_TRAPDOOR, 1, 100, Items.EXPOSED_COPPER_TRAPDOOR, 60);
+        oxidizing(output, "weathered_copper_trapdoor", Items.EXPOSED_COPPER_TRAPDOOR, 1, 100, Items.WEATHERED_COPPER_TRAPDOOR, 60);
+        oxidizing(output, "oxidized_copper_trapdoor", Items.WEATHERED_COPPER_TRAPDOOR, 1, 100, Items.OXIDIZED_COPPER_TRAPDOOR, 60);
+        oxidizing(output, "mossy_cobblestone", Items.COBBLESTONE, 1, 250, Items.MOSSY_COBBLESTONE, 40);
+        oxidizing(output, "mossy_cobblestone_stairs", Items.COBBLESTONE_STAIRS, 1, 250, Items.MOSSY_COBBLESTONE_STAIRS, 40);
+        oxidizing(output, "mossy_cobblestone_slab", Items.COBBLESTONE_SLAB, 1, 250, Items.MOSSY_COBBLESTONE_SLAB, 40);
+        oxidizing(output, "mossy_cobblestone_wall", Items.COBBLESTONE_WALL, 1, 250, Items.MOSSY_COBBLESTONE_WALL, 40);
+        oxidizing(output, "mossy_stone_bricks", Items.STONE_BRICKS, 1, 250, Items.MOSSY_STONE_BRICKS, 40);
+        oxidizing(output, "mossy_stone_brick_stairs", Items.STONE_BRICK_STAIRS, 1, 250, Items.MOSSY_STONE_BRICK_STAIRS, 40);
+        oxidizing(output, "mossy_stone_brick_slab", Items.STONE_BRICK_SLAB, 1, 250, Items.MOSSY_STONE_BRICK_SLAB, 40);
+        oxidizing(output, "mossy_stone_brick_wall", Items.STONE_BRICK_WALL, 1, 250, Items.MOSSY_STONE_BRICK_WALL, 40);
+        oxidizing(output, "red_dye", Items.IRON_NUGGET, 3, 100, Items.RED_DYE, 40);
+        oxidizing(output, "cyan_dye", Items.RAW_COPPER, 1, 100, Items.CYAN_DYE, 40);
+        oxidizing(output, "rusted_red_iron_block", ModBlocks.RED_IRON_BLOCK_ITEM.get(), 1, 250, ModBlocks.RUSTED_RED_IRON_BLOCK_ITEM.get(), 80);
+        oxidizing(output, "rusted_red_iron_ingot", ModItems.RED_IRON_INGOT.get(), 1, 250, ModItems.RUSTED_RED_IRON_INGOT.get(), 80);
+
+        // ── Teinture (teinturière) : une recette par objet et par couleur ──
+        dyeFamily(output, "wool", c -> vanilla(c.getName() + "_wool"));
+        dyeFamily(output, "carpet", c -> vanilla(c.getName() + "_carpet"));
+        dyeFamily(output, "bed", c -> vanilla(c.getName() + "_bed"));
+        dyeFamily(output, "concrete", c -> vanilla(c.getName() + "_concrete"));
+        dyeFamily(output, "concrete_powder", c -> vanilla(c.getName() + "_concrete_powder"));
+        dyeFamily(output, "stained_glass", c -> vanilla(c.getName() + "_stained_glass"), Items.GLASS);
+        dyeFamily(output, "stained_glass_pane", c -> vanilla(c.getName() + "_stained_glass_pane"), Items.GLASS_PANE);
+        dyeFamily(output, "terracotta", c -> vanilla(c.getName() + "_terracotta"), Items.TERRACOTTA);
+        dyeFamily(output, "candle", c -> vanilla(c.getName() + "_candle"), Items.CANDLE);
+        dyeFamily(output, "shulker_box", c -> vanilla(c.getName() + "_shulker_box"), true, Items.SHULKER_BOX);
+        dyeFamily(output, "banner", c -> vanilla(c.getName() + "_banner"), true);
+        dyeFamily(output, "insulated_wire", c -> ModBlocks.INSULATED_WIRE_ITEMS.get(c).get());
+
+        // ── Écorçage (écorceuse) ───────────────────────────────────────────
+        debarking(output, "stripped_oak_log", Items.OAK_LOG, Items.STRIPPED_OAK_LOG);
+        debarking(output, "stripped_oak_wood", Items.OAK_WOOD, Items.STRIPPED_OAK_WOOD);
+        debarking(output, "stripped_spruce_log", Items.SPRUCE_LOG, Items.STRIPPED_SPRUCE_LOG);
+        debarking(output, "stripped_spruce_wood", Items.SPRUCE_WOOD, Items.STRIPPED_SPRUCE_WOOD);
+        debarking(output, "stripped_birch_log", Items.BIRCH_LOG, Items.STRIPPED_BIRCH_LOG);
+        debarking(output, "stripped_birch_wood", Items.BIRCH_WOOD, Items.STRIPPED_BIRCH_WOOD);
+        debarking(output, "stripped_jungle_log", Items.JUNGLE_LOG, Items.STRIPPED_JUNGLE_LOG);
+        debarking(output, "stripped_jungle_wood", Items.JUNGLE_WOOD, Items.STRIPPED_JUNGLE_WOOD);
+        debarking(output, "stripped_acacia_log", Items.ACACIA_LOG, Items.STRIPPED_ACACIA_LOG);
+        debarking(output, "stripped_acacia_wood", Items.ACACIA_WOOD, Items.STRIPPED_ACACIA_WOOD);
+        debarking(output, "stripped_dark_oak_log", Items.DARK_OAK_LOG, Items.STRIPPED_DARK_OAK_LOG);
+        debarking(output, "stripped_dark_oak_wood", Items.DARK_OAK_WOOD, Items.STRIPPED_DARK_OAK_WOOD);
+        debarking(output, "stripped_mangrove_log", Items.MANGROVE_LOG, Items.STRIPPED_MANGROVE_LOG);
+        debarking(output, "stripped_mangrove_wood", Items.MANGROVE_WOOD, Items.STRIPPED_MANGROVE_WOOD);
+        debarking(output, "stripped_cherry_log", Items.CHERRY_LOG, Items.STRIPPED_CHERRY_LOG);
+        debarking(output, "stripped_cherry_wood", Items.CHERRY_WOOD, Items.STRIPPED_CHERRY_WOOD);
+        debarking(output, "stripped_crimson_stem", Items.CRIMSON_STEM, Items.STRIPPED_CRIMSON_STEM);
+        debarking(output, "stripped_crimson_hyphae", Items.CRIMSON_HYPHAE, Items.STRIPPED_CRIMSON_HYPHAE);
+        debarking(output, "stripped_warped_stem", Items.WARPED_STEM, Items.STRIPPED_WARPED_STEM);
+        debarking(output, "stripped_warped_hyphae", Items.WARPED_HYPHAE, Items.STRIPPED_WARPED_HYPHAE);
+        debarking(output, "stripped_bamboo_block", Items.BAMBOO_BLOCK, Items.STRIPPED_BAMBOO_BLOCK);
+
         // ── Congélation (congélateur) ──────────────────────────────────────
         freezing(output, "ice", Optional.empty(), 1, 1000, Items.ICE, 200);
         freezing(output, "packed_ice", Optional.of(Ingredient.of(Items.ICE)), 1, 1000, Items.PACKED_ICE, 300);
@@ -398,5 +545,53 @@ public class ModRecipeProvider extends RecipeProvider {
         output.accept(ResourceLocation.fromNamespaceAndPath(Electra.MODID, "freezing_" + id),
                 new FreezingRecipe(input, inputCount, fluidAmount, new ItemStack(result), energyCost),
                 null);
+    }
+
+    /** Recette d'écorçage : un tronc → le même tronc écorcé (40 FE). */
+    private static void debarking(RecipeOutput output, String id, ItemLike input, ItemLike result) {
+        output.accept(ResourceLocation.fromNamespaceAndPath(Electra.MODID, "debarking_" + id),
+                new DebarkingRecipe(Ingredient.of(input), new ItemStack(result), 40),
+                null);
+    }
+
+    /** Recette de malaxage : objet (en quantité) + eau (mB) → objet. */
+    private static void mixing(RecipeOutput output, String id, ItemLike input, int inputCount, int fluidAmount,
+                               ItemLike result, int energyCost) {
+        output.accept(ResourceLocation.fromNamespaceAndPath(Electra.MODID, "mixing_" + id),
+                new MixingRecipe(Ingredient.of(input), inputCount, fluidAmount, new ItemStack(result), energyCost),
+                null);
+    }
+
+    /** Recette d'oxydation : objet (en quantité) + eau (mB) → objet. */
+    private static void oxidizing(RecipeOutput output, String id, ItemLike input, int inputCount, int fluidAmount,
+                                  ItemLike result, int energyCost) {
+        output.accept(ResourceLocation.fromNamespaceAndPath(Electra.MODID, "oxidizing_" + id),
+                new OxidizingRecipe(Ingredient.of(input), inputCount, fluidAmount, new ItemStack(result), energyCost),
+                null);
+    }
+
+    private static Item vanilla(String path) {
+        return BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(path));
+    }
+
+    /**
+     * Une famille teignable : l'objet de n'importe quelle couleur (et les objets neutres donnés) devient
+     * l'objet de la couleur du colorant. 100 mB d'eau et 40 FE par objet.
+     */
+    private static void dyeFamily(RecipeOutput output, String family, Function<DyeColor, Item> colored, Item... plain) {
+        dyeFamily(output, family, colored, false, plain);
+    }
+
+    private static void dyeFamily(RecipeOutput output, String family, Function<DyeColor, Item> colored,
+                                  boolean keepComponents, Item... plain) {
+        List<Item> all = new ArrayList<>(List.of(plain));
+        for (DyeColor color : DyeColor.values()) all.add(colored.apply(color));
+        Ingredient input = Ingredient.of(all.toArray(new Item[0]));
+        for (DyeColor color : DyeColor.values()) {
+            Item result = colored.apply(color);
+            output.accept(ResourceLocation.fromNamespaceAndPath(Electra.MODID, "dyeing_" + color.getName() + "_" + family),
+                    new DyeingRecipe(input, Ingredient.of(DyeItem.byColor(color)), 100, new ItemStack(result), 40, keepComponents),
+                    null);
+        }
     }
 }

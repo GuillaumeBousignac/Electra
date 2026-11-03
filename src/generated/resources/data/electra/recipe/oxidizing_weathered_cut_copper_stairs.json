@@ -1,0 +1,11 @@
+{
+  "type": "electra:oxidizing",
+  "fluid_amount": 100,
+  "input": {
+    "item": "minecraft:exposed_cut_copper_stairs"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:weathered_cut_copper_stairs"
+  }
+}

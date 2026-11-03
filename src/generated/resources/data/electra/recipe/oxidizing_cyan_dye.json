@@ -1,0 +1,12 @@
+{
+  "type": "electra:oxidizing",
+  "energy_cost": 40,
+  "fluid_amount": 100,
+  "input": {
+    "item": "minecraft:raw_copper"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:cyan_dye"
+  }
+}
