@@ -14,6 +14,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -297,6 +298,7 @@ public class GuideBookScreen extends Screen {
         if (target < 0 || target >= pages.size()) return;
         page = target;
         lastPage = page;
+        GuideBookClient.playSound(SoundEvents.BOOK_PAGE_TURN, 1.0f);
         updateButtons();
     }
 
@@ -306,6 +308,7 @@ public class GuideBookScreen extends Screen {
         page = 0;
         lastChapter = chapter;
         lastPage = 0;
+        GuideBookClient.playSound(SoundEvents.BOOK_PAGE_TURN, 0.8f);
         paginate();
         updateButtons();
     }

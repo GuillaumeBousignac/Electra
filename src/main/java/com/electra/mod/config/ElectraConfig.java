@@ -92,6 +92,13 @@ public final class ElectraConfig {
     public static final ModConfigSpec.DoubleValue SPRINKLER_GROWTH_CHANCE;
     public static final ModConfigSpec.DoubleValue SPRINKLER_LAVA_DAMAGE;
 
+    // ── Visual effects ─────────────────────────────────────────────────────
+    public static final ModConfigSpec.BooleanValue PARTICLES_ENABLED;
+    public static final ModConfigSpec.BooleanValue SHOCK_SOUND_ENABLED;
+    public static final ModConfigSpec.BooleanValue MACHINE_SOUNDS_ENABLED;
+    public static final ModConfigSpec.BooleanValue DYNAMO_SOUND_ENABLED;
+    public static final ModConfigSpec.BooleanValue GUIDE_SOUNDS_ENABLED;
+
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
 
@@ -329,6 +336,25 @@ public final class ElectraConfig {
         SPRINKLER_LAVA_DAMAGE = builder
                 .comment("Damage dealt each second by lava drops to creatures below, on top of setting them on fire. 0 = fire only.")
                 .defineInRange("lavaDamage", 2.0, 0.0, 100.0);
+        builder.pop();
+
+        builder.comment("Visual effects.").push("effects");
+        PARTICLES_ENABLED = builder
+                .comment("Particle effects of Electra blocks (electric shocks, Redstone Dynamo, sprinkler).",
+                         "false turns them all off.")
+                .define("particles", true);
+        SHOCK_SOUND_ENABLED = builder
+                .comment("Crackling sound when a powered bare wire shocks a creature.")
+                .define("shockSound", true);
+        MACHINE_SOUNDS_ENABLED = builder
+                .comment("Background noise of working machines (furnace, grinder, freezer, debarker, concrete mixer, oxidation station, dyer).")
+                .define("machineSounds", true);
+        DYNAMO_SOUND_ENABLED = builder
+                .comment("Redstone Dynamo: hum while it spins, higher-pitched as it speeds up.")
+                .define("dynamoSound", true);
+        GUIDE_SOUNDS_ENABLED = builder
+                .comment("Page-turning sounds of the Electra Guide book.")
+                .define("guideSounds", true);
         builder.pop();
 
         SPEC = builder.build();

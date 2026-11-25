@@ -4,6 +4,7 @@ import com.electra.mod.blockentity.DyerBlockEntity;
 import com.electra.mod.setup.ModBlockEntities;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
@@ -124,6 +125,16 @@ public class DyerBlock extends BaseEntityBlock {
     public static void setLit(Level level, BlockPos pos, BlockState state, boolean lit) {
         if (state.hasProperty(LIT) && state.getValue(LIT) != lit) {
             level.setBlock(pos, state.setValue(LIT, lit), Block.UPDATE_ALL);
+        }
+    }
+
+    /** Particules tant que la machine travaille (cote client). */
+    @Override
+    public void animateTick(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
+                            @NotNull RandomSource random) {
+        if (state.getValue(LIT)) {
+            MachineParticles.dyer(level, pos, random);
+            MachineSounds.dyer(level, pos, random);
         }
     }
 }

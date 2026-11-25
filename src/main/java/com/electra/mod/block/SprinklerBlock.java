@@ -110,7 +110,7 @@ public class SprinklerBlock extends BaseEntityBlock {
     public void animateTick(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
                             @NotNull RandomSource random) {
         Mode mode = state.getValue(MODE);
-        if (mode == Mode.IDLE) return;
+        if (mode == Mode.IDLE || !ElectraConfig.PARTICLES_ENABLED.get()) return;
 
         // Gouttes visibles : zone réduite de 3×3 blocs sous l'arroseur (l'arrosage réel suit la portée configurée)
         double depth = ElectraConfig.SPRINKLER_DEPTH.get();

@@ -8,7 +8,7 @@ import com.electra.mod.setup.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -225,9 +225,11 @@ public class RedstoneDynamoBlockEntity extends BlockEntity {
     /** Retour visuel et sonore : le fer rouge vient de s'accrocher. */
     private void onMounted() {
         if (!(level instanceof ServerLevel serverLevel)) return;
-        serverLevel.sendParticles(ParticleTypes.ELECTRIC_SPARK,
-                worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5,
-                40, 1.2, 0.4, 1.2, 0.15);
+        if (ElectraConfig.PARTICLES_ENABLED.get()) {
+            serverLevel.sendParticles(DustParticleOptions.REDSTONE,
+                    worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5,
+                    40, 1.2, 0.4, 1.2, 0.15);
+        }
         serverLevel.playSound(null, worldPosition, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 0.6f, 1.6f);
     }
 
@@ -245,6 +247,54 @@ public class RedstoneDynamoBlockEntity extends BlockEntity {
         if (angle >= 360.0f) {
             angle -= 360.0f;
             prevAngle -= 360.0f;
+        }
+        spawnContactParticles();
+        playHum();
+    }
+
+    /**
+     * Ronronnement continu : le son d'ambiance de la balise, rejoue toutes les 4 secondes (sa duree),
+     * plus grave a basse vitesse et plus aigu a pleine vitesse. Joue cote client, donc sans paquet reseau.
+     */
+    private void playHum() {
+        if (level == null || !hasRotor || speed <= 0.0f || !ElectraConfig.DYNAMO_SOUND_ENABLED.get()) return;
+        if (Math.floorMod(level.getGameTime() + worldPosition.asLong(), 80L) != 0) return;
+        level.playLocalSound(worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5,
+                SoundEvents.BEACON_AMBIENT, SoundSource.BLOCKS, 0.35f, 0.5f + speed * 0.8f, false);
+    }
+
+    /**
+     * Particules de redstone a l'endroit ou le fer rouge frotte les blocs de redstone ; plus il tourne vite,
+     * plus elles sont nombreuses (jusqu'a deux par tick a pleine vitesse).
+     */
+    private void spawnContactParticles() {
+        if (level == null || !hasRotor || speed <= 0.0f || !ElectraConfig.PARTICLES_ENABLED.get()) return;
+        int count = (level.random.nextFloat() < speed * 0.6f ? 1 : 0)
+                + (speed > 0.9f && level.random.nextFloat() < 0.5f ? 1 : 0);
+        if (count == 0) return;
+
+        // Position du bras dans son repere (cos, sin), puis dans le monde selon l'axe (voir angleOf)
+        double radians = Math.toRadians(angle);
+        double lx = Math.cos(radians), lz = Math.sin(radians);
+        double dx, dy, dz;
+        switch (axis()) {
+            case X -> { dx = 0.0; dy = -lx; dz = lz; }
+            case Z -> { dx = lx; dy = -lz; dz = 0.0; }
+            default -> { dx = lx; dy = 0.0; dz = lz; }
+        }
+        // Face du fer rouge tournee vers l'anneau de redstone : un peu au-dela du centre du bloc
+        double reach = 1.4;
+        double x = worldPosition.getX() + 0.5 + dx * reach;
+        double y = worldPosition.getY() + 0.5 + dy * reach;
+        double z = worldPosition.getZ() + 0.5 + dz * reach;
+        for (int i = 0; i < count; i++) {
+            level.addParticle(DustParticleOptions.REDSTONE,
+                    x + (level.random.nextDouble() - 0.5) * 0.5,
+                    y + (level.random.nextDouble() - 0.5) * 0.5,
+                    z + (level.random.nextDouble() - 0.5) * 0.5,
+                    (level.random.nextDouble() - 0.5) * 0.1,
+                    (level.random.nextDouble() - 0.5) * 0.1,
+                    (level.random.nextDouble() - 0.5) * 0.1);
         }
     }
 
