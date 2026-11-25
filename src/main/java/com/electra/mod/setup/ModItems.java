@@ -3,6 +3,7 @@ package com.electra.mod.setup;
 import com.electra.mod.Electra;
 import com.electra.mod.block.LampSymbol;
 import com.electra.mod.item.EnergyMeterItem;
+import com.electra.mod.item.GuideBookItem;
 import com.electra.mod.item.LampStickerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -35,6 +36,11 @@ public class ModItems {
     public static final DeferredItem<EnergyMeterItem> ENERGY_METER =
             ITEMS.register("energy_meter",
                     () -> new EnergyMeterItem(new Item.Properties().stacksTo(1)));
+
+    /** Livre-guide en jeu : explique tout ce qu'ajoute le mod. */
+    public static final DeferredItem<GuideBookItem> GUIDE_BOOK =
+            ITEMS.register("guide_book",
+                    () -> new GuideBookItem(new Item.Properties().stacksTo(1)));
 
     /** Autocollant de lettres pour les lampes électriques. */
     public static final DeferredItem<LampStickerItem> ALPHABETIC_STICKER =

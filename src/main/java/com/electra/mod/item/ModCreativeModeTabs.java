@@ -54,6 +54,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.ROSE_GOLD_NUGGET.get());
                         output.accept(ModItems.RED_IRON_INGOT.get());
                         output.accept(ModItems.RUSTED_RED_IRON_INGOT.get());
+                        output.accept(ModItems.GUIDE_BOOK.get());
                         output.accept(ModItems.ENERGY_METER.get());
                         output.accept(ModItems.ALPHABETIC_STICKER.get());
                         output.accept(ModItems.TOOL_STICKER.get());

@@ -30,6 +30,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.MOB_STICKER.get());
         basicItem(ModItems.RED_IRON_INGOT.get());
         basicItem(ModItems.RUSTED_RED_IRON_INGOT.get());
+        basicItem(ModItems.GUIDE_BOOK.get());
 
         // Texture provisoire : bâton vanilla, tenu comme un outil
         withExistingParent("energy_meter", mcLoc("item/handheld"))

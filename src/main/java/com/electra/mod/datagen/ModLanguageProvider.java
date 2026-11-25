@@ -2,6 +2,7 @@ package com.electra.mod.datagen;
 
 import com.electra.mod.Electra;
 import com.electra.mod.block.GateType;
+import com.electra.mod.guide.GuideContent;
 import com.electra.mod.setup.ModBlocks;
 import com.electra.mod.setup.ModItems;
 import net.minecraft.data.PackOutput;
@@ -52,6 +53,7 @@ public class ModLanguageProvider extends LanguageProvider {
 
         // ── Objets ─────────────────────────────────────────────────────────
         add(ModItems.ENERGY_METER.get(), "Energy Meter");
+        add(ModItems.GUIDE_BOOK.get(), "Electra Guide");
         add(ModItems.ROSE_GOLD_INGOT.get(), "Rose Gold Ingot");
         add(ModItems.ROSE_GOLD_NUGGET.get(), "Rose Gold Nugget");
         add(ModItems.ALPHABETIC_STICKER.get(), "Alphabetic Sticker");
@@ -140,6 +142,18 @@ public class ModLanguageProvider extends LanguageProvider {
         add("message.electra.lamp_has_sticker", "This lamp already has a sticker: remove it with shears");
         add("message.electra.lamp_symbol", "Symbol: %s");
         add("symbol.electra.none", "none");
+
+        // ── Livre-guide ────────────────────────────────────────────────────
+        add("tooltip.electra.guide_book", "Right-click to read. Explains everything Electra adds");
+        add("gui.electra.guide.contents", "Contents");
+        add("gui.electra.guide.page", "Page %s / %s");
+        add("gui.electra.guide.discord_tooltip", "Join the Electra community on Discord");
+        for (GuideContent.Chapter chapter : GuideContent.CHAPTERS) {
+            add(chapter.titleKey(), chapter.title());
+            for (int i = 0; i < chapter.entries().size(); i++) {
+                add(chapter.entryKey(i), chapter.entries().get(i).text());
+            }
+        }
 
         // ── JEI ────────────────────────────────────────────────────────────
         add("jei.electra.alloying", "Alloying");

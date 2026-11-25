@@ -257,6 +257,13 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_copper_ingot", has(Tags.Items.INGOTS_COPPER))
                 .save(output);
 
+        // Livre-guide : un livre et un lingot de cuivre
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.GUIDE_BOOK.get())
+                .requires(Items.BOOK)
+                .requires(Tags.Items.INGOTS_COPPER)
+                .unlockedBy("has_copper_ingot", has(Tags.Items.INGOTS_COPPER))
+                .save(output);
+
         // Autocollant alphabétique : papier + colle (slime) + encre pour les lettres
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, ModItems.ALPHABETIC_STICKER.get(), 8)
                 .requires(Items.PAPER)
